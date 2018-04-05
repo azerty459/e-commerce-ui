@@ -1,1 +1,138 @@
 /* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import "~bootstrap/dist/css/bootstrap.css";
+
+html, body, app-root{
+  margin:0;
+  height:100%;
+}
+
+.logo {
+  width: 80px;
+}
+
+/* Barre de recherche */
+.bar_navbar {
+  padding-right: 16px;
+}
+
+.categorie_button:focus, .search_input:focus, search_bar:focus {
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+}
+
+.search_button, .categorie_button {
+  border-radius: 0 !important;
+}
+
+@media only screen and (min-width: 576px) {
+  .search_bar > .search_input {
+    width: 30rem;
+  }
+}
+
+/**/
+
+.form-control{
+  margin-left: -0.4rem !important;
+  margin-right: -0.4rem !important;
+  border-radius: 0 !important;
+}
+
+.spacing-bare {
+  margin-top: 14px!important;
+  margin-bottom: 14px!important;
+  background-color: transparent;
+  display: block;
+  height: 1px;
+  border-width: 0;
+  border-top: 1px solid #e7e7e7;
+  line-height: 19px;
+  margin-top: 0;
+  margin-bottom: 14px;
+}
+
+.mat-toolbar.mat-primary {
+  height: 100%;
+  width: 100%;
+  padding: 10px 0 10px 0;
+  background: #333333;
+}
+
+.form-inline {
+  display: inline-block;
+}
+
+.text-align-left {
+  text-align: left;
+}
+
+.text-align-right {
+  text-align: right;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-self-right {
+  align-self: flex-end;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.flex {
+  flex: 1;
+}
+
+.flex2 {
+  flex: 2;
+}
+
+.flex3 {
+  flex: 3;
+}
+
+.flex4 {
+  flex: 4;
+}
+
+.flex5 {
+  flex: 5;
+}
+
+.flex6 {
+  flex: 6;
+}
+
+.flex7 {
+  flex: 7;
+}
+
+.flex8 {
+  flex: 8;
+}
+
+.flex9 {
+  flex: 9;
+}
+
+.flex10 {
+  flex: 10;
+}
+
+.margin {
+  margin: 1%;
+}
+
+.espace {
+  margin-right: 10px;
+}

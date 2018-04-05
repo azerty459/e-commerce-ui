@@ -1,18 +1,96 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { RouterModule, Routes } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  MatButtonModule, MatIconModule, MatCardModule, MatToolbarModule, MatMenuModule, MatInputModule,
+  MatFormFieldModule, MatSidenavModule, MatSelectModule, MatTooltipModule, MatStepperModule, MatSortModule, MatSnackBarModule,
+  MatSlideToggleModule, MatSliderModule, MatRippleModule, MatRadioModule, MatProgressSpinnerModule, MatProgressBarModule,
+  MatPaginatorModule, MatNativeDateModule, MatListModule, MatGridListModule, MatTableModule, MatTabsModule, MatAutocompleteModule,
+  MatCheckboxModule, MatButtonToggleModule, MatChipsModule, MatDatepickerModule, MatDialogModule, MatDividerModule, MatExpansionModule
+} from '@angular/material';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
+import { ProduitComponent } from './components/produit.component';
+import {HttpModule} from '@angular/http';
+import {ProduitBusiness} from './business/ProduitBusiness';
 
+
+const appRoutes: Routes = [
+  { path: 'produit', component: ProduitComponent },
+  { path: 'produit/:id', component: ProduitComponent },
+  {
+    path: 'accueil',
+    component: AppComponent,
+    data: { title: 'Heroes List' }
+  },
+  { path: '',
+    redirectTo: '/produit',
+    pathMatch: 'full'
+  }
+  // { path: '**', component: PageNotFoundComponent }
+];
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ProduitComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    HttpModule,
+    NgbModule.forRoot(),
+    RouterModule.forRoot(
+      appRoutes,
+      { enableTracing: true } // <-- debugging purposes only
+    ),
+    BrowserAnimationsModule,
+    MatCardModule,
+    MatIconModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatMenuModule,
+    MatSidenavModule,
+    MatAutocompleteModule,
+    MatButtonModule,
+    MatButtonToggleModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatChipsModule,
+    MatDatepickerModule,
+    MatDialogModule,
+    MatDividerModule,
+    MatExpansionModule,
+    MatGridListModule,
+    MatIconModule,
+    MatInputModule,
+    MatListModule,
+    MatMenuModule,
+    MatNativeDateModule,
+    MatPaginatorModule,
+    MatProgressBarModule,
+    MatProgressSpinnerModule,
+    MatRadioModule,
+    MatRippleModule,
+    MatSelectModule,
+    MatSidenavModule,
+    MatSliderModule,
+    MatSlideToggleModule,
+    MatSnackBarModule,
+    MatSortModule,
+    MatStepperModule,
+    MatTableModule,
+    MatTabsModule,
+    MatToolbarModule,
+    MatTooltipModule,
+    FlexLayoutModule,
   ],
-  providers: [],
+  providers: [ProduitBusiness],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

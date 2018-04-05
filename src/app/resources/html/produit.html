@@ -1,0 +1,118 @@
+<div class="flex-row margin">
+  <div class="flex">
+    <a href="/accueil">Accueil</a> > <a href="/produits">Produits</a>
+  </div>
+  <div class="flex flex-row">
+    <div class="flex3"></div>
+    <button type="button" class="btn btn-outline-success"><- Précédent</button>
+    <div class="espace"></div>
+    <button type="button" class="btn btn-outline-success">Suivant -></button>
+  </div>
+</div>
+
+<div class="flex-row margin">
+  <div class="flex-column caracteristique">
+    <div class="flex-column">
+      <div class="flex-row">
+        <b class="caracteristique_nom">Couleur</b>
+      </div>
+      <div class="flex-row">
+        <mat-checkbox>Rouge</mat-checkbox>
+      </div>
+      <div class="flex-row">
+        <mat-checkbox>Bleu</mat-checkbox>
+      </div>
+      <div class="flex-row">
+        <mat-checkbox>Blanc</mat-checkbox>
+      </div>
+      <div class="flex-row">
+        <mat-checkbox>Noire</mat-checkbox>
+      </div>
+      <div class="flex-row">
+        <mat-checkbox>Orange</mat-checkbox>
+      </div>
+    </div>
+    <div class="spacing-bare"></div>
+    <div class="flex-column">
+      <div class="flex-row">
+        <b class="caracteristique_nom">Dimension</b>
+      </div>
+      <div class="flex-row">
+        <mat-checkbox>10x10</mat-checkbox>
+      </div>
+      <div class="flex-row">
+        <mat-checkbox>11x11</mat-checkbox>
+      </div>
+      <div class="flex-row">
+        <mat-checkbox>12x12</mat-checkbox>
+      </div>
+      <div class="flex-row">
+        <mat-checkbox>13x13</mat-checkbox>
+      </div>
+      <div class="flex-row">
+        <mat-checkbox>14x14</mat-checkbox>
+      </div>
+      <div class="flex-row">
+        <mat-checkbox>15x15</mat-checkbox>
+      </div>
+    </div>
+  </div>
+  <div class="flex6 flex-column">
+    <div class="barre_produit_top flex-row">
+      <div class="flex flex-row">
+        <span class="text_afficher">174 produits</span>
+      </div>
+      <div class="trier flex flex-row">
+        <span class="text_afficher">Trier par</span>
+        <div class="form-group">
+          <select class="form-control">
+            <option>Nom</option>
+            <option>Note</option>
+            <option>Nombre d'avis</option>
+            <option>Prix décroissant</option>
+            <option>Prix croissant</option>
+          </select>
+        </div>
+      </div>
+      <div class="afficher flex flex-row">
+        <span class="text_afficher">Afficher</span>
+        <div class="form-group">
+          <select class="form-control">
+            <option>25 produits</option>
+            <option>50 produits</option>
+            <option>75 produits</option>
+            <option>100 produits</option>
+            <option>tous les produits</option>
+          </select>
+        </div>
+      </div>
+      <div class="flex flex-row">
+        <span class="text_afficher">5 pages</span>
+      </div>
+    </div>
+
+    <div class="flex-row produit_container">
+      <div *ngFor="let produit of produits | async; let i = index">
+        <div class="flex produit">
+          <div class="flex-row produit_image">
+            <img
+              src="http://image.slidesharecdn.com/evaluersamaturiteproduit-agilefrance2015-150622094121-lva1-app6891/95/evaluer-sa-maturite-produit-agile-france-2015-4-638.jpg?cb=1434966885"
+              width="300" height="100">
+          </div>
+          <div class="flex-row produit_nom produit_border_top">
+            {{produit.description}}
+          </div>
+          <div class="flex-row produit_description">
+            <div class="flex text-align-left produit_description_prixHT">
+              {{produit.prixHT}}€
+            </div>
+            <div class="flex text-align-right produit_description_promo">
+              20%
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
