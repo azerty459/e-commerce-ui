@@ -13,11 +13,11 @@ export class ProduitComponent implements OnInit {
   private produits: Observable<Produit[]>;
 
   constructor(private produitBusiness: ProduitBusiness){
-    this.produits = this.produitBusiness.getProduit();
+
   }
 
   ngOnInit() {
     this.produits = this.produitBusiness.getProduit();
-  }
 
+  }
 }

@@ -12,6 +12,7 @@ html, body, app-root{
 }
 
 /* Barre de recherche */
+
 .bar_navbar {
   padding-right: 16px;
 }
@@ -23,6 +24,10 @@ html, body, app-root{
 
 .search_button, .categorie_button {
   border-radius: 0 !important;
+}
+
+.enlever_focus_bleu {
+  outline: 0 !important;
 }
 
 @media only screen and (min-width: 576px) {
