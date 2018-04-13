@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  api_url: 'http://10.6.67.150:8080/graphql'
+  api_url: 'http://localhost:8888/graphql'
 };
