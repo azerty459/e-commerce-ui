@@ -15,7 +15,7 @@ export class ProduitBusiness {
   }
 
   getProduit(): Observable<Produit[]> {
-    return this.http.post(environment.api_url, { query: '{getAllProduit{referenceProduit description prixHT}}'})
+    return this.http.post(environment.api_url, { query: '{getAllProduit{ref description prixHT}}'})
       .map(response => {
         const produits = response.json().getAllProduit;
         return produits.map((produit) => new Produit(produit.referenceProduit, produit.description, produit.prixHT));
