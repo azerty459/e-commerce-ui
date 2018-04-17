@@ -15,13 +15,13 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
 import { ProduitComponent } from './components/produit/produit.component';
 import {HttpModule} from '@angular/http';
-import {ProduitBusiness} from './business/ProduitBusiness';
+import {ProduitBusiness} from './business/produit.business';
 import { AccueilComponent } from './components/accueil/accueil.component';
 
 
 const appRoutes: Routes = [
-  { path: 'produit', component: ProduitComponent },
-  { path: 'produit/:id', component: ProduitComponent },
+  { path: 'produit', redirectTo: 'produit/1'},
+  { path: 'produit/:page', component: ProduitComponent },
   {
     path: 'accueil',
     component: AccueilComponent,
