@@ -13,9 +13,10 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
-import { ProduitComponent } from './components/produit.component';
+import { ProduitComponent } from './components/produit/produit.component';
 import {HttpModule} from '@angular/http';
 import {ProduitBusiness} from './business/ProduitBusiness';
+import { AccueilComponent } from './components/accueil/accueil.component';
 
 
 const appRoutes: Routes = [
@@ -23,7 +24,7 @@ const appRoutes: Routes = [
   { path: 'produit/:id', component: ProduitComponent },
   {
     path: 'accueil',
-    component: AppComponent,
+    component: AccueilComponent,
     data: { title: 'Heroes List' }
   },
   { path: '',
@@ -36,7 +37,8 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    ProduitComponent
+    ProduitComponent,
+    AccueilComponent
   ],
   imports: [
     BrowserModule,
