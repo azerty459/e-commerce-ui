@@ -28,7 +28,7 @@ const appRoutes: Routes = [
     data: { title: 'Heroes List' }
   },
   { path: '',
-    redirectTo: '/produit',
+    redirectTo: 'produit/1',
     pathMatch: 'full'
   }
   // { path: '**', component: PageNotFoundComponent }

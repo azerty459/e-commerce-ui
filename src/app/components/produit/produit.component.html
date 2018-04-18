@@ -66,10 +66,10 @@
     <div class="barre_produit_top flex-row">
       <div class="flex flex-row" *ngIf="lengthProduit > 0; else OneProduit">
           <span class="text_afficher">{{lengthProduit}} articles au total</span>
-        <ng-template #OneProduit>
-          <span class="text_afficher">{{lengthProduit}} article au total</span>
-        </ng-template>
       </div>
+      <ng-template #OneProduit>
+        <span class="text_afficher">{{lengthProduit}} article au total</span>
+      </ng-template>
       <!--<div class="trier flex flex-row">-->
         <!--<span class="text_afficher">Trier par</span>-->
         <!--<div class="form-group">-->
