@@ -13,22 +13,28 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
-import { ProduitComponent } from './components/produit/produit.component';
+import { ProduitComponent } from './components/produit/page.produit.component';
 import {HttpModule} from '@angular/http';
 import {ProduitBusiness} from './business/produit.business';
 import { AccueilComponent } from './components/accueil/accueil.component';
 
 
 const appRoutes: Routes = [
-  { path: 'produit', redirectTo: 'produit/1'},
-  { path: 'produit/:page', component: ProduitComponent },
+  {
+    path: 'produit',
+    redirectTo: 'produit/1'},
+  {
+    path: 'produit/:page',
+    component: ProduitComponent,
+    data: { title: 'e-commerce - Produits' }
+  },
   {
     path: 'accueil',
     component: AccueilComponent,
-    data: { title: 'Heroes List' }
+    data: { title: 'e-commerce - Accueil' }
   },
   { path: '',
-    redirectTo: 'produit/1',
+    redirectTo: '/produit/1',
     pathMatch: 'full'
   }
   // { path: '**', component: PageNotFoundComponent }
