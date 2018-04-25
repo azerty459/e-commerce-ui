@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {ProduitBusiness} from "../../business/produit.business";
-import {Produit} from "../../models/Produit";
 import {Observable} from "rxjs/Observable";
 import {ActivatedRoute, Router} from "@angular/router";
+import {Produit} from "../../../../e-commerce-ui-common/models/Produit";
+import {ProduitBusiness} from "../../../../e-commerce-ui-common/business/produit.business";
 
 @Component({
   selector: 'app-produit',

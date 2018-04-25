@@ -15,8 +15,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
 import { ProduitComponent } from './components/produit/page.produit.component';
 import {HttpModule} from '@angular/http';
-import {ProduitBusiness} from './business/produit.business';
 import { AccueilComponent } from './components/accueil/accueil.component';
+import {ProduitBusiness} from "../../e-commerce-ui-common/business/produit.business";
 
 
 const appRoutes: Routes = [
