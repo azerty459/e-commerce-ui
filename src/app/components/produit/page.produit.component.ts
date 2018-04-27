@@ -3,6 +3,7 @@ import {Observable} from "rxjs/Observable";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Produit} from "../../../../e-commerce-ui-common/models/Produit";
 import {ProduitBusiness} from "../../../../e-commerce-ui-common/business/produit.business";
+import {Pagination} from "../../../../e-commerce-ui-common/models/Pagination";
 
 @Component({
   selector: 'app-produit',
@@ -11,19 +12,20 @@ import {ProduitBusiness} from "../../../../e-commerce-ui-common/business/produit
 })
 export class ProduitComponent implements OnInit {
 
-  public produits: Observable<Produit[]>;
+  public page: Observable<Pagination>;
+  public produits: Array<Produit>;
   public lengthProduit;
 
   public nombrePages:number;
-  public pageInitial:number;
+  public pageInitial:number = 1;
   public messagesParPage: number = 5;
 
   constructor(private produitBusiness: ProduitBusiness, private activatedRoute: ActivatedRoute, private _router: Router){
   }
 
   init() {
-    this.produits = this.produitBusiness.getProduitByPagination((this.pageInitial-1)*this.messagesParPage,this.pageInitial*this.messagesParPage);
-    this.produitBusiness.getProduit().subscribe(async(value) => {this.lengthProduit = value.length; this.nombrePages = Math.ceil(this.lengthProduit/this.messagesParPage);});
+    this.page = this.produitBusiness.getProduitByPagination(this.pageInitial, this.messagesParPage);
+    this.page.subscribe(value => {this.lengthProduit = value.total; this.nombrePages = value.nbpage; this.produits = value.tableau;});
   }
 
   ngOnInit() {
@@ -46,7 +48,7 @@ export class ProduitComponent implements OnInit {
         this.pageInitial = this.pageInitial + 1;
       }
     }
-    this.produits = this.produitBusiness.getProduitByPagination((this.pageInitial-1)*this.messagesParPage,this.pageInitial*this.messagesParPage);
+    this.init();
     this._router.navigate(['/produit', this.pageInitial]);
   }
 }
