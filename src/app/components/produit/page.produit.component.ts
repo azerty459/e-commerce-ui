@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Observable} from "rxjs/Observable";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Produit} from "../../../../e-commerce-ui-common/models/Produit";
@@ -16,39 +16,72 @@ export class ProduitComponent implements OnInit {
   public produits: Array<Produit>;
   public lengthProduit;
 
-  public nombrePages:number;
-  public pageInitial:number = 1;
+  public pageURL: number;
+  public pageMax: number;
+  public pageMin: number;
   public messagesParPage: number = 5;
 
-  constructor(private produitBusiness: ProduitBusiness, private activatedRoute: ActivatedRoute, private _router: Router){
+  constructor(private produitBusiness: ProduitBusiness, private activatedRoute: ActivatedRoute, private _router: Router) {
+    this.activatedRoute.params.subscribe(params => {
+        this.pageURL = parseInt(params.page);
+      },
+      error => {
+        console.log("Erreur gestion de page ", error)
+      },
+    );
   }
 
-  init() {
-    this.page = this.produitBusiness.getProduitByPagination(this.pageInitial, this.messagesParPage);
-    this.page.subscribe(value => {this.lengthProduit = value.total; this.nombrePages = value.nbpage; this.produits = value.tableau;});
+  async affichage() {
+    this.page = this.produitBusiness.getProduitByPagination(this.pageURL, this.messagesParPage);
+    this.page.subscribe(value => {
+        this.pageURL = value.pageActuelle;
+        this.lengthProduit = value.total;
+        this.produits = value.tableau;
+      },
+      error2 => {
+        console.log("Erreur getProduitByPagination", error2)
+      });
+    this.pageMax = await this.getPageMax();
+    this.pageMin = await this.getPageMin();
+    this.redirection();
+    this._router.navigate(['/produit', this.pageURL]);
+  }
+
+  getPageMin(): Promise<number> {
+    return new Promise(resolve => this.page.subscribe(value => resolve(value.pageMin)));
+  }
+
+  getPageMax(): Promise<number> {
+    return new Promise(resolve => this.page.subscribe(value => resolve(value.pageMax)));
+  }
+
+  async redirection() {
+    if (this.pageURL <= 0)
+      this._router.navigate(['/produit', await this.pageMin]);
+    else if (this.pageURL > this.pageMax) {
+      this._router.navigate(['/produit', await this.pageMax]);
+    }
   }
 
   ngOnInit() {
-    this.activatedRoute.params.subscribe(params => this.pageInitial = parseInt(params.page));
-    this.init();
+    this.affichage();
   }
 
   selected(value: any) {
     this.messagesParPage = value;
-    this.init();
+    this.affichage();
   }
 
   pagination(value: String) {
-    if(value === "precedent"){
-      if(this.pageInitial > 1){
-        this.pageInitial = this.pageInitial-1;
+    if (value === "precedent") {
+      if (this.pageURL > this.pageMin) {
+        this.pageURL = this.pageURL - 1;
       }
-    }else {
-      if(this.pageInitial < this.nombrePages) {
-        this.pageInitial = this.pageInitial + 1;
+    } else {
+      if (this.pageURL < this.pageMax) {
+        this.pageURL = this.pageURL + 1;
       }
     }
-    this.init();
-    this._router.navigate(['/produit', this.pageInitial]);
+    this.affichage();
   }
 }
