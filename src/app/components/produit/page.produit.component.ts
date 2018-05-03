@@ -47,6 +47,7 @@ export class ProduitComponent implements OnInit {
     this._router.navigate(['/produit', this.pageURL]);
   }
 
+  // Permet
   getPageMin(): Promise<number> {
     return new Promise(resolve => this.page.subscribe(value => resolve(value.pageMin)));
   }
