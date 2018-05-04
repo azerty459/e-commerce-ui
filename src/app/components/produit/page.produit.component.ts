@@ -16,14 +16,14 @@ export class ProduitComponent implements OnInit {
   public produits: Array<Produit>;
   public lengthProduit;
 
-  public pageURL: number;
+  public pageActuelURL: number;
   public pageMax: number;
   public pageMin: number;
   public messagesParPage: number = 5;
 
   constructor(private produitBusiness: ProduitBusiness, private activatedRoute: ActivatedRoute, private _router: Router) {
     this.activatedRoute.params.subscribe(params => {
-        this.pageURL = parseInt(params.page);
+        this.pageActuelURL = parseInt(params.page);
       },
       error => {
         console.log("Erreur gestion de page ", error)
@@ -32,9 +32,9 @@ export class ProduitComponent implements OnInit {
   }
 
   async affichage() {
-    this.page = this.produitBusiness.getProduitByPagination(this.pageURL, this.messagesParPage);
+    this.page = this.produitBusiness.getProduitByPagination(this.pageActuelURL, this.messagesParPage);
     this.page.subscribe(value => {
-        this.pageURL = value.pageActuelle;
+        this.pageActuelURL = value.pageActuelle;
         this.lengthProduit = value.total;
         this.produits = value.tableau;
       },
@@ -44,7 +44,7 @@ export class ProduitComponent implements OnInit {
     this.pageMax = await this.getPageMax();
     this.pageMin = await this.getPageMin();
     this.redirection();
-    this._router.navigate(['/produit', this.pageURL]);
+    this._router.navigate(['/produit', this.pageActuelURL]);
   }
 
   // Permet
@@ -57,10 +57,10 @@ export class ProduitComponent implements OnInit {
   }
 
   async redirection() {
-    if (this.pageURL <= 0)
-      this._router.navigate(['/produit', await this.pageMin]);
-    else if (this.pageURL > this.pageMax) {
-      this._router.navigate(['/produit', await this.pageMax]);
+    if (this.pageActuelURL <= 0)
+      this._router.navigate(['/produit', this.pageMin]);
+    else if (this.pageActuelURL > this.pageMax) {
+      this._router.navigate(['/produit', this.pageMax]);
     }
   }
 
@@ -75,12 +75,12 @@ export class ProduitComponent implements OnInit {
 
   pagination(value: String) {
     if (value === "precedent") {
-      if (this.pageURL > this.pageMin) {
-        this.pageURL = this.pageURL - 1;
+      if (this.pageActuelURL > this.pageMin) {
+        this.pageActuelURL = this.pageActuelURL - 1;
       }
     } else {
-      if (this.pageURL < this.pageMax) {
-        this.pageURL = this.pageURL + 1;
+      if (this.pageActuelURL < this.pageMax) {
+        this.pageActuelURL = this.pageActuelURL + 1;
       }
     }
     this.affichage();

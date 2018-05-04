@@ -6,8 +6,8 @@ import {
   MatButtonModule, MatIconModule, MatCardModule, MatToolbarModule, MatMenuModule, MatInputModule,
   MatFormFieldModule, MatSidenavModule, MatSelectModule, MatTooltipModule, MatStepperModule, MatSortModule, MatSnackBarModule,
   MatSlideToggleModule, MatSliderModule, MatRippleModule, MatRadioModule, MatProgressSpinnerModule, MatProgressBarModule,
-  MatPaginatorModule, MatNativeDateModule, MatListModule, MatGridListModule, MatTableModule, MatTabsModule, MatAutocompleteModule,
-  MatCheckboxModule, MatButtonToggleModule, MatChipsModule, MatDatepickerModule, MatDialogModule, MatDividerModule, MatExpansionModule
+  MatPaginatorModule, MatNativeDateModule, MatListModule, MatTableModule, MatTabsModule, MatAutocompleteModule,
+  MatCheckboxModule, MatButtonToggleModule, MatDatepickerModule, MatDialogModule,MatChipsModule, MatDividerModule, MatExpansionModule, MatGridListModule
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -17,6 +17,9 @@ import { ProduitComponent } from './components/produit/page.produit.component';
 import {HttpModule} from '@angular/http';
 import { AccueilComponent } from './components/accueil/accueil.component';
 import {ProduitBusiness} from "../../e-commerce-ui-common/business/produit.business";
+import { DetailProduitComponent } from './components/detail-produit/detail-produit.component';
+
+
 
 
 const appRoutes: Routes = [
@@ -36,6 +39,11 @@ const appRoutes: Routes = [
   { path: '',
     redirectTo: '/produit/1',
     pathMatch: 'full'
+  },
+  {
+    path: 'produit/detail/:id',
+    component: DetailProduitComponent,
+    data: { title: 'e-commerce - Detail produit' }
   }
   // { path: '**', component: PageNotFoundComponent }
 ];
@@ -44,7 +52,8 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     ProduitComponent,
-    AccueilComponent
+    AccueilComponent,
+    DetailProduitComponent
   ],
   imports: [
     BrowserModule,
@@ -69,7 +78,6 @@ const appRoutes: Routes = [
     MatButtonToggleModule,
     MatCardModule,
     MatCheckboxModule,
-    MatChipsModule,
     MatDatepickerModule,
     MatDialogModule,
     MatDividerModule,
@@ -97,6 +105,7 @@ const appRoutes: Routes = [
     MatToolbarModule,
     MatTooltipModule,
     FlexLayoutModule,
+    MatChipsModule
   ],
   providers: [ProduitBusiness],
   bootstrap: [AppComponent]
