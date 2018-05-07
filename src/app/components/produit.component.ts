@@ -10,7 +10,7 @@ import {Observable} from "rxjs/Observable";
 })
 export class ProduitComponent implements OnInit {
 
-  private produits: Observable<Produit[]>;
+  public produits: Observable<Produit[]>;
 
   constructor(private produitBusiness: ProduitBusiness){
 
