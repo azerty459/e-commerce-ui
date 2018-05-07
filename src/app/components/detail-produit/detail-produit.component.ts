@@ -3,6 +3,7 @@ import {Observable} from "rxjs/Observable";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Produit} from "../../../../e-commerce-ui-common/models/Produit";
 import {ProduitBusiness} from "../../../../e-commerce-ui-common/business/produit.business";
+import {Categorie} from "../../../../e-commerce-ui-common/models/Categorie";
 
 
 @Component({
@@ -35,7 +36,8 @@ export class DetailProduitComponent implements OnInit {
 
     this.observableProduit = this.produitBusiness.getProduitByRef(this.pageActuelURL);
     this.observableProduit.subscribe(value => {
-        this.produit= new Produit(value.ref,value.nom,value.description,value.prixHT);
+        var array = value.categories.map((categorie) => new Categorie(categorie.nom));
+        this.produit= new Produit(value.ref,value.nom,value.description,value.prixHT, array);
       },
       error2 => {
         console.log("Erreur getProduitByPagination", error2)

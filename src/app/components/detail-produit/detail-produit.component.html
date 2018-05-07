@@ -12,7 +12,7 @@
     <div class="flex3 flex-column detail_container">
       <div class="flex flex-row prix"><div class="flex valeurPrix">{{produit?.prixHT}}€</div><div class="flex descriptifPrix text-align-right">prix hors Taxe</div></div>
 
-      <div class="flex flex-row purchase"><button mat-raised-button color="warn" >Add to cart</button></div>
+      <div class="flex flex-row purchase"><button [disabled]="true" mat-raised-button color="warn" >Add to cart</button></div>
 
 
       <div class="flex3 flex-column description">
@@ -21,9 +21,8 @@
       </div>
       <div class="flex ref"><span>REF {{produit?.ref}}</span></div>
       <div class="flex flex-row categorie">
-        <mat-chip-list [selectable]="false" >
-          <mat-chip [disabled]="true" >Livre</mat-chip>
-          <mat-chip [disabled]="true">Livre educatif</mat-chip>
+        <mat-chip-list [selectable]="false" *ngFor="let categorie of produit?.arrayCategorie; let i = index">
+          <mat-chip [disabled]="true" >{{categorie.nomCat}}</mat-chip>
         </mat-chip-list>
       </div>
     </div>
