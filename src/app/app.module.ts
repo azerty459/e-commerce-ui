@@ -41,7 +41,7 @@ const appRoutes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'produit/detail/:id',
+    path: 'produit/detail/:ref',
     component: DetailProduitComponent,
     data: { title: 'e-commerce - Detail produit' }
   }

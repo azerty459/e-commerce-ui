@@ -103,7 +103,7 @@
 
     <div class="flex-row produit_container">
       <div *ngFor="let produit of produits; let i = index">
-        <div class="flex produit">
+        <div class="flex produit" (click)="redirectionPageDetail(produit.ref)">
           <div class="flex-row produit_image">
             <img
               src="../../../assets/img/1024px-Emblem-question.svg.png" alt="produit image"

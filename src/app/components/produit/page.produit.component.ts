@@ -73,6 +73,10 @@ export class ProduitComponent implements OnInit {
     this.affichage();
   }
 
+  redirectionPageDetail(ref:string){
+    this._router.navigate(['/produit/detail', ref]);
+  }
+
   pagination(value: String) {
     if (value === "precedent") {
       if (this.pageActuelURL > this.pageMin) {

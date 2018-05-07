@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import {Observable} from "rxjs/Observable";
+import {ActivatedRoute, Router} from "@angular/router";
+import {Produit} from "../../../../e-commerce-ui-common/models/Produit";
+import {ProduitBusiness} from "../../../../e-commerce-ui-common/business/produit.business";
+
 
 @Component({
   selector: 'app-detail-produit',
@@ -6,9 +11,35 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./detail-produit.component.css']
 })
 export class DetailProduitComponent implements OnInit {
-  constructor() { }
+  public observableProduit: Observable<Produit>;
+  public produit: Produit;
+  public pageActuelURL: string;
+
+
+  constructor(private produitBusiness: ProduitBusiness, private activatedRoute: ActivatedRoute, private _router: Router) {
+    this.activatedRoute.params.subscribe(params => {
+        this.pageActuelURL = params.ref;
+      },
+      error => {
+        console.log("Erreur gestion de page ", error)
+      },
+    );
+  }
 
   ngOnInit() {
+    this.affichage();
+  }
+
+  async affichage() {
+
+
+    this.observableProduit = this.produitBusiness.getProduitByRef(this.pageActuelURL);
+    this.observableProduit.subscribe(value => {
+        this.produit= new Produit(value.ref,value.nom,value.description,value.prixHT);
+      },
+      error2 => {
+        console.log("Erreur getProduitByPagination", error2)
+      });
   }
 
 }
