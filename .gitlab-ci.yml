@@ -20,7 +20,7 @@ build_dev:
 build_master:
   stage: build
   script: 
-    - ls
+    - npm install
     - npm run build
   artifacts:
     paths:
