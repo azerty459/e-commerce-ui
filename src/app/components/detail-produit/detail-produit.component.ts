@@ -32,16 +32,10 @@ export class DetailProduitComponent implements OnInit {
   }
 
   async affichage() {
-
-
     this.observableProduit = this.produitBusiness.getProduitByRef(this.pageActuelURL);
-    this.observableProduit.subscribe(value => {
-        var array = value.categories.map((categorie) => new Categorie(categorie.nom));
-        this.produit= new Produit(value.ref,value.nom,value.description,value.prixHT, array);
-      },
-      error2 => {
-        console.log("Erreur getProduitByPagination", error2)
-      });
+    this.observableProduit.subscribe(
+      value => this.produit = value
+    )
   }
 
 }
