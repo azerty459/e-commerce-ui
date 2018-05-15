@@ -5,6 +5,9 @@ stages:
   - tests
   - deploiement
 
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+  
 before_script:
   - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
   - eval $(ssh-agent -s)
@@ -13,8 +16,7 @@ before_script:
   - chmod 700 ~/.ssh
   - ssh-keyscan -t rsa git.nextoo.fr >> ~/.ssh/known_hosts
   - git submodule sync
-  - ls ~/.ssh
-  - git submodule update --init --recursive
+  - git submodule update --init
   
 build_dev:
   stage: build
