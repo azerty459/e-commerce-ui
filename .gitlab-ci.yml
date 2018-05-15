@@ -8,6 +8,7 @@ stages:
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
   GITLAB_USER_NAME: rhalipre
+  GITLAB_USER_LOGIN: rhalipre
 
 before_script:
   - git submodule sync
