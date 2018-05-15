@@ -17,8 +17,7 @@ build_dev:
     - perl -i -p -e 's|https://(.*?)/|git@\1:|g' .gitmodules
     - ssh-keyscan -t rsa git.nextoo.fr >> ~/.ssh/known_hosts
     - ssh -T git@git.nextoo.fr
-    - git submodule sync
-    - git submodule update --init
+    - ssh-agent bash -c 'git submodule sync; git submodule update --init --recursive'
     - npm install
     - npm run build-dev
   artifacts:
