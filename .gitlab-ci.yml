@@ -16,7 +16,6 @@ before_script:
 build_dev:
   stage: build
   script: 
-    - ssh -T git@git.nextoo.fr
     - ssh -T git@git.nextoo.fr "git submodule sync --recursive && git submodule update --init --recursive"
     - npm install
     - npm run build-dev
