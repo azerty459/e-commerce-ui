@@ -9,8 +9,8 @@ variables:
   GIT_SUBMODULE_STRATEGY: recursive
 
 before_script:
-  - git submodule sync --recursive
-  - git submodule update --init --recursive
+  - git submodule sync
+  - git submodule update --init
   
 build_dev:
   stage: build
