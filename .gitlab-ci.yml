@@ -12,6 +12,7 @@ build_dev:
     - eval $(ssh-agent -s)
     - ssh-add <(echo "$SSH_PRIVATE_KEY")
     - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
     - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
     - perl -i -p -e 's|https://(.*?)/|git@\1:|g' .gitmodules
     - git submodule sync
