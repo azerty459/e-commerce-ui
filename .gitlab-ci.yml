@@ -15,6 +15,7 @@ build_dev:
     - chmod 700 ~/.ssh
     - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
     - perl -i -p -e 's|https://(.*?)/|git@\1:|g' .gitmodules
+    - ssh-keyscan -t rsa git.nextoo.fr >> ~/.ssh/known_hosts
     - ssh -T git@git.nextoo.fr
     - git submodule sync
     - git submodule update --init
