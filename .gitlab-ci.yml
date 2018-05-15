@@ -13,8 +13,8 @@ before_script:
   - chmod 700 ~/.ssh
   - ssh-keyscan -t rsa git.nextoo.fr >> ~/.ssh/known_hosts
   - git submodule sync
+  - ls ~/.ssh
   - git submodule update --init --recursive
-
   
 build_dev:
   stage: build
