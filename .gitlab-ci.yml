@@ -5,6 +5,9 @@ stages:
   - tests
   - deploiement
   
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+
 before_script:
   - git submodule sync --recursive
   - git submodule update --init --recursive
