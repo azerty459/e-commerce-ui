@@ -3,6 +3,7 @@
 }
 
 .produit {
+  cursor:pointer;
   border: 1px solid black;
   margin: 30px 44px 0px 0px;
   width: 200px;

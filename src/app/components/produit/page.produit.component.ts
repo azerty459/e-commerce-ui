@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import {ProduitBusiness} from "../../business/produit.business";
-import {Produit} from "../../models/Produit";
+import {Component, OnInit} from '@angular/core';
 import {Observable} from "rxjs/Observable";
 import {ActivatedRoute, Router} from "@angular/router";
+import {Produit} from "../../../../e-commerce-ui-common/models/Produit";
+import {ProduitBusiness} from "../../../../e-commerce-ui-common/business/produit.business";
+import {Pagination} from "../../../../e-commerce-ui-common/models/Pagination";
 
 @Component({
   selector: 'app-produit',
@@ -11,42 +12,81 @@ import {ActivatedRoute, Router} from "@angular/router";
 })
 export class ProduitComponent implements OnInit {
 
-  public produits: Observable<Produit[]>;
+  public page: Observable<Pagination>;
+  public produits: Array<Produit>;
   public lengthProduit;
 
-  public nombrePages:number;
-  public pageInitial:number;
+  public pageActuelURL: number;
+  public pageMax: number;
+  public pageMin: number;
   public messagesParPage: number = 5;
 
-  constructor(private produitBusiness: ProduitBusiness, private activatedRoute: ActivatedRoute, private _router: Router){
+  constructor(private produitBusiness: ProduitBusiness, private activatedRoute: ActivatedRoute, private _router: Router) {
+    this.activatedRoute.params.subscribe(params => {
+        this.pageActuelURL = parseInt(params.page);
+      },
+      error => {
+        console.log("Erreur gestion de page ", error)
+      },
+    );
   }
 
-  init() {
-    this.produits = this.produitBusiness.getProduitByPagination((this.pageInitial-1)*this.messagesParPage,this.pageInitial*this.messagesParPage);
-    this.produitBusiness.getProduit().subscribe(async(value) => {this.lengthProduit = value.length; this.nombrePages = Math.ceil(this.lengthProduit/this.messagesParPage);});
+  async affichage() {
+    this.page = this.produitBusiness.getProduitByPagination(this.pageActuelURL, this.messagesParPage);
+    this.page.subscribe(value => {
+        this.pageActuelURL = value.pageActuelle;
+        this.lengthProduit = value.total;
+        this.produits = value.tableau;
+      },
+      error2 => {
+        console.log("Erreur getProduitByPagination", error2)
+      });
+    this.pageMax = await this.getPageMax();
+    this.pageMin = await this.getPageMin();
+    this.redirection();
+    this._router.navigate(['/produit', this.pageActuelURL]);
+  }
+
+  // Permet
+  getPageMin(): Promise<number> {
+    return new Promise(resolve => this.page.subscribe(value => resolve(value.pageMin)));
+  }
+
+  getPageMax(): Promise<number> {
+    return new Promise(resolve => this.page.subscribe(value => resolve(value.pageMax)));
+  }
+
+  async redirection() {
+    if (this.pageActuelURL <= 0)
+      this._router.navigate(['/produit', this.pageMin]);
+    else if (this.pageActuelURL > this.pageMax) {
+      this._router.navigate(['/produit', this.pageMax]);
+    }
   }
 
   ngOnInit() {
-    this.activatedRoute.params.subscribe(params => this.pageInitial = parseInt(params.page));
-    this.init();
+    this.affichage();
   }
 
   selected(value: any) {
     this.messagesParPage = value;
-    this.init();
+    this.affichage();
+  }
+
+  redirectionPageDetail(ref:string){
+    this._router.navigate(['/produit/detail', ref]);
   }
 
   pagination(value: String) {
-    if(value === "precedent"){
-      if(this.pageInitial > 1){
-        this.pageInitial = this.pageInitial-1;
+    if (value === "precedent") {
+      if (this.pageActuelURL > this.pageMin) {
+        this.pageActuelURL = this.pageActuelURL - 1;
       }
-    }else {
-      if(this.pageInitial < this.nombrePages) {
-        this.pageInitial = this.pageInitial + 1;
+    } else {
+      if (this.pageActuelURL < this.pageMax) {
+        this.pageActuelURL = this.pageActuelURL + 1;
       }
     }
-    this.produits = this.produitBusiness.getProduitByPagination((this.pageInitial-1)*this.messagesParPage,this.pageInitial*this.messagesParPage);
-    this._router.navigate(['/produit', this.pageInitial]);
+    this.affichage();
   }
 }

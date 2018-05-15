@@ -1,0 +1,55 @@
+<head>
+  <title>Page Detail Produit</title>
+</head>
+<div class="flex-column produit_container">
+  <div class="flex name_container">{{produit?.nom}}</div> <!-- ? = safe navigation operator !-->
+  <div class="flex7 flex-row top_container" >
+    <div class="flex4 flex-column produit_image" >
+      <img
+        src="../../../assets/img/1024px-Emblem-question.svg.png" alt="produit image"
+        width="300" height="100">
+    </div>
+    <div class="flex3 flex-column detail_container">
+      <div class="flex flex-row prix"><div class="flex valeurPrix">{{produit?.prixHT}}€</div><div class="flex descriptifPrix text-align-right">prix hors Taxe</div></div>
+
+      <div class="flex flex-row purchase"><button [disabled]="true" mat-raised-button color="warn" >Add to cart</button></div>
+
+
+      <div class="flex3 flex-column description">
+        <h1>Description</h1>
+        <p>{{produit?.description}}</p>
+      </div>
+      <div class="flex ref"><span>REF {{produit?.ref}}</span></div>
+      <div class="flex flex-row categorie">
+        <mat-chip-list [selectable]="false" *ngFor="let categorie of produit?.arrayCategorie; let i = index">
+          <mat-chip [disabled]="true" >{{categorie.nomCat}}</mat-chip>
+        </mat-chip-list>
+      </div>
+    </div>
+  </div>
+
+    <!--
+
+
+
+  <div class="flex7 flex-column additionalDetail_container">
+    <div class="flex">
+      <h1>Informations additionnel</h1>
+
+    </div>
+    <div class="flex4 flex-row descriptionAdditionnel">
+      <div class="flex">
+        <p> Ma description additionnel blad zdazdzadaz dazd az tfuvygbuhinj,oiuybrctexzrctbhuyjn,oik; </p>
+      </div>
+      <div class="flex2 produit_image2">
+        <img
+          src="../../../assets/img/1024px-Emblem-question.svg.png" alt="produit image"
+          width="300" height="100">
+      </div>
+    </div>
+    </div>
+    !-->
+
+
+
+</div>
