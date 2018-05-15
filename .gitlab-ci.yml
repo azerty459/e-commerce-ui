@@ -4,30 +4,17 @@ stages:
   - build
   - tests
   - deploiement
-
-variables:
-  GIT_SUBMODULE_STRATEGY: recursive
-  
-before_script:
-  - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
-  - eval $(ssh-agent -s)
-  - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
-  - mkdir -p ~/.ssh
-  - chmod 700 ~/.ssh
-  - ssh-keyscan -t rsa git.nextoo.fr >> ~/.ssh/known_hosts
-  - perl -i -p -e 's|https://(.*?)/|git@\1:|g' .gitmodules
-#   - ssh-agent bash -c 'git submodule sync; git submodule update --init --recursive'
   
 build_dev:
   stage: build
   script: 
     - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
-  - eval $(ssh-agent -s)
-  - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
-  - mkdir -p ~/.ssh
-  - chmod 700 ~/.ssh
-  - ssh-keyscan -t rsa git.nextoo.fr >> ~/.ssh/known_hosts
-  - perl -i -p -e 's|https://(.*?)/|git@\1:|g' .gitmodules
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan -t rsa git.nextoo.fr >> ~/.ssh/known_hosts
+    - perl -i -p -e 's|https://(.*?)/|git@\1:|g' .gitmodules
     - git submodule sync
     - git submodule update --init
     - npm install
