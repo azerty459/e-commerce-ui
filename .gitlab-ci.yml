@@ -20,7 +20,7 @@ build_dev:
     - ssh-keyscan -t rsa git.nextoo.fr >> ~/.ssh/known_hosts
     
     - git submodule sync
-     - git submodule update --init --recursive
+    - git submodule update --init --recursive
      
     - npm install
     - npm run build-dev
