@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {Title} from "@angular/platform-browser";
+import {PreviousRouteBusiness} from "../../e-commerce-ui-common/business/previous-route.business";
 
 @Component({
   selector: 'app-root',
@@ -10,6 +11,7 @@ import {Title} from "@angular/platform-browser";
 export class AppComponent implements OnInit {
   constructor(
     private router: Router,
+    private previousRouteBusiness: PreviousRouteBusiness,
     private activatedRoute: ActivatedRoute,
     private titleService: Title
   ) {}

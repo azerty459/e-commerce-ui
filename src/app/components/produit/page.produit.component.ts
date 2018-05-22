@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {Produit} from "../../../../e-commerce-ui-common/models/Produit";
 import {ProduitBusiness} from "../../../../e-commerce-ui-common/business/produit.business";
 import {Pagination} from "../../../../e-commerce-ui-common/models/Pagination";
+import {PreviousRouteBusiness} from "../../../../e-commerce-ui-common/business/previous-route.business";
 
 @Component({
   selector: 'app-produit',
@@ -21,9 +22,12 @@ export class ProduitComponent implements OnInit {
   public pageMin: number;
   public messagesParPage: number = 5;
 
-  constructor(private produitBusiness: ProduitBusiness, private activatedRoute: ActivatedRoute, private _router: Router) {
+  constructor(private produitBusiness: ProduitBusiness, private activatedRoute: ActivatedRoute, private _router: Router, private previousRouteBusiness: PreviousRouteBusiness) {
     this.activatedRoute.params.subscribe(params => {
         this.pageActuelURL = parseInt(params.page);
+        if (params['nbMsg']) {
+          this.messagesParPage=params.nbMsg;
+        }
       },
       error => {
         console.log("Erreur gestion de page ", error)
@@ -65,6 +69,8 @@ export class ProduitComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.previousRouteBusiness.getPreviousUrl());
+    console.log(this.previousRouteBusiness.getCurrentUrl());
     this.affichage();
   }
 
@@ -74,6 +80,9 @@ export class ProduitComponent implements OnInit {
   }
 
   redirectionPageDetail(ref:string){
+    console.log(this.previousRouteBusiness.getCurrentUrl());
+    this.previousRouteBusiness.setCurrentUrl(this.previousRouteBusiness.getCurrentUrl()+';nbMsg='+this.messagesParPage.toString());
+    console.log(this.previousRouteBusiness.getCurrentUrl());
     this._router.navigate(['/produit/detail', ref]);
   }
 

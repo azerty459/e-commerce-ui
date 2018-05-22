@@ -3,6 +3,9 @@
 </head>
 <div class="flex-column produit_container">
   <div class="flex name_container">{{produit?.nom}}</div> <!-- ? = safe navigation operator !-->
+  <div id="toolbar">
+    <app-retour [urlPrecedenteAttendue]="urlPrecedenteAttendue" matTooltip="Revenir en arrière" [matTooltipPosition]="positionAfterTooltip"></app-retour>
+  </div>
   <div class="flex7 flex-row top_container" >
     <div class="flex4 flex-column produit_image" >
       <img
@@ -14,7 +17,7 @@
 
       <div class="flex flex-row purchase"><button [disabled]="true" mat-raised-button color="warn" >Add to cart</button></div>
 
-
+gi
       <div class="flex3 flex-column description">
         <h1>Description</h1>
         <p>{{produit?.description}}</p>

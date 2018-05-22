@@ -3,7 +3,6 @@ import {Observable} from "rxjs/Observable";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Produit} from "../../../../e-commerce-ui-common/models/Produit";
 import {ProduitBusiness} from "../../../../e-commerce-ui-common/business/produit.business";
-import {Categorie} from "../../../../e-commerce-ui-common/models/Categorie";
 
 
 @Component({
@@ -15,8 +14,8 @@ export class DetailProduitComponent implements OnInit {
   public observableProduit: Observable<Produit>;
   public produit: Produit;
   public pageActuelURL: string;
-
-
+  positionAfterTooltip = 'after';
+  urlPrecedenteAttendue = '/produit';
   constructor(private produitBusiness: ProduitBusiness, private activatedRoute: ActivatedRoute, private _router: Router) {
     this.activatedRoute.params.subscribe(params => {
         this.pageActuelURL = params.ref;
