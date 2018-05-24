@@ -15,7 +15,6 @@ export class DetailProduitComponent implements OnInit {
   public produit: Produit;
   public pageActuelURL: string;
   positionAfterTooltip = 'after';
-  urlPrecedenteAttendue = '/produit';
   constructor(private produitBusiness: ProduitBusiness, private activatedRoute: ActivatedRoute, private _router: Router) {
     this.activatedRoute.params.subscribe(params => {
         this.pageActuelURL = params.ref;
