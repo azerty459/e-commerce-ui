@@ -20,8 +20,7 @@ import {ProduitBusiness} from "../../e-commerce-ui-common/business/produit.busin
 import { DetailProduitComponent } from './components/detail-produit/detail-produit.component';
 import {PreviousRouteBusiness} from "../../e-commerce-ui-common/business/previous-route.business";
 import {RetourComponent} from "../../e-commerce-ui-common/utilitaires/retour/retour.component";
-
-
+import { HttpClientModule } from "@angular/common/http";
 
 
 const appRoutes: Routes = [
@@ -73,6 +72,7 @@ const appRoutes: Routes = [
     ),
     BrowserAnimationsModule,
     MatCardModule,
+    HttpClientModule,
     MatIconModule,
     MatToolbarModule,
     MatButtonModule,

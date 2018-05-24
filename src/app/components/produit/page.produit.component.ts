@@ -21,12 +21,13 @@ export class ProduitComponent implements OnInit {
   public pageMax: number;
   public pageMin: number;
   public messagesParPage: number = 5;
+  public back:boolean =false;
 
   constructor(private produitBusiness: ProduitBusiness, private activatedRoute: ActivatedRoute, private _router: Router, private previousRouteBusiness: PreviousRouteBusiness) {
     this.activatedRoute.params.subscribe(params => {
         this.pageActuelURL = parseInt(params.page);
-        if (params['nbMsg']) {
-          this.messagesParPage=params.nbMsg;
+        if (params['back']) {
+          this.back=true;
         }
       },
       error => {
@@ -80,9 +81,6 @@ export class ProduitComponent implements OnInit {
   }
 
   redirectionPageDetail(ref:string){
-    console.log(this.previousRouteBusiness.getCurrentUrl());
-    this.previousRouteBusiness.setCurrentUrl(this.previousRouteBusiness.getCurrentUrl()+';nbMsg='+this.messagesParPage.toString());
-    console.log(this.previousRouteBusiness.getCurrentUrl());
     this._router.navigate(['/produit/detail', ref]);
   }
 
