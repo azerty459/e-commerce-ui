@@ -4,6 +4,8 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {Produit} from "../../../../e-commerce-ui-common/models/Produit";
 import {ProduitBusiness} from "../../../../e-commerce-ui-common/business/produit.business";
 import {Pagination} from "../../../../e-commerce-ui-common/models/Pagination";
+import {PreviousRouteBusiness} from "../../../../e-commerce-ui-common/business/previous-route.business";
+
 
 @Component({
   selector: 'app-produit',
@@ -20,15 +22,27 @@ export class ProduitComponent implements OnInit {
   public pageMax: number;
   public pageMin: number;
   public messagesParPage: number = 5;
+  public back:boolean =false;
 
-  constructor(private produitBusiness: ProduitBusiness, private activatedRoute: ActivatedRoute, private _router: Router) {
+  constructor(private produitBusiness: ProduitBusiness, private activatedRoute: ActivatedRoute, private _router: Router, private previousRouteBusiness: PreviousRouteBusiness) {
     this.activatedRoute.params.subscribe(params => {
         this.pageActuelURL = parseInt(params.page);
+        var backValue= params['back'];
+        if (backValue === '1') {
+          console.log("back");
+          this.back=true;
+        }else {
+          console.log("pas back");
+        }
       },
       error => {
         console.log("Erreur gestion de page ", error)
       },
     );
+  }
+
+  ngOnInit() {
+    this.affichage();
   }
 
   async affichage() {
@@ -44,7 +58,6 @@ export class ProduitComponent implements OnInit {
     this.pageMax = await this.getPageMax();
     this.pageMin = await this.getPageMin();
     this.redirection();
-    this._router.navigate(['/produit', this.pageActuelURL]);
   }
 
   // Permet
@@ -57,24 +70,19 @@ export class ProduitComponent implements OnInit {
   }
 
   async redirection() {
-    if (this.pageActuelURL <= 0)
+    if (this.pageActuelURL <= 0) {
+      console.log("redirection");
       this._router.navigate(['/produit', this.pageMin]);
-    else if (this.pageActuelURL > this.pageMax) {
+    }
+      else if (this.pageActuelURL > this.pageMax) {
+      console.log("redirection");
       this._router.navigate(['/produit', this.pageMax]);
     }
-  }
-
-  ngOnInit() {
-    this.affichage();
   }
 
   selected(value: any) {
     this.messagesParPage = value;
     this.affichage();
-  }
-
-  redirectionPageDetail(ref:string){
-    this._router.navigate(['/produit/detail', ref]);
   }
 
   pagination(value: String) {
@@ -88,5 +96,11 @@ export class ProduitComponent implements OnInit {
       }
     }
     this.affichage();
+    this._router.navigate(['/produit', this.pageActuelURL]);
+  }
+
+  redirectionPageDetail(ref:string){
+    this.previousRouteBusiness.setCurrentUrl(this._router.url);
+    this._router.navigate(['/produit/detail', ref]);
   }
 }

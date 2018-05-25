@@ -18,8 +18,9 @@ import {HttpModule} from '@angular/http';
 import { AccueilComponent } from './components/accueil/accueil.component';
 import {ProduitBusiness} from "../../e-commerce-ui-common/business/produit.business";
 import { DetailProduitComponent } from './components/detail-produit/detail-produit.component';
-
-
+import {PreviousRouteBusiness} from "../../e-commerce-ui-common/business/previous-route.business";
+import {RetourComponent} from "../../e-commerce-ui-common/utilitaires/retour/retour.component";
+import { HttpClientModule } from "@angular/common/http";
 
 
 const appRoutes: Routes = [
@@ -28,6 +29,11 @@ const appRoutes: Routes = [
     redirectTo: 'produit/1'},
   {
     path: 'produit/:page',
+    component: ProduitComponent,
+    data: { title: 'e-commerce - Produits' }
+  },
+  {
+    path: 'produit/:page;nbMsg=:nbMsg',
     component: ProduitComponent,
     data: { title: 'e-commerce - Produits' }
   },
@@ -53,7 +59,8 @@ const appRoutes: Routes = [
     AppComponent,
     ProduitComponent,
     AccueilComponent,
-    DetailProduitComponent
+    DetailProduitComponent,
+    RetourComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,6 +72,7 @@ const appRoutes: Routes = [
     ),
     BrowserAnimationsModule,
     MatCardModule,
+    HttpClientModule,
     MatIconModule,
     MatToolbarModule,
     MatButtonModule,
@@ -107,7 +115,7 @@ const appRoutes: Routes = [
     FlexLayoutModule,
     MatChipsModule
   ],
-  providers: [ProduitBusiness],
+  providers: [ProduitBusiness, PreviousRouteBusiness],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
