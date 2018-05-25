@@ -5,7 +5,7 @@ import {Produit} from "../../../../e-commerce-ui-common/models/Produit";
 import {ProduitBusiness} from "../../../../e-commerce-ui-common/business/produit.business";
 import {Pagination} from "../../../../e-commerce-ui-common/models/Pagination";
 import {PreviousRouteBusiness} from "../../../../e-commerce-ui-common/business/previous-route.business";
-import {el} from "@angular/platform-browser/testing/src/browser_util";
+
 
 @Component({
   selector: 'app-produit',
@@ -28,7 +28,6 @@ export class ProduitComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
         this.pageActuelURL = parseInt(params.page);
         var backValue= params['back'];
-        console.log("backValue -->"+backValue);
         if (backValue === '1') {
           console.log("back");
           this.back=true;
@@ -43,8 +42,6 @@ export class ProduitComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.previousRouteBusiness.getPreviousUrl());
-    console.log(this.previousRouteBusiness.getCurrentUrl());
     this.affichage();
   }
 
@@ -103,6 +100,7 @@ export class ProduitComponent implements OnInit {
   }
 
   redirectionPageDetail(ref:string){
+    this.previousRouteBusiness.setCurrentUrl(this._router.url);
     this._router.navigate(['/produit/detail', ref]);
   }
 }
