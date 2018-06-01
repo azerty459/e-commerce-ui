@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {Observable} from "rxjs/Observable";
-import {ActivatedRoute, Router} from "@angular/router";
-import {Produit} from "../../../../e-commerce-ui-common/models/Produit";
-import {ProduitBusiness} from "../../../../e-commerce-ui-common/business/produit.business";
+import {ActivatedRoute, Router} from '@angular/router';
+import {Produit} from '../../../../e-commerce-ui-common/models/Produit';
+import {ProduitBusiness} from '../../../../e-commerce-ui-common/business/produit.service';
 
 
 @Component({
@@ -11,7 +10,7 @@ import {ProduitBusiness} from "../../../../e-commerce-ui-common/business/produit
   styleUrls: ['./detail-produit.component.css']
 })
 export class DetailProduitComponent implements OnInit {
-  public observableProduit: Observable<Produit>;
+  public promiseProduit: Promise<Produit>;
   public produit: Produit;
   public pageActuelURL: string;
   positionAfterTooltip = 'after';
@@ -20,7 +19,7 @@ export class DetailProduitComponent implements OnInit {
         this.pageActuelURL = params.ref;
       },
       error => {
-        console.log("Erreur gestion de page ", error)
+        console.log('Erreur gestion de page ', error)
       },
     );
   }
@@ -30,10 +29,10 @@ export class DetailProduitComponent implements OnInit {
   }
 
   async affichage() {
-    this.observableProduit = this.produitBusiness.getProduitByRef(this.pageActuelURL);
-    this.observableProduit.subscribe(
+    this.promiseProduit = this.produitBusiness.getProduitByRef(this.pageActuelURL);
+    this.promiseProduit.then(
       value => this.produit = value
-    )
+    );
   }
 
 }

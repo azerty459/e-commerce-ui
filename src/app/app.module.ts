@@ -16,11 +16,11 @@ import { AppComponent } from './app.component';
 import { ProduitComponent } from './components/produit/page.produit.component';
 import {HttpModule} from '@angular/http';
 import { AccueilComponent } from './components/accueil/accueil.component';
-import {ProduitBusiness} from "../../e-commerce-ui-common/business/produit.business";
+import {ProduitBusiness} from '../../e-commerce-ui-common/business/produit.service';
 import { DetailProduitComponent } from './components/detail-produit/detail-produit.component';
-import {PreviousRouteBusiness} from "../../e-commerce-ui-common/business/previous-route.business";
-import {RetourComponent} from "../../e-commerce-ui-common/utilitaires/retour/retour.component";
-import { HttpClientModule } from "@angular/common/http";
+import {PreviousRouteBusiness} from '../../e-commerce-ui-common/business/previous-route.service';
+import {RetourComponent} from '../../e-commerce-ui-common/utilitaires/retour/retour.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 const appRoutes: Routes = [
