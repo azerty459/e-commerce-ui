@@ -22,6 +22,7 @@ import {PreviousRouteBusiness} from '../../e-commerce-ui-common/business/previou
 import {RetourComponent} from '../../e-commerce-ui-common/utilitaires/retour/retour.component';
 import { HttpClientModule } from '@angular/common/http';
 
+import { FormsModule } from '@angular/forms';
 
 const appRoutes: Routes = [
   {
@@ -64,6 +65,7 @@ const appRoutes: Routes = [
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     HttpModule,
     NgbModule.forRoot(),
     RouterModule.forRoot(

@@ -16,10 +16,15 @@
                 <button class="dropdown-item">Jardinage</button>
               </div>
             </div>
-            <form class="form-inline search_bar">
-              <input class="form-control mr-sm-2 search_input" type="search" placeholder="" aria-label="Search">
+
+            <form class="form-inline search_bar" #searchForm="ngForm" (ngSubmit)="submitSearch()">
+              <input class="form-control mr-sm-2 search_input" type="text" placeholder="Rechercher un produit" aria-label="Search"
+                     name="searchedText"
+                     [(ngModel)]="produit.nom"
+                     #name="ngModel">
               <button class="btn btn-success my-2 my-sm-0 search_button" type="submit"><i class="fa fa-search"></i></button>
             </form>
+
           </div>
           <div class="flex"></div>
         </div>

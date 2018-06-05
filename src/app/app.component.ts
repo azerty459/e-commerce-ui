@@ -1,8 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit } from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {Title} from '@angular/platform-browser';
 import {PreviousRouteBusiness} from '../../e-commerce-ui-common/business/previous-route.service';
 import { filter, map, mergeMap } from 'rxjs/internal/operators';
+import { Produit} from '../../e-commerce-ui-common/models/Produit';
+import {ProduitBusiness} from '../../e-commerce-ui-common/business/produit.service';
+
+
 
 @Component({
   selector: 'app-root',
@@ -10,11 +14,15 @@ import { filter, map, mergeMap } from 'rxjs/internal/operators';
   styleUrls: ['./app.component.css', '../../node_modules/font-awesome/css/font-awesome.css' ]
 })
 export class AppComponent implements OnInit {
+
+  public produit = new Produit('', '', '', 0);
+
   constructor(
     private router: Router,
     private previousRouteBusiness: PreviousRouteBusiness,
     private activatedRoute: ActivatedRoute,
-    private titleService: Title
+    private titleService: Title,
+    private produitBusiness: ProduitBusiness
   ) {}
 
   ngOnInit() {
@@ -38,4 +46,10 @@ export class AppComponent implements OnInit {
       )
       .subscribe((event) => this.titleService.setTitle(event['title']));
   }
+
+  public submitSearch(): void {
+    this.produitBusiness.searchedText = this.produit.nom;
+    this.produitBusiness.search(this.produit.nom);
+  }
+
 }

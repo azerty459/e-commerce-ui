@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Produit} from '../../../../e-commerce-ui-common/models/Produit';
 import {ProduitBusiness} from '../../../../e-commerce-ui-common/business/produit.service';
@@ -13,13 +13,32 @@ import {PreviousRouteBusiness} from '../../../../e-commerce-ui-common/business/p
 export class ProduitComponent implements OnInit {
 
   public page: Promise<Pagination>;
+
+  /**
+   * Tableau de produits à afficher
+   */
   public produits: Array<Produit>;
+
+  /**
+   * Taille du tableau de produits à afficher
+   */
   public lengthProduit;
 
+  /**
+   * Numéro de la page actuelle
+   */
   public pageActuelURL: number;
+
+
   public pageMax: number;
   public pageMin: number;
+
+  /**
+   * Nombre de produits par page
+   * @type {number}
+   */
   public messagesParPage = 5;
+
   public back = false;
 
   constructor(private produitBusiness: ProduitBusiness, private activatedRoute: ActivatedRoute,
@@ -31,6 +50,7 @@ export class ProduitComponent implements OnInit {
           console.log('back');
           this.back = true;
         } else {
+
           console.log('pas back');
         }
       },
@@ -41,7 +61,13 @@ export class ProduitComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.affichage();
+    this.produitBusiness.subject.subscribe((result) => {
+      console.log(result);
+      this.produits = result.tableau;
+    });
+
   }
 
   async affichage() {
@@ -58,6 +84,12 @@ export class ProduitComponent implements OnInit {
     this.pageMin = await this.getPageMin();
     this.redirection();
   }
+
+
+
+
+
+
 
   // Permet
   getPageMin(): Promise<number> {
