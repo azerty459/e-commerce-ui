@@ -34,6 +34,11 @@ export class ProduitComponent implements OnInit {
   public pageMin: number;
 
   /**
+   * Indique si une recherche de produits a été effectuée
+   */
+  public searchIsOn: boolean;
+
+  /**
    * Nombre de produits par page
    * @type {number}
    */
@@ -62,13 +67,30 @@ export class ProduitComponent implements OnInit {
 
   ngOnInit() {
 
+    // Déclenche l'affichage au chargement de la page
     this.affichage();
-    this.produitBusiness.subject.subscribe((result) => {
-      console.log(result);
-      this.produits = result.tableau;
-    });
 
+    // On a rechargé la page donc on n'est pas dans le cadre d'une recherche de produits.
+    this.searchIsOn = false;
+
+    // On souscrit à un Observable. Permet de recevoir une nouvelle liste paginée de produits à afficher
+    // en cas de recherche de produits par l'utilisateur.
+    this.produitBusiness.subject.subscribe((result) => {
+      this.produits = result.tableau;
+      this.lengthProduit = result.total;
+      this.pageActuelURL = result.pageActuelle;
+      this.pageMax = result.pageMax;
+
+      // On est dans le cadre d'une recherche (sauf si la chaîne recherchée est de longueur 0)
+      if(this.produitBusiness.searchedText.length === 0) {
+        this.searchIsOn = false;
+      }
+      else {
+        this.searchIsOn = true;
+      }
+    });
   }
+
 
   async affichage() {
     this.page = this.produitBusiness.getProduitByPagination(this.pageActuelURL, this.messagesParPage);
@@ -84,11 +106,6 @@ export class ProduitComponent implements OnInit {
     this.pageMin = await this.getPageMin();
     this.redirection();
   }
-
-
-
-
-
 
 
   // Permet
@@ -112,7 +129,9 @@ export class ProduitComponent implements OnInit {
 
   selected(value: any) {
     this.messagesParPage = value;
-    this.affichage();
+    if(this.searchIsOn === false) {
+      this.affichage();
+    }
   }
 
   pagination(value: String) {
@@ -125,7 +144,9 @@ export class ProduitComponent implements OnInit {
         this.pageActuelURL = this.pageActuelURL + 1;
       }
     }
-    this.affichage();
+    if(this.searchIsOn === false) {
+      this.affichage();
+    }
     this._router.navigate(['/produit', this.pageActuelURL]);
   }
 

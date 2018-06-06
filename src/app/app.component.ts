@@ -47,6 +47,9 @@ export class AppComponent implements OnInit {
       .subscribe((event) => this.titleService.setTitle(event['title']));
   }
 
+  /**
+   * Méthode appelée par le formulaire de recherche
+   */
   public submitSearch(): void {
     this.produitBusiness.searchedText = this.produit.nom;
     this.produitBusiness.search(this.produit.nom);
