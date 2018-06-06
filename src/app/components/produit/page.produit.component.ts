@@ -38,6 +38,8 @@ export class ProduitComponent implements OnInit {
    */
   public searchIsOn: boolean;
 
+  public searchedText: string;
+
   /**
    * Nombre de produits par page
    * @type {number}
@@ -147,6 +149,7 @@ export class ProduitComponent implements OnInit {
     if(this.searchIsOn === false) {
       this.affichage();
     }
+
     this._router.navigate(['/produit', this.pageActuelURL]);
   }
 
