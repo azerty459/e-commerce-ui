@@ -96,9 +96,9 @@
         <span class="text_afficher">Page {{pageActuelURL}} sur {{pageMax}}</span>
       </div>
       <div class="flex-row">
-        <button type="button" class="btn btn-outline-success" (click)="pagination('precedent')"><- Précédent</button>
+        <button type="button" class="btn btn-outline-success" (click)="pagination('precedent')" [disabled]="!hasPreviousPage"><- Précédent</button>
         <div class="espace"></div>
-        <button type="button" class="btn btn-outline-success" (click)="pagination('suivant')">Suivant -></button>
+        <button type="button" class="btn btn-outline-success" (click)="pagination('suivant')" [disabled]="!hasNextPage">Suivant -></button>
       </div>
     </div>
 
