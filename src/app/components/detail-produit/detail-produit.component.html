@@ -6,7 +6,7 @@
   <div class="flex name_container">{{produit?.nom}}</div> <!-- ? = safe navigation operator !-->
 
   <!-- Fil d'ariane pour la catégorie du produit -->
-  <div id="catbreadcrumb">{{catBreadCrumb}} <span id="catduproduit">{{categoriePourFil.nomCat}}</span></div>
+  <div id="catbreadcrumb">{{catBreadCrumb}} <span id="catduproduit">{{categoriePourFil?.nomCat}}</span></div>
 
   <div id="toolbar">
     <app-retour  matTooltip="Revenir en arrière" [matTooltipPosition]="positionAfterTooltip"></app-retour>
