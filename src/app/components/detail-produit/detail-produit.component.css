@@ -1,3 +1,15 @@
+
+/* Fil d'ariane des catégories */
+#catbreadcrumb {
+  color: cornflowerblue;
+  margin-bottom: 10px;
+}
+
+#catduproduit {
+  color: darkorange;
+}
+
+
 .produit_image {
   width: 100%;
   margin-right: 15px;
