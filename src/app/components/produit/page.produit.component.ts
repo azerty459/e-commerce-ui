@@ -121,7 +121,7 @@ export class ProduitComponent implements OnInit {
     } else {
       console.log('nb message par page avec recherche');
       console.log(this.messagesParPage);
-      this.page = this.produitBusiness.getProduitByPaginationSearch(this.pageActuelURL, this.messagesParPage, this.produitBusiness.searchedText);
+      this.page = this.produitBusiness.getProduitByPaginationSearch(this.pageActuelURL, this.messagesParPage, this.produitBusiness.searchedText, this.produitBusiness.searchedCategorie);
     }
 
     this.page.then(value => {

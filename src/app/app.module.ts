@@ -3,11 +3,40 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
-  MatButtonModule, MatIconModule, MatCardModule, MatToolbarModule, MatMenuModule, MatInputModule,
-  MatFormFieldModule, MatSidenavModule, MatSelectModule, MatTooltipModule, MatStepperModule, MatSortModule, MatSnackBarModule,
-  MatSlideToggleModule, MatSliderModule, MatRippleModule, MatRadioModule, MatProgressSpinnerModule, MatProgressBarModule,
-  MatPaginatorModule, MatNativeDateModule, MatListModule, MatTableModule, MatTabsModule, MatAutocompleteModule,
-  MatCheckboxModule, MatButtonToggleModule, MatDatepickerModule, MatDialogModule,MatChipsModule, MatDividerModule, MatExpansionModule, MatGridListModule
+  MatButtonModule,
+  MatIconModule,
+  MatCardModule,
+  MatToolbarModule,
+  MatMenuModule,
+  MatInputModule,
+  MatFormFieldModule,
+  MatSidenavModule,
+  MatSelectModule,
+  MatTooltipModule,
+  MatStepperModule,
+  MatSortModule,
+  MatSnackBarModule,
+  MatSlideToggleModule,
+  MatSliderModule,
+  MatRippleModule,
+  MatRadioModule,
+  MatProgressSpinnerModule,
+  MatProgressBarModule,
+  MatPaginatorModule,
+  MatNativeDateModule,
+  MatListModule,
+  MatTableModule,
+  MatTabsModule,
+  MatAutocompleteModule,
+  MatCheckboxModule,
+  MatButtonToggleModule,
+  MatDatepickerModule,
+  MatDialogModule,
+  MatChipsModule,
+  MatDividerModule,
+  MatExpansionModule,
+  MatGridListModule,
+  MatTreeModule
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -23,6 +52,9 @@ import {RetourComponent} from '../../e-commerce-ui-common/utilitaires/retour/ret
 import { HttpClientModule } from '@angular/common/http';
 
 import { FormsModule } from '@angular/forms';
+import {ArbreService} from "../../e-commerce-ui-common/business/arbre.service";
+import {CategorieBusinessService} from "../../e-commerce-ui-common/business/categorie.service";
+import {MenuItemComponent} from "./components/menu-item/menu-item.component";
 
 const appRoutes: Routes = [
   {
@@ -62,6 +94,7 @@ const appRoutes: Routes = [
     AccueilComponent,
     DetailProduitComponent,
     RetourComponent,
+    MenuItemComponent
   ],
   imports: [
     BrowserModule,
@@ -114,10 +147,11 @@ const appRoutes: Routes = [
     MatTabsModule,
     MatToolbarModule,
     MatTooltipModule,
+    MatTreeModule, // Angular tree
     FlexLayoutModule,
     MatChipsModule
   ],
-  providers: [ProduitBusiness, PreviousRouteBusiness],
+  providers: [ProduitBusiness, PreviousRouteBusiness, ArbreService, CategorieBusinessService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

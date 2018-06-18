@@ -1,3 +1,6 @@
+
+
+
 <div class="flex-row">
   <mat-toolbar color="primary">
     <div class="flex flex-row">
@@ -8,15 +11,34 @@
     <div class="flex8 flex-column">
         <div class="flex-row text-align-left">
           <div class="flex2 bar_navbar">
-            <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
-              <button class="btn btn btn-primary categorie_button" ngbDropdownToggle disabled>Toutes nos catégories</button>
-              <div class="dropdown-menu" ngbDropdownMenu>
-                <button class="dropdown-item">Livre</button>
-                <button class="dropdown-item">Film</button>
-                <button class="dropdown-item">Jardinage</button>
+            <div class="btn-group"  role="group" aria-label="Button group with nested dropdown">
+              <button [hidden]="nodeLoaded" mat-raised-button color="primary" (mouseover)="getNodes()">
+                Toutes nos categories
+                <mat-icon>expand_more</mat-icon>
+              </button>
+              <div *ngIf="nodeLoaded">
+                <span *ngFor="let item of navItems">
+                  <!-- Handle branch node buttons here -->
+                  <span *ngIf="item.children && item.children.length > 0">
+                    <button mat-raised-button color="primary" [matMenuTriggerFor]="menu.childMenu"  >
+                      {{item.nomCategorie}}
+                      <mat-icon>expand_more</mat-icon>
+                    </button>
+                    <app-menu-item #menu [items]="item.children"></app-menu-item>
+                  </span>
+                  <!-- Leaf node buttons here -->
+                  <span *ngIf="!item.children || item.children.length === 0">
+                    <button mat-button color="primary">
+                      {{item.nomCategorie}}
+                    </button>
+                  </span>
+                </span>
               </div>
-            </div>
 
+            </div>
+            <button class="cancelButton" [hidden]="!categorieHasBeenSelected" mat-button (click)="CancelCategorieChoice()" >
+              <mat-icon>cancel</mat-icon>
+            </button>
             <form class="form-inline search_bar" #searchForm="ngForm" (ngSubmit)="submitSearch()">
               <input class="form-control mr-sm-2 search_input" type="text" placeholder="Rechercher un produit" aria-label="Search"
                      name="searchedText"
