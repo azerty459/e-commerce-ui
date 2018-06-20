@@ -86,6 +86,7 @@ export class AppComponent implements OnInit{
       this.produitBusiness.searchedText=this.produit.nom;
       if(this.navItems[0].id != undefined){
         this.produitBusiness.search(this.produit.nom,this.navItems[0].id);
+        this.produitBusiness.searchedCategorieObject = this.navItems[0];
       }
     } else{
       this.produitBusiness.search(this.produit.nom,0);

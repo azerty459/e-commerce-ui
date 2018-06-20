@@ -62,7 +62,11 @@
   <div class="flex6 flex-column">
     <div *ngIf="back" class="alert-success">Vous êtes bien revenu sur votre page</div>
     <!-- Fil d'ariane pour la catégorie du produit -->
-    <div id="catbreadcrumb">{{catBreadCrumb}} <span id="catduproduit">{{categoriePourFil?.nomCat}}</span></div>
+    <div *ngIf="categorieForBreadCrum">
+      <app-breadcrumb [categorie]="categorieForBreadCrum"></app-breadcrumb>
+    </div>
+
+
     <div class="barre_produit_top flex-row">
       <div class="flex flex-row" *ngIf="lengthProduit > 0; else OneProduit">
           <span class="text_afficher">{{lengthProduit}} articles au total</span>

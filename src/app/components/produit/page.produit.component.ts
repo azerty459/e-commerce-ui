@@ -4,6 +4,8 @@ import {Produit} from '../../../../e-commerce-ui-common/models/Produit';
 import {ProduitBusiness} from '../../../../e-commerce-ui-common/business/produit.service';
 import {Pagination} from '../../../../e-commerce-ui-common/models/Pagination';
 import {PreviousRouteBusiness} from '../../../../e-commerce-ui-common/business/previous-route.service';
+import {CategorieBusinessService} from "../../../../e-commerce-ui-common/business/categorie.service";
+import {Categorie} from "../../../../e-commerce-ui-common/models/Categorie";
 
 @Component({
   selector: 'app-produit',
@@ -32,7 +34,7 @@ export class ProduitComponent implements OnInit {
 
   public pageMax: number;
   public pageMin: number;
-
+  public categorieForBreadCrum;
   /**
    * Indique si une recherche de produits a été effectuée
    */
@@ -58,10 +60,8 @@ export class ProduitComponent implements OnInit {
    * @type {number}
    */
   public messagesParPage = 5;
-
   public back = false;
-
-  constructor(private produitBusiness: ProduitBusiness, private activatedRoute: ActivatedRoute,
+  constructor(private categorieBusiness: CategorieBusinessService,private produitBusiness: ProduitBusiness, private activatedRoute: ActivatedRoute,
               private _router: Router, private previousRouteBusiness: PreviousRouteBusiness) {
     this.activatedRoute.params.subscribe(params => {
         this.pageActuelURL = parseInt(params.page, 10);
@@ -91,17 +91,18 @@ export class ProduitComponent implements OnInit {
     // On souscrit à un Observable. Permet de recevoir une nouvelle liste paginée de produits à afficher
     // en cas de recherche de produits par l'utilisateur.
     this.produitBusiness.subject.subscribe((result) => {
+      this.categorieForBreadCrum = undefined;
       this.produits = result.tableau;
       this.lengthProduit = result.total;
       this.pageActuelURL = result.pageActuelle;
       this.pageMax = result.pageMax;
-
       // On est dans le cadre d'une recherche (sauf si la chaîne recherchée est de longueur 0)
       if(this.produitBusiness.searchedText.length === 0) {
         this.searchIsOn = false;
       } else {
         this.searchIsOn = true;
       }
+      this.getSearchedCategorie();
     });
   }
 
@@ -119,8 +120,6 @@ export class ProduitComponent implements OnInit {
       console.log(this.messagesParPage);
       this.page = this.produitBusiness.getProduitByPagination(this.pageActuelURL, this.messagesParPage);
     } else {
-      console.log('nb message par page avec recherche');
-      console.log(this.messagesParPage);
       this.page = this.produitBusiness.getProduitByPaginationSearch(this.pageActuelURL, this.messagesParPage, this.produitBusiness.searchedText, this.produitBusiness.searchedCategorie);
     }
 
@@ -135,7 +134,6 @@ export class ProduitComponent implements OnInit {
       });
     this.pageMax = await this.getPageMax();
     this.pageMin = await this.getPageMin();
-
     if(this.searchIsOn) {
       this.produitBusiness.subject.next(new Pagination(this.pageActuelURL, this.pageMin, this.pageMax, this.lengthProduit, this.produits));
     }
@@ -203,5 +201,10 @@ export class ProduitComponent implements OnInit {
   redirectionPageDetail (ref: string){
     this.previousRouteBusiness.setCurrentUrl(this._router.url);
     this._router.navigate(['/produit/detail', ref]);
+  }
+
+  public  getSearchedCategorie() {
+    const categorieNode = this.produitBusiness.searchedCategorieObject;
+    this.categorieForBreadCrum=new Categorie(categorieNode.id,categorieNode.nomCategorie,undefined,undefined);
   }
 }

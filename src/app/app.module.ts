@@ -53,6 +53,9 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { FormsModule } from '@angular/forms';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
+import {ArbreService} from "../../e-commerce-ui-common/business/arbre.service";
+import {CategorieBusinessService} from "../../e-commerce-ui-common/business/categorie.service";
+import {MenuItemComponent} from "./components/menu-item/menu-item.component";
 
 const appRoutes: Routes = [
   {

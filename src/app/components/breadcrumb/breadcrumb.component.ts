@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, OnInit, Input, OnChanges} from '@angular/core';
 import {Produit} from '../../../../e-commerce-ui-common/models/Produit';
 import {Categorie} from '../../../../e-commerce-ui-common/models/Categorie';
 import {BreadcrumbsService} from '../../../../e-commerce-ui-common/business/breadcrumbs.service';
@@ -9,7 +9,7 @@ import {CategoriedataService} from '../../../../e-commerce-ui-common/business/da
   templateUrl: './breadcrumb.component.html',
   styleUrls: ['./breadcrumb.component.css']
 })
-export class BreadcrumbComponent implements OnInit {
+export class BreadcrumbComponent implements OnInit, OnChanges {
 
   /**
    * La chaîne de caractères représentant le fil d'ariane des catégories d'un produit
@@ -34,12 +34,14 @@ export class BreadcrumbComponent implements OnInit {
     this.buildBreadCrumb();
 
   }
+  ngOnChanges() {
+    this.buildBreadCrumb();
+  }
 
   /**
    * Construit le fil d'ariane
    */
   public buildBreadCrumb(): void {
-
     // Récupérer le fil d'ariane
     let promiseCategorie = null;
     if(this.categorie !== undefined) {
