@@ -22,7 +22,7 @@ export class DetailProduitComponent implements OnInit {
   // Chaîne de catactères représentant le fil d'ariane pour les catégories (jusque la catégorie juste avant celle du produit)
   public catBreadCrumb: string;
 
-  constructor(private produitBusiness: ProduitBusiness, private activatedRoute: ActivatedRoute, private _router: Router, private breadcrumb: BreadcrumbsService, private categorieData: CategoriedataService) {
+  constructor(private produitBusiness: ProduitBusiness, private activatedRoute: ActivatedRoute, private _router: Router, private breadcrumb: BreadcrumbsService, private categorieData: CategoriedataService, private bcService: BreadcrumbsService) {
     this.activatedRoute.params.subscribe(params => {
         this.pageActuelURL = params.ref;
       },
@@ -38,6 +38,19 @@ export class DetailProduitComponent implements OnInit {
     this.affichage();
   }
 
+  /**
+   * Pour le fil d'ariane, permet de choisir une catégorie du produit (celle avec l'id la plus petite)
+   * @param {Produit} produit le produit dont on cherche le fil d'ariane des catégories
+   * @returns {Categorie} la catégorie choisie du produit, celle avec l'id la plus petite.
+   */
+  public choixCategorie(produit: Produit): Categorie {
+
+    // Aller chercher la catégorie du produit
+    const cat = this.bcService.getBreadCrumb(this.produit);
+
+    return cat;
+  }
+
 
 
   async affichage() {
@@ -47,16 +60,6 @@ export class DetailProduitComponent implements OnInit {
 
         this.produit = value;
 
-        // Récupérer la catégorie qui servira à construire le fil de catégories du produit
-        this.categoriePourFil = this.breadcrumb.getBreadCrumb(this.produit);
-
-        // Récupérer le fil d'ariane de la catégorie si on a récupéré une catégorie
-        if(this.categoriePourFil !== undefined) {
-          const promiseCategorie = this.categorieData.getChemin(this.categoriePourFil);
-          promiseCategorie.then((c) => {
-            this.catBreadCrumb = c.chemin + ' > ';
-          });
-        }
       }
     );
   }

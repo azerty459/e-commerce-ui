@@ -52,9 +52,7 @@ import {RetourComponent} from '../../e-commerce-ui-common/utilitaires/retour/ret
 import { HttpClientModule } from '@angular/common/http';
 
 import { FormsModule } from '@angular/forms';
-import {ArbreService} from "../../e-commerce-ui-common/business/arbre.service";
-import {CategorieBusinessService} from "../../e-commerce-ui-common/business/categorie.service";
-import {MenuItemComponent} from "./components/menu-item/menu-item.component";
+import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 
 const appRoutes: Routes = [
   {
@@ -94,6 +92,7 @@ const appRoutes: Routes = [
     AccueilComponent,
     DetailProduitComponent,
     RetourComponent,
+    BreadcrumbComponent,
     MenuItemComponent
   ],
   imports: [
