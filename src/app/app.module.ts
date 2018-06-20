@@ -23,6 +23,7 @@ import {RetourComponent} from '../../e-commerce-ui-common/utilitaires/retour/ret
 import { HttpClientModule } from '@angular/common/http';
 
 import { FormsModule } from '@angular/forms';
+import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 
 const appRoutes: Routes = [
   {
@@ -62,6 +63,7 @@ const appRoutes: Routes = [
     AccueilComponent,
     DetailProduitComponent,
     RetourComponent,
+    BreadcrumbComponent,
   ],
   imports: [
     BrowserModule,
