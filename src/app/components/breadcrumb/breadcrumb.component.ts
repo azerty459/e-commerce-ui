@@ -31,7 +31,6 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
 
   ngOnInit() {
 
-    this.buildBreadCrumb();
 
   }
   ngOnChanges() {

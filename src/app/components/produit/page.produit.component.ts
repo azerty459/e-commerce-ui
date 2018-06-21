@@ -91,7 +91,6 @@ export class ProduitComponent implements OnInit {
     // On souscrit à un Observable. Permet de recevoir une nouvelle liste paginée de produits à afficher
     // en cas de recherche de produits par l'utilisateur.
     this.produitBusiness.subject.subscribe((result) => {
-      this.categorieForBreadCrum = undefined;
       this.produits = result.tableau;
       this.lengthProduit = result.total;
       this.pageActuelURL = result.pageActuelle;
@@ -205,6 +204,11 @@ export class ProduitComponent implements OnInit {
 
   public  getSearchedCategorie() {
     const categorieNode = this.produitBusiness.searchedCategorieObject;
-    this.categorieForBreadCrum=new Categorie(categorieNode.id,categorieNode.nomCategorie,undefined,undefined);
+    if(categorieNode.id !== 0){ //0 équivaut aucune catégorie existante
+      this.categorieForBreadCrum = new Categorie(categorieNode.id,categorieNode.nomCategorie,undefined,undefined);
+    } else {
+      this.categorieForBreadCrum = undefined;
+    }
+
   }
 }

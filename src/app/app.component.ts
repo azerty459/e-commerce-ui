@@ -1,4 +1,4 @@
-import {Component, DoCheck, Input, OnInit} from '@angular/core';
+import {Component, DoCheck, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {Title} from '@angular/platform-browser';
 import {PreviousRouteBusiness} from '../../e-commerce-ui-common/business/previous-route.service';
@@ -11,6 +11,7 @@ import {CategorieNode} from "../../e-commerce-ui-common/models/CategorieNode";
 import {FlatTreeControl} from '@angular/cdk/tree';
 import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
 import {NavItem} from "./components/menu-item/nav-item";
+import {MatMenuTrigger} from "@angular/material";
 
 @Component({
   selector: 'app-root',
@@ -18,8 +19,7 @@ import {NavItem} from "./components/menu-item/nav-item";
   styleUrls: ['./app.component.css', '../../node_modules/font-awesome/css/font-awesome.css' ]
 })
 export class AppComponent implements OnInit{
-  @Input('matTreeNodePaddingIdent')
-  indent: number;
+  @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
   navItems:NavItem[];
   nodeLoaded:boolean = false;
   public treeControl: FlatTreeControl<CategorieFlatNode>;
@@ -46,6 +46,9 @@ export class AppComponent implements OnInit{
   }
 
 
+  /**
+   * Méthode permettant de charger les catégories du menu
+   */
   public getNodes(){
     this.nodeLoaded=true;
     let primary :CategorieNode = new CategorieNode();
@@ -86,6 +89,7 @@ export class AppComponent implements OnInit{
       this.produitBusiness.searchedText=this.produit.nom;
       if(this.navItems[0].id != undefined){
         this.produitBusiness.search(this.produit.nom,this.navItems[0].id);
+        console.log(this.navItems[0]);
         this.produitBusiness.searchedCategorieObject = this.navItems[0];
       }
     } else{
@@ -93,16 +97,24 @@ export class AppComponent implements OnInit{
     }
 
   }
-  public selectCategorie(item:CategorieNode): void{
-    // TODO splice cat quand on reselectionne "toutes nos categories"
-    if(this.nodeLoaded=true){
 
+  /**
+   * Methode appellé lors de la selection d'une catégorie dans le menu
+   * @param {CategorieNode} categorie selectionné
+   */
+  public selectCategorie(item:CategorieNode): void{
+    if(this.nodeLoaded=true){
+      this.trigger.closeMenu();
       this.chosenCategorie=item.nomCategorie;
       this.navItems[0].nomCategorie=item.nomCategorie;
       this.navItems[0].id=item.id;
       this.categorieHasBeenSelected=true;
     }
   }
+
+  /**
+   * Méthode apellé lors de la désélection de la catégorie sélectionné
+   */
   public CancelCategorieChoice(){
     this.navItems = undefined;
     this.nodeLoaded = false;
