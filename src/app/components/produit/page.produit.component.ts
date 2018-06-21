@@ -91,6 +91,7 @@ export class ProduitComponent implements OnInit {
     // On souscrit à un Observable. Permet de recevoir une nouvelle liste paginée de produits à afficher
     // en cas de recherche de produits par l'utilisateur.
     this.produitBusiness.subject.subscribe((result) => {
+
       this.produits = result.tableau;
       this.lengthProduit = result.total;
       this.pageActuelURL = result.pageActuelle;
