@@ -61,6 +61,7 @@ export class ProduitComponent implements OnInit {
    */
   public messagesParPage = 5;
   public back = false;
+
   constructor(private categorieBusiness: CategorieBusinessService,private produitBusiness: ProduitBusiness, private activatedRoute: ActivatedRoute,
               private _router: Router, private previousRouteBusiness: PreviousRouteBusiness) {
     this.activatedRoute.params.subscribe(params => {
@@ -205,7 +206,8 @@ export class ProduitComponent implements OnInit {
 
   public  getSearchedCategorie() {
     const categorieNode = this.produitBusiness.searchedCategorieObject;
-    if(categorieNode.id !== 0){ //0 équivaut aucune catégorie existante
+    // 0 équivaut aucune catégorie existante
+    if(categorieNode && categorieNode.id !== 0){
       this.categorieForBreadCrum = new Categorie(categorieNode.id,categorieNode.nomCategorie,undefined,undefined);
     } else {
       this.categorieForBreadCrum = undefined;

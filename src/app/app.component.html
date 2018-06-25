@@ -39,7 +39,9 @@
             <button class="cancelButton" [hidden]="!categorieHasBeenSelected" mat-button (click)="CancelCategorieChoice()" >
               <mat-icon>cancel</mat-icon>
             </button>
-            <form class="form-inline search_bar" #searchForm="ngForm" (ngSubmit)="submitSearch()">
+
+            <!--Formulaire de recherche-->
+            <form class="form-inline search_bar" #searchForm="ngForm" (ngSubmit)=" submitSearch()">
               <input class="form-control mr-sm-2 search_input" type="text" placeholder="Rechercher un produit" aria-label="Search"
                      name="searchedText"
                      [(ngModel)]="produit.nom"

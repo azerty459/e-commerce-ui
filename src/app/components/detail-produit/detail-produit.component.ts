@@ -36,6 +36,13 @@ export class DetailProduitComponent implements OnInit {
 
   ngOnInit() {
     this.affichage();
+
+    this.produitBusiness.subject.subscribe(
+      (result) => {
+        this._router.navigate(['/produit/1']);
+
+      }
+    );
   }
 
   /**

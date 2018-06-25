@@ -85,25 +85,31 @@ export class AppComponent implements OnInit{
    * Méthode appelée par le formulaire de recherche
    */
   public submitSearch(): void {
-    if(this.navItems!==undefined){
-      this.produitBusiness.searchedText=this.produit.nom;
-      if(this.navItems[0].id != undefined){
-        this.produitBusiness.search(this.produit.nom,this.navItems[0].id);
+
+    // Rediriger vers la page de résultats si on est sur une autre page // TODO
+
+
+    if (this.navItems !== undefined) {
+      this.produitBusiness.searchedText = this.produit.nom;
+      if (this.navItems[0].id !== undefined) {
+        this.produitBusiness.search(this.produit.nom, this.navItems[0].id);
         console.log(this.navItems[0]);
         this.produitBusiness.searchedCategorieObject = this.navItems[0];
       }
-    } else{
-      this.produitBusiness.search(this.produit.nom,0);
+    } else {
+      this.produitBusiness.search(this.produit.nom, 0);
     }
-
   }
 
+
+
+
   /**
-   * Methode appellé lors de la selection d'une catégorie dans le menu
-   * @param {CategorieNode} categorie selectionné
+   * Methode appellée lors de la selection d'une catégorie dans le menu
+   * @param {CategorieNode} categorie selectionnée
    */
-  public selectCategorie(item:CategorieNode): void{
-    if(this.nodeLoaded=true){
+  public selectCategorie(item: CategorieNode): void{
+    if(this.nodeLoaded = true){
       this.trigger.closeMenu();
       this.chosenCategorie=item.nomCategorie;
       this.navItems[0].nomCategorie=item.nomCategorie;
