@@ -1,0 +1,9 @@
+/* Fil d'ariane des catégories */
+#catbreadcrumb {
+  color: cornflowerblue;
+  margin-bottom: 10px;
+}
+
+#catduproduit {
+  color: darkorange;
+}

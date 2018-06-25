@@ -61,6 +61,12 @@
   <!--</div>-->
   <div class="flex6 flex-column">
     <div *ngIf="back" class="alert-success">Vous êtes bien revenu sur votre page</div>
+    <!-- Fil d'ariane pour la catégorie du produit -->
+    <div *ngIf="categorieForBreadCrum">
+      <app-breadcrumb [categorie]="categorieForBreadCrum"></app-breadcrumb>
+    </div>
+
+
     <div class="barre_produit_top flex-row">
       <div class="flex flex-row" *ngIf="lengthProduit > 0; else OneProduit">
           <span class="text_afficher">{{lengthProduit}} articles au total</span>
@@ -106,9 +112,17 @@
       <div *ngFor="let produit of produits; let i = index">
         <div class="flex produit" (click)="redirectionPageDetail(produit.ref)">
           <div class="flex-row produit_image">
-            <img
-              src="../../../assets/img/1024px-Emblem-question.svg.png" alt="produit image"
+
+            <div *ngIf="produit.arrayPhoto[0]; else noPhoto">
+              <img src="{{produit.arrayPhoto[0].url}}" alt="Image du produit {{produit.nom}}"
+                   width="100%" height="autp">
+            </div>
+
+            <ng-template #noPhoto>
+              <img src="../../../assets/img/1024px-Emblem-question.svg.png" alt="produit image"
               width="300" height="100">
+            </ng-template>
+
           </div>
           <div class="flex-row produit_nom produit_border_top">
             {{produit.nom}}
