@@ -56,7 +56,6 @@ export class AppComponent implements OnInit{
     primary.id=0;
     primary.children=JSON.parse(JSON.stringify(this.arbreService.data));
     this.navItems = JSON.parse(JSON.stringify([primary]));
-    console.log(this.arbreService.data);
   }
 
   ngOnInit() {

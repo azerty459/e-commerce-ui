@@ -56,6 +56,7 @@ import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.componen
 import {ArbreService} from "../../e-commerce-ui-common/business/arbre.service";
 import {CategorieBusinessService} from "../../e-commerce-ui-common/business/categorie.service";
 import {MenuItemComponent} from "./components/menu-item/menu-item.component";
+import {FiltreService} from "../../e-commerce-ui-common/business/filtre.service";
 
 const appRoutes: Routes = [
   {
@@ -153,7 +154,7 @@ const appRoutes: Routes = [
     FlexLayoutModule,
     MatChipsModule
   ],
-  providers: [ProduitBusiness, PreviousRouteBusiness, ArbreService, CategorieBusinessService],
+  providers: [ProduitBusiness, PreviousRouteBusiness, ArbreService, CategorieBusinessService, FiltreService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
