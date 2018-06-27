@@ -5,7 +5,8 @@
   <mat-toolbar color="primary">
     <div class="flex flex-row">
       <button mat-button routerLink="/accueil" disabled>
-        <img class="logo" src="assets/img/icon.png" alt="logo">
+
+        <img (click)="retourHome()" class="logo" src="assets/img/icon.png" alt="logo">
       </button>
     </div>
     <div class="flex8 flex-column">

@@ -128,5 +128,7 @@ export class AppComponent implements OnInit{
     this.chosenCategorie ="";
   }
 
-
+  public retourHome(){
+    this.router.navigate(['/produit']);
+  }
 }
