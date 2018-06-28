@@ -5,6 +5,7 @@ import {ProduitBusiness} from '../../../../e-commerce-ui-common/business/produit
 import { BreadcrumbsService} from '../../../../e-commerce-ui-common/business/breadcrumbs.service';
 import {Categorie} from '../../../../e-commerce-ui-common/models/Categorie';
 import {CategoriedataService} from '../../../../e-commerce-ui-common/business/data/categoriedata.service';
+import {Photo} from "../../../../e-commerce-ui-common/models/Photo";
 
 
 @Component({
@@ -17,6 +18,7 @@ export class DetailProduitComponent implements OnInit {
   public promiseProduit: Promise<Produit>;
   public produit: Produit;
   public pageActuelURL: string;
+  public arrayPhotoUrl;
   positionAfterTooltip = 'after';
 
   // Chaîne de catactères représentant le fil d'ariane pour les catégories (jusque la catégorie juste avant celle du produit)
@@ -64,8 +66,11 @@ export class DetailProduitComponent implements OnInit {
     this.promiseProduit = this.produitBusiness.getProduitByRef(this.pageActuelURL);
     this.promiseProduit.then(
       (value) => {
-
         this.produit = value;
+        this.arrayPhotoUrl=[];
+        for (const photo of this.produit.arrayPhoto) {
+          this.arrayPhotoUrl.push(photo.url);
+        }
 
       }
     );

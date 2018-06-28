@@ -15,11 +15,16 @@
     <app-retour  matTooltip="Revenir en arrière" [matTooltipPosition]="positionAfterTooltip"></app-retour>
   </div>
   <div class="flex7 flex-row top_container" >
-    <div class="flex4 flex-column produit_image" >
-      <img
-        src="../../../assets/img/1024px-Emblem-question.svg.png" alt="produit image"
-        width="300" height="100">
+    <div  >
+
     </div>
+    <slideshow class="flex4 flex-column produit_image" *ngIf="arrayPhotoUrl!==undefined"
+               [imageUrls]="arrayPhotoUrl"
+               [autoPlay]="true"
+               [lazyLoad]="arrayPhotoUrl?.length > 1"
+               [showDots]="true"
+              >
+    </slideshow>
     <div class="flex3 flex-column detail_container">
       <div class="flex flex-row prix"><div class="flex valeurPrix">{{produit?.prixHT}}€</div><div class="flex descriptifPrix text-align-right">Prix HT</div></div>
 

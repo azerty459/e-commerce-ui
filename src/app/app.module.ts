@@ -56,6 +56,7 @@ import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.componen
 import {ArbreService} from "../../e-commerce-ui-common/business/arbre.service";
 import {CategorieBusinessService} from "../../e-commerce-ui-common/business/categorie.service";
 import {MenuItemComponent} from "./components/menu-item/menu-item.component";
+import {SlideshowModule} from "ng-simple-slideshow";
 
 const appRoutes: Routes = [
   {
@@ -96,9 +97,10 @@ const appRoutes: Routes = [
     DetailProduitComponent,
     RetourComponent,
     BreadcrumbComponent,
-    MenuItemComponent
+    MenuItemComponent,
   ],
   imports: [
+    SlideshowModule, // photo slider
     BrowserModule,
     FormsModule,
     HttpModule,
