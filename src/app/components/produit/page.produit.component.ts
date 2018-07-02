@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Produit} from '../../../../e-commerce-ui-common/models/Produit';
 import {ProduitBusiness} from '../../../../e-commerce-ui-common/business/produit.service';
@@ -6,6 +6,8 @@ import {Pagination} from '../../../../e-commerce-ui-common/models/Pagination';
 import {PreviousRouteBusiness} from '../../../../e-commerce-ui-common/business/previous-route.service';
 import {CategorieBusinessService} from "../../../../e-commerce-ui-common/business/categorie.service";
 import {Categorie} from "../../../../e-commerce-ui-common/models/Categorie";
+import {FiltreService} from "../../../../e-commerce-ui-common/business/filtre.service";
+import {MatMenuTrigger} from "@angular/material";
 
 @Component({
   selector: 'app-produit',
@@ -13,7 +15,7 @@ import {Categorie} from "../../../../e-commerce-ui-common/models/Categorie";
   styleUrls: ['./page.produit.component.css']
 })
 export class ProduitComponent implements OnInit {
-
+  @ViewChild('messageParPageSelect') messageParPageSelect: ElementRef;
   public page: Promise<Pagination>;
 
   /**
@@ -59,10 +61,10 @@ export class ProduitComponent implements OnInit {
    * Nombre de produits par page
    * @type {number}
    */
-  public messagesParPage = 5;
+  public messagesParPage = this.filtreService.getNbProduitParPage();
   public back = false;
 
-  constructor(private categorieBusiness: CategorieBusinessService,private produitBusiness: ProduitBusiness, private activatedRoute: ActivatedRoute,
+  constructor(private filtreService: FiltreService, private categorieBusiness: CategorieBusinessService,private produitBusiness: ProduitBusiness, private activatedRoute: ActivatedRoute,
               private _router: Router, private previousRouteBusiness: PreviousRouteBusiness) {
     this.activatedRoute.params.subscribe(params => {
         this.pageActuelURL = parseInt(params.page, 10);
@@ -83,6 +85,7 @@ export class ProduitComponent implements OnInit {
 
   ngOnInit() {
 
+    this.messageParPageSelect.nativeElement.value = this.messagesParPage;
     // Déclenche l'affichage au chargement de la page
     this.affichage();
 
@@ -104,7 +107,11 @@ export class ProduitComponent implements OnInit {
         this.searchIsOn = true;
       }
       this.getSearchedCategorie();
+      this.filtreService.setFiltres(this.produits, this.lengthProduit, this.pageActuelURL, this.pageMax);
     });
+    if (this.filtreService.pageAffiche !== undefined){
+      this.pageActuelURL = this.filtreService.pageAffiche;
+    }
   }
 
 
@@ -118,7 +125,6 @@ export class ProduitComponent implements OnInit {
     if(!this.searchIsOn) {
       console.log('nb message par page sans recherche');
 
-      console.log(this.messagesParPage);
       this.page = this.produitBusiness.getProduitByPagination(this.pageActuelURL, this.messagesParPage);
     } else {
       this.page = this.produitBusiness.getProduitByPaginationSearch(this.pageActuelURL, this.messagesParPage, this.produitBusiness.searchedText, this.produitBusiness.searchedCategorie);
@@ -178,7 +184,8 @@ export class ProduitComponent implements OnInit {
     }
   }
 
-  selected(value: any) {
+  selected(value: number) {
+    this.filtreService.saveNbProduitParPage(value);
     this.messagesParPage = value;
     this.affichage();
 
@@ -192,8 +199,10 @@ export class ProduitComponent implements OnInit {
     } else {
       if (this.pageActuelURL < this.pageMax) {
         this.pageActuelURL = this.pageActuelURL + 1;
+
       }
     }
+    this.filtreService.pageAffiche = this.pageActuelURL;
     this.affichage();
 
     this._router.navigate(['/produit', this.pageActuelURL]);
@@ -209,8 +218,10 @@ export class ProduitComponent implements OnInit {
     // 0 équivaut aucune catégorie existante
     if(categorieNode && categorieNode.id !== 0){
       this.categorieForBreadCrum = new Categorie(categorieNode.id,categorieNode.nomCategorie,undefined,undefined);
+      this.filtreService.categorieForBreadCrum = this.categorieForBreadCrum;
     } else {
       this.categorieForBreadCrum = undefined;
+      this.filtreService.categorieForBreadCrum = this.categorieForBreadCrum;
     }
 
   }
