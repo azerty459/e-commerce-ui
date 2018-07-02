@@ -30,8 +30,6 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
   constructor(private bcService: BreadcrumbsService, private categorieData: CategoriedataService) { }
 
   ngOnInit() {
-
-
   }
   ngOnChanges() {
     this.buildBreadCrumb();

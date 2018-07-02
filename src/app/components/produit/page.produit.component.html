@@ -2,7 +2,6 @@
   <title>Page Produit</title>
 </head>
 
-
 <div class="flex-row margin">
   <!--<div class="flex">-->
     <!--<a href="/accueil">Accueil</a> > <a href="/produits">Produits</a>-->
@@ -11,7 +10,6 @@
     <!--<div class="flex3"></div>-->
   <!--</div>-->
 </div>
-
 <div class="flex-row margin">
   <!--<div class="flex-column caracteristique">-->
     <!--<div class="flex-column">-->
@@ -62,18 +60,15 @@
   <div class="flex6 flex-column">
     <div *ngIf="back" class="alert-success">Vous êtes bien revenu sur votre page</div>
     <!-- Fil d'ariane pour la catégorie du produit -->
-    <div *ngIf="categorieForBreadCrum">
-      <app-breadcrumb [categorie]="categorieForBreadCrum"></app-breadcrumb>
+    <div *ngIf="filtreService.categorieForBreadCrum">
+      <app-breadcrumb [categorie]="filtreService.categorieForBreadCrum"></app-breadcrumb>
     </div>
 
 
     <div class="barre_produit_top flex-row">
-      <div class="flex flex-row" *ngIf="lengthProduit > 0; else OneProduit">
-          <span class="text_afficher">{{lengthProduit}} articles au total</span>
+      <div class="flex flex-row">
+          <span class="text_afficher">{{produits.length}} articles au total</span>
       </div>
-      <ng-template #OneProduit>
-        <span class="text_afficher">{{lengthProduit}} article au total</span>
-      </ng-template>
       <!--<div class="trier flex flex-row">-->
         <!--<span class="text_afficher">Trier par</span>-->
         <!--<div class="form-group">-->
@@ -99,17 +94,17 @@
         </div>
       </div>
       <div class="flex flex-row">
-        <span class="text_afficher">Page {{pageActuelURL}} sur {{pageMax}}</span>
+        <span class="text_afficher">Page {{page?.pageActuelle}} sur {{page?.pageMax}}</span>
       </div>
       <div class="flex-row">
-        <button type="button" class="btn btn-outline-success" (click)="pagination('precedent')" [disabled]="!hasPreviousPage"><- Précédent</button>
+        <button type="button" class="btn btn-outline-success" (click)="pagination('precedent')" [disabled]="page?.pageActuelle <= page?.pageMin"><- Précédent</button>
         <div class="espace"></div>
-        <button type="button" class="btn btn-outline-success" (click)="pagination('suivant')" [disabled]="!hasNextPage">Suivant -></button>
+        <button type="button" class="btn btn-outline-success" (click)="pagination('suivant')" [disabled]="page?.pageActuelle >= page?.pageMax">Suivant -></button>
       </div>
     </div>
 
     <div class="flex-row produit_container">
-      <div *ngFor="let produit of produits; let i = index">
+      <div  *ngFor="let produit of produits.arrayProduit; let i = index">
         <div class="flex produit" (click)="redirectionPageDetail(produit.ref)">
           <div class="flex-row produit_image">
 

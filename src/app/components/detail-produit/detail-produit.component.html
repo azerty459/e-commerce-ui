@@ -2,6 +2,7 @@
   <title>Page Detail Produit</title>
 </head>
 
+
 <div class="flex-column produit_container">
   <div class="flex name_container">{{produit?.nom}}</div> <!-- ? = safe navigation operator !-->
 
@@ -18,13 +19,20 @@
     <div  >
 
     </div>
-    <slideshow class="flex4 flex-column produit_image" *ngIf="arrayPhotoUrl!==undefined"
-               [imageUrls]="arrayPhotoUrl"
-               [autoPlay]="true"
-               [lazyLoad]="arrayPhotoUrl?.length > 1"
-               [showDots]="true"
-              >
+    <slideshow  *ngIf="produit?.arrayPhoto.length" class="flex4 flex-column produit_image"
+                [imageUrls]="arrayPhotoUrl"
+                [autoPlay]="true"
+                [lazyLoad]="arrayPhotoUrl?.length > 1"
+                [showDots]="true"
+    >
     </slideshow>
+    <div class="flex4 flex-column produit_image" *ngIf="produit?.arrayPhoto.length === 0">
+      <img
+        src="../../../assets/img/1024px-Emblem-question.svg.png" alt="produit image"
+        width="300" height="100">
+    </div>
+
+
     <div class="flex3 flex-column detail_container">
       <div class="flex flex-row prix"><div class="flex valeurPrix">{{produit?.prixHT}}€</div><div class="flex descriptifPrix text-align-right">Prix HT</div></div>
 
