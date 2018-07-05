@@ -68,18 +68,27 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
       }
     }
   }
-  public async redirect(categorieChoisie){
-    const result = await this.produitBusiness.getProduitByPaginationSearch(1,this.filtreService.getNbProduitParPage(),'',categorieChoisie.id)
-    this.produitDataService.produits.arrayProduit = result.tableau;
-    this.produitDataService.produits.length = result.total;
-    this.paginationDataService.paginationProduit.pageActuelle = result.pageActuelle;
-    this.paginationDataService.paginationProduit.pageMax = result.pageMax;
-    this.paginationDataService.paginationProduit.total = result.total;
-    this.paginationDataService.paginationProduit.tableau = result.tableau;
-    this.paginationDataService.paginationProduit.pageMin = result.pageMin;
-    this.previousRouteBusiness.retour = true;
-    this.filtreService.categorieForBreadCrum = categorieChoisie;
-    this._router.navigate(['/produit']);
+  public async redirect(categorieChoisie,i){
+    if(!this.isClickable(i)){
+
+    }else{
+      const result = await this.produitBusiness.getProduitByPaginationSearch(1,this.filtreService.getNbProduitParPage(),'',categorieChoisie.id)
+      this.produitDataService.produits.arrayProduit = result.tableau;
+      this.produitDataService.produits.length = result.total;
+      this.paginationDataService.paginationProduit.pageActuelle = result.pageActuelle;
+      this.paginationDataService.paginationProduit.pageMax = result.pageMax;
+      this.paginationDataService.paginationProduit.total = result.total;
+      this.paginationDataService.paginationProduit.tableau = result.tableau;
+      this.paginationDataService.paginationProduit.pageMin = result.pageMin;
+      this.previousRouteBusiness.retour = true;
+      this.filtreService.categorieForBreadCrum = categorieChoisie;
+      this._router.navigate(['/produit']);
+    }
+
+  }
+
+  public isClickable(i): boolean {
+    return this.categoriesForBreadCrumb.length !== i+1 || this.previousRouteBusiness.getCurrentUrl().startsWith('/produit/detail')
   }
 
 
