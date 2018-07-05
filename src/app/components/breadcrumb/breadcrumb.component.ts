@@ -67,6 +67,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
         }
       }
     }
+    console.log(this.categoriesForBreadCrumb);
   }
   public async redirect(categorieChoisie,i){
     if(!this.isClickable(i)){
