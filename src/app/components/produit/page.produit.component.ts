@@ -60,7 +60,6 @@ export class ProduitComponent implements OnInit {
     if(this.pageInitiale <=0 ){
       this.pageInitiale = 1;
     }
-
     if(!this.previousRouteBusiness.retour){
       this.initialisation();
     }
@@ -71,6 +70,7 @@ export class ProduitComponent implements OnInit {
     this.getPaginationWithoutSearch(this.pageInitiale,this.messagesParPage);
     this._router.navigate(['/produit', this.page.pageActuelle]);
   }
+
   private async getPaginationWithoutSearch(pageDemande:number,messageParPage:number){
     const result =  await this.produitBusiness.getProduitByPagination(pageDemande, messageParPage);
     this.produits.arrayProduit = result.tableau;

@@ -87,7 +87,6 @@ export class AppComponent implements OnInit{
    */
   public submitSearch(): void {
 
-    // Rediriger vers la page de résultats si on est sur une autre page // TODO
 
 
     if (this.navItems !== undefined) {
@@ -113,14 +112,7 @@ export class AppComponent implements OnInit{
 
   /**
    * Methode appellée lors de la selection d'une catégorie dans le menu
-   * @param {CategorieNode if(!this.searchIsOn) {
-      console.log('nb message par page sans recherche');
-
-
-
-    } else {
-
-    }} categorie selectionnée
+   * @param categorie selectionnée
    */
   public selectCategorie(item: CategorieNode): void{
     if(this.nodeLoaded = true){
@@ -140,7 +132,6 @@ export class AppComponent implements OnInit{
     this.nodeLoaded = false;
     this.categorieHasBeenSelected=false;
     this.chosenCategorie ="";
-    this.filterService.categorieForBreadCrum = undefined;
   }
 
   public retourHome(){
