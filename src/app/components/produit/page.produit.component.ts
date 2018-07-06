@@ -49,8 +49,8 @@ export class ProduitComponent implements OnInit {
    * @type {number}
    */
   public messagesParPage = this.filtreService.getNbProduitParPage();
-  constructor(private paginationDataService: PaginationDataService,private filtreService: FiltreService,private produitDataService: ProduiDataService,private categorieBusiness: CategorieBusinessService,private produitBusiness: ProduitBusiness, private activatedRoute: ActivatedRoute,
-              private _router: Router, private previousRouteBusiness: PreviousRouteBusiness) {
+  constructor(public paginationDataService: PaginationDataService,public filtreService: FiltreService,public produitDataService: ProduiDataService,public categorieBusiness: CategorieBusinessService,public produitBusiness: ProduitBusiness, public activatedRoute: ActivatedRoute,
+              public _router: Router, public previousRouteBusiness: PreviousRouteBusiness) {
     this.activatedRoute.params.subscribe(params => {
       this.pageInitiale = parseInt(params.page, 10);
     })
