@@ -56,6 +56,9 @@ import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.componen
 import {ArbreService} from "../../e-commerce-ui-common/business/arbre.service";
 import {CategorieBusinessService} from "../../e-commerce-ui-common/business/categorie.service";
 import {MenuItemComponent} from "./components/menu-item/menu-item.component";
+import {SlideshowModule} from "ng-simple-slideshow";
+import {ProduiDataService} from "../../e-commerce-ui-common/business/data/produitData.service";
+import {FiltreService} from "../../e-commerce-ui-common/business/filtre.service";
 
 const appRoutes: Routes = [
   {
@@ -96,9 +99,10 @@ const appRoutes: Routes = [
     DetailProduitComponent,
     RetourComponent,
     BreadcrumbComponent,
-    MenuItemComponent
+    MenuItemComponent,
   ],
   imports: [
+    SlideshowModule, // photo slider
     BrowserModule,
     FormsModule,
     HttpModule,
@@ -153,7 +157,7 @@ const appRoutes: Routes = [
     FlexLayoutModule,
     MatChipsModule
   ],
-  providers: [ProduitBusiness, PreviousRouteBusiness, ArbreService, CategorieBusinessService],
+  providers: [ProduitBusiness, PreviousRouteBusiness, ArbreService, CategorieBusinessService, FiltreService, ProduiDataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

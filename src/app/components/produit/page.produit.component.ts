@@ -1,11 +1,12 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Produit} from '../../../../e-commerce-ui-common/models/Produit';
 import {ProduitBusiness} from '../../../../e-commerce-ui-common/business/produit.service';
 import {Pagination} from '../../../../e-commerce-ui-common/models/Pagination';
 import {PreviousRouteBusiness} from '../../../../e-commerce-ui-common/business/previous-route.service';
 import {CategorieBusinessService} from "../../../../e-commerce-ui-common/business/categorie.service";
-import {Categorie} from "../../../../e-commerce-ui-common/models/Categorie";
+import {ProduiDataService} from "../../../../e-commerce-ui-common/business/data/produitData.service";
+import {FiltreService} from "../../../../e-commerce-ui-common/business/filtre.service";
+import {PaginationDataService} from "../../../../e-commerce-ui-common/business/data/pagination-data.service";
 
 @Component({
   selector: 'app-produit',
@@ -13,37 +14,25 @@ import {Categorie} from "../../../../e-commerce-ui-common/models/Categorie";
   styleUrls: ['./page.produit.component.css']
 })
 export class ProduitComponent implements OnInit {
-
-  public page: Promise<Pagination>;
+  @ViewChild('messageParPageSelect') messageParPageSelect: ElementRef;
+  public page:Pagination = this.paginationDataService.paginationProduit;
 
   /**
    * Tableau de produits à afficher
    */
-  public produits: Array<Produit>;
-
-  /**
-   * Taille du tableau de produits à afficher
-   */
-  public lengthProduit;
-
-  /**
-   * Numéro de la page actuelle
-   */
-  public pageActuelURL: number;
+  public produits = this.produitDataService.produits;
 
 
-  public pageMax: number;
-  public pageMin: number;
-  public categorieForBreadCrum;
-  /**
-   * Indique si une recherche de produits a été effectuée
-   */
-  public searchIsOn: boolean;
+
+  public categorieForBreadCrum = this.filtreService.categorieForBreadCrum;
+
 
   /**
    * Le texte recherché
    */
   public searchedText: string;
+
+  public pageInitiale: number;
 
   /**
    * true s'il y a des produits suivants à afficher et donc une page suivante
@@ -59,88 +48,81 @@ export class ProduitComponent implements OnInit {
    * Nombre de produits par page
    * @type {number}
    */
-  public messagesParPage = 5;
-  public back = false;
-
-  constructor(private categorieBusiness: CategorieBusinessService,private produitBusiness: ProduitBusiness, private activatedRoute: ActivatedRoute,
+  public messagesParPage = this.filtreService.getNbProduitParPage();
+  constructor(private paginationDataService: PaginationDataService,private filtreService: FiltreService,private produitDataService: ProduiDataService,private categorieBusiness: CategorieBusinessService,private produitBusiness: ProduitBusiness, private activatedRoute: ActivatedRoute,
               private _router: Router, private previousRouteBusiness: PreviousRouteBusiness) {
     this.activatedRoute.params.subscribe(params => {
-        this.pageActuelURL = parseInt(params.page, 10);
-        const backValue = params['back'];
-        if (backValue === '1') {
-          console.log('back');
-          this.back = true;
-        } else {
-
-          console.log('pas back');
-        }
-      },
-      error => {
-        console.log('Erreur gestion de page', error);
-      },
-    );
+      this.pageInitiale = parseInt(params.page, 10);
+    })
   }
-
   ngOnInit() {
-
-    // Déclenche l'affichage au chargement de la page
-    this.affichage();
-
-    // On a rechargé la page donc on n'est pas dans le cadre d'une recherche de produits.
-    this.searchIsOn = false;
-
-    // On souscrit à un Observable. Permet de recevoir une nouvelle liste paginée de produits à afficher
-    // en cas de recherche de produits par l'utilisateur.
-    this.produitBusiness.subject.subscribe((result) => {
-
-      this.produits = result.tableau;
-      this.lengthProduit = result.total;
-      this.pageActuelURL = result.pageActuelle;
-      this.pageMax = result.pageMax;
-      // On est dans le cadre d'une recherche (sauf si la chaîne recherchée est de longueur 0)
-      if(this.produitBusiness.searchedText.length === 0) {
-        this.searchIsOn = false;
-      } else {
-        this.searchIsOn = true;
-      }
-      this.getSearchedCategorie();
-    });
+    this.messageParPageSelect.nativeElement.value = this.messagesParPage;
+    if(this.pageInitiale <=0 ){
+      this.pageInitiale = 1;
+    }
+    if(!this.previousRouteBusiness.retour){
+      this.initialisation();
+    }
   }
 
 
-  async affichage() {
+  async initialisation() {
+    this.getPaginationWithoutSearch(this.pageInitiale,this.messagesParPage);
+    this._router.navigate(['/produit', this.page.pageActuelle]);
+  }
 
-    // Remise à zéro de la recherche si le texte recherché est de longueur 0
-    if(this.searchIsOn && this.produitBusiness.searchedText.length === 0) {
-      this.searchIsOn = false;
+  private async getPaginationWithoutSearch(pageDemande:number,messageParPage:number){
+    const result =  await this.produitBusiness.getProduitByPagination(pageDemande, messageParPage);
+    this.produits.arrayProduit = result.tableau;
+    this.produits.length = result.total;
+    this.page.pageActuelle = result.pageActuelle;
+    this.page.pageMax = result.pageMax;
+    this.page.total = result.total;
+    this.page.tableau = result.tableau;
+    this.page.pageMin = result.pageMin;
+    this.produitDataService.produits.arrayProduit = this.page.tableau;
+  }
+  private async getPaginationWithSearch(pageDemande:number,messageParPage:number){
+
+    const result = await this.produitBusiness.getProduitByPaginationSearch(pageDemande, messageParPage, this.produitBusiness.searchedText, this.produitBusiness.searchedCategorie);
+    this.produitDataService.produits.arrayProduit = result.tableau;
+    this.produitDataService.produits.length = result.total;
+    this.paginationDataService.paginationProduit.pageActuelle = result.pageActuelle;
+    this.paginationDataService.paginationProduit.pageMax = result.pageMax;
+    this.paginationDataService.paginationProduit.total = result.total;
+    this.paginationDataService.paginationProduit.tableau = result.tableau;
+    this.paginationDataService.paginationProduit.pageMin = result.pageMin;
+  }
+
+
+
+
+
+  async redirection() {
+    if (this.page.pageActuelle <= 0) {
+      console.log('redirection');
+      this._router.navigate(['/produit', this.page.pageMin]);
+    } else if (this.page.pageActuelle > this.page.pageMax) {
+      console.log('redirection');
+      this._router.navigate(['/produit', this.page.pageMax]);
     }
+  }
 
-    if(!this.searchIsOn) {
-      console.log('nb message par page sans recherche');
-
-      console.log(this.messagesParPage);
-      this.page = this.produitBusiness.getProduitByPagination(this.pageActuelURL, this.messagesParPage);
+  async selected(value: number) {
+    this.filtreService.saveNbProduitParPage(value);
+    this.messagesParPage = value;
+    const pasDeTexteRecherche = this.produitBusiness.searchedText =='' || this.produitBusiness.searchedText == undefined ||this.produitBusiness.searchedText==null;
+    const pasDeCategorieRecherche = this.filtreService.categorieForBreadCrum == undefined && this.filtreService.categorieForBreadCrum == null;
+    if (pasDeCategorieRecherche && pasDeTexteRecherche ){
+      console.log("without");
+      this.getPaginationWithoutSearch(this.page.pageActuelle,this.messagesParPage);
     } else {
-      this.page = this.produitBusiness.getProduitByPaginationSearch(this.pageActuelURL, this.messagesParPage, this.produitBusiness.searchedText, this.produitBusiness.searchedCategorie);
-    }
-
-    this.page.then(value => {
-        this.pageActuelURL = value.pageActuelle;
-        this.lengthProduit = value.total;
-        this.produits = value.tableau;
-
-      },
-      error2 => {
-        console.log('Erreur getProduitByPagination', error2);
-      });
-    this.pageMax = await this.getPageMax();
-    this.pageMin = await this.getPageMin();
-    if(this.searchIsOn) {
-      this.produitBusiness.subject.next(new Pagination(this.pageActuelURL, this.pageMin, this.pageMax, this.lengthProduit, this.produits));
+      console.log("with");
+      this.getPaginationWithSearch(this.page.pageActuelle,this.messagesParPage);
     }
 
     // Désactivation du bouton suivant s'il n'y a pas de page suivante
-    if(this.pageActuelURL === this.pageMax) {
+    if(this.page.pageActuelle === this.page.pageMax) {
       this.hasNextPage = false;
     }
     else {
@@ -148,7 +130,7 @@ export class ProduitComponent implements OnInit {
     }
 
     // Désactivation du bouton précédent s'il n'y a pas de page précédente
-    if(this.pageActuelURL === 1) {
+    if(this.page.pageActuelle === 1) {
       this.hasPreviousPage = false;
     }
     else {
@@ -156,47 +138,31 @@ export class ProduitComponent implements OnInit {
     }
 
     this.redirection();
-  }
-
-
-  // Permet
-  getPageMin(): Promise<number> {
-    return new Promise(resolve => this.page.then(value => resolve(value.pageMin)));
-  }
-
-  getPageMax(): Promise<number> {
-    return new Promise(resolve => this.page.then(value => resolve(value.pageMax)));
-  }
-
-  async redirection() {
-    if (this.pageActuelURL <= 0) {
-      console.log('redirection');
-      this._router.navigate(['/produit', this.pageMin]);
-    } else if (this.pageActuelURL > this.pageMax) {
-      console.log('redirection');
-      this._router.navigate(['/produit', this.pageMax]);
-    }
-  }
-
-  selected(value: any) {
-    this.messagesParPage = value;
-    this.affichage();
 
   }
 
-  pagination(value: String) {
+  async pagination(value: String) {
     if (value === 'precedent') {
-      if (this.pageActuelURL > this.pageMin) {
-        this.pageActuelURL = this.pageActuelURL - 1;
+      if (this.page.pageActuelle > this.page.pageMin) {
+        this.page.pageActuelle = this.page.pageActuelle - 1;
       }
     } else {
-      if (this.pageActuelURL < this.pageMax) {
-        this.pageActuelURL = this.pageActuelURL + 1;
+      if (this.page.pageActuelle < this.page.pageMax) {
+        this.page.pageActuelle = this.page.pageActuelle + 1;
+
       }
     }
-    this.affichage();
-
-    this._router.navigate(['/produit', this.pageActuelURL]);
+    this.filtreService.pageAffiche = this.page.pageActuelle;
+    const pasDeTexteRecherche = this.produitBusiness.searchedText =='' || this.produitBusiness.searchedText == undefined ||this.produitBusiness.searchedText==null;
+    const pasDeCategorieRecherche = this.filtreService.categorieForBreadCrum == undefined && this.filtreService.categorieForBreadCrum == null;
+    if (pasDeCategorieRecherche && pasDeTexteRecherche ){
+      console.log("without");
+      this.getPaginationWithoutSearch(this.page.pageActuelle,this.messagesParPage);
+    } else {
+      console.log("with");
+      this.getPaginationWithSearch(this.page.pageActuelle,this.messagesParPage);
+    }
+    this._router.navigate(['/produit', this.page.pageActuelle]);
   }
 
   redirectionPageDetail (ref: string){
@@ -204,14 +170,5 @@ export class ProduitComponent implements OnInit {
     this._router.navigate(['/produit/detail', ref]);
   }
 
-  public  getSearchedCategorie() {
-    const categorieNode = this.produitBusiness.searchedCategorieObject;
-    // 0 équivaut aucune catégorie existante
-    if(categorieNode && categorieNode.id !== 0){
-      this.categorieForBreadCrum = new Categorie(categorieNode.id,categorieNode.nomCategorie,undefined,undefined);
-    } else {
-      this.categorieForBreadCrum = undefined;
-    }
 
-  }
 }

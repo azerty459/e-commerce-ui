@@ -12,6 +12,7 @@ import {FlatTreeControl} from '@angular/cdk/tree';
 import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
 import {NavItem} from "./components/menu-item/nav-item";
 import {MatMenuTrigger} from "@angular/material";
+import {FiltreService} from "../../e-commerce-ui-common/business/filtre.service";
 
 @Component({
   selector: 'app-root',
@@ -35,6 +36,7 @@ export class AppComponent implements OnInit{
     private titleService: Title,
     private produitBusiness: ProduitBusiness,
     private arbreService: ArbreService,
+    private filterService: FiltreService,
   ) {
     this.treeFlattener = new MatTreeFlattener(arbreService.transformerNodeToFlatNode, arbreService.getLevel,
       arbreService.isExpandable, arbreService.getChildren);
@@ -56,7 +58,6 @@ export class AppComponent implements OnInit{
     primary.id=0;
     primary.children=JSON.parse(JSON.stringify(this.arbreService.data));
     this.navItems = JSON.parse(JSON.stringify([primary]));
-    console.log(this.arbreService.data);
   }
 
   ngOnInit() {
@@ -86,19 +87,24 @@ export class AppComponent implements OnInit{
    */
   public submitSearch(): void {
 
-    // Rediriger vers la page de résultats si on est sur une autre page // TODO
 
 
     if (this.navItems !== undefined) {
       this.produitBusiness.searchedText = this.produit.nom;
       if (this.navItems[0].id !== undefined) {
         this.produitBusiness.search(this.produit.nom, this.navItems[0].id);
-        console.log(this.navItems[0]);
+        this.produitBusiness.searchedCategorie = this.navItems[0].id;
         this.produitBusiness.searchedCategorieObject = this.navItems[0];
       }
     } else {
+      this.produitBusiness.searchedCategorie = 0;
       this.produitBusiness.search(this.produit.nom, 0);
     }
+    console.log(this.previousRouteBusiness.getCurrentUrl());
+    if(this.previousRouteBusiness.getCurrentUrl().startsWith('/produit/detail')){
+      this.router.navigate(['/produit']);
+    }
+
   }
 
 
@@ -106,7 +112,7 @@ export class AppComponent implements OnInit{
 
   /**
    * Methode appellée lors de la selection d'une catégorie dans le menu
-   * @param {CategorieNode} categorie selectionnée
+   * @param categorie selectionnée
    */
   public selectCategorie(item: CategorieNode): void{
     if(this.nodeLoaded = true){
@@ -128,5 +134,7 @@ export class AppComponent implements OnInit{
     this.chosenCategorie ="";
   }
 
-
+  public retourHome(){
+    this.router.navigate(['/produit']);
+  }
 }
