@@ -39,7 +39,6 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
   ngOnInit() {
   }
   ngOnChanges() {
-    console.log(this.previousRouteBusiness.getCurrentUrl().startsWith('/produit/detail'));
     this.categoriesForBreadCrumb = [];
     this.buildBreadCrumb();
   }
@@ -52,22 +51,15 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
       this.bcService.allCategories = await this.categorieData.getChemin();
       this.allCategories = this.bcService.allCategories;
     }
-    console.log(this.allCategories);
     for (let categorie of this.allCategories){
       if(categorie.id === this.categorie.id){
-        this.categorie.chemin = categorie.chemin + ' > ' + this.categorie.id;
-      }
-    }
-    const listIdString = this.categorie.chemin.split(' > ');
-    for (let id of listIdString){
-      for(let categorie of this.allCategories){
-        if (categorie.id.toString() === id){
-          const categorieToAdd = new Categorie(categorie.id,categorie.nom,categorie.level,categorie.chemin+' > '+categorie.id);
-          this.categoriesForBreadCrumb.push(categorieToAdd);
+        categorie.chemin.reverse();
+        for( let catDto of categorie.chemin){
+          this.categoriesForBreadCrumb.push(new Categorie(catDto.id,catDto.nom,catDto.level,null));
         }
+        this.categoriesForBreadCrumb.push(this.categorie);
       }
     }
-    console.log(this.categoriesForBreadCrumb);
   }
   public async redirect(categorieChoisie,i){
     if(!this.isClickable(i)){
