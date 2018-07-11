@@ -53,12 +53,16 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
     }
     for (let categorie of this.allCategories){
       if(categorie.id === this.categorie.id){
-        categorie.chemin.reverse();
         for( let catDto of categorie.chemin){
           this.categoriesForBreadCrumb.push(new Categorie(catDto.id,catDto.nom,catDto.level,null));
         }
         this.categoriesForBreadCrumb.push(this.categorie);
       }
+    }
+    if (this.categoriesForBreadCrumb[0].id != this.categorie.id){
+      this.categoriesForBreadCrumb.pop();
+      this.categoriesForBreadCrumb.reverse();
+      this.categoriesForBreadCrumb.push(this.categorie);
     }
   }
   public async redirect(categorieChoisie,i){
@@ -66,6 +70,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
 
     }else{
       const result = await this.produitBusiness.getProduitByPaginationSearch(1,this.filtreService.getNbProduitParPage(),'',categorieChoisie.id)
+      console.log(result);
       this.produitDataService.produits.arrayProduit = result.tableau;
       this.produitDataService.produits.length = result.total;
       this.paginationDataService.paginationProduit.pageActuelle = result.pageActuelle;
@@ -75,6 +80,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
       this.paginationDataService.paginationProduit.pageMin = result.pageMin;
       this.previousRouteBusiness.retour = true;
       this.filtreService.categorieForBreadCrum = categorieChoisie;
+      this.produitBusiness.searchedCategorie = categorieChoisie.id;
       this._router.navigate(['/produit']);
     }
 
