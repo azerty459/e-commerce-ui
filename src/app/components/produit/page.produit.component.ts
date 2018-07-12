@@ -7,7 +7,7 @@ import {CategorieBusinessService} from "../../../../e-commerce-ui-common/busines
 import {ProduiDataService} from "../../../../e-commerce-ui-common/business/data/produitData.service";
 import {FiltreService} from "../../../../e-commerce-ui-common/business/filtre.service";
 import {PaginationDataService} from "../../../../e-commerce-ui-common/business/data/pagination-data.service";
-
+import {environment} from '../../../../src/environments/environment';
 @Component({
   selector: 'app-produit',
   templateUrl: './page.produit.component.html',
@@ -21,7 +21,7 @@ export class ProduitComponent implements OnInit {
    * Tableau de produits à afficher
    */
   public produits = this.produitDataService.produits;
-
+  public api_download_url = environment.api_rest_download_url;
 
 
   public categorieForBreadCrum = this.filtreService.categorieForBreadCrum;
