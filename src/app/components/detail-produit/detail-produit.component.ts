@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Produit} from '../../../../e-commerce-ui-common/models/Produit';
 import {ProduitBusiness} from '../../../../e-commerce-ui-common/business/produit.service';
@@ -20,7 +20,7 @@ export class DetailProduitComponent implements OnInit {
   public pageActuelURL: string;
   public arrayPhotoUrl;
   positionAfterTooltip = 'after';
-
+  @ViewChild('image') public image;
   // Chaîne de catactères représentant le fil d'ariane pour les catégories (jusque la catégorie juste avant celle du produit)
   public catBreadCrumb: string;
 
@@ -69,7 +69,7 @@ export class DetailProduitComponent implements OnInit {
         this.produit = value;
         this.arrayPhotoUrl=[];
         for (const photo of this.produit.arrayPhoto) {
-          this.arrayPhotoUrl.push(photo.url);
+          this.arrayPhotoUrl.push(photo.url+'_'+this.image.nativeElement.clientHeight+'x'+this.image.nativeElement.clientWidth);
         }
 
       }

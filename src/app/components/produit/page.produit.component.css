@@ -6,8 +6,8 @@
   cursor:pointer;
   border: 1px solid black;
   margin: 30px 44px 0px 0px;
-  width: 200px;
-  height: 350px;
+  width: 240px;
+  height: 300px;
 }
 
 .produit_border_top {
@@ -15,7 +15,7 @@
 }
 
 .produit_image {
-  height: 60%;
+  height: 180px;
 }
 
 .produit_image > img {
