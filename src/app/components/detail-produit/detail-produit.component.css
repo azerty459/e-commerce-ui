@@ -1,9 +1,17 @@
-
+.avisArea{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  margin-top: 50px;
+  justify-content: center;
+  align-items: center;
+}
 
 
 
 .produit_image {
-  width: 100%;
+  display: flex;
   margin-right: 15px;
   background-color: #F2F2F2;
   align-items: center;/* aligne l'image horizontalement*/
@@ -54,9 +62,7 @@
   background-color: grey;
 }
 
-.produit_image{
-  align-items: center;
-}
+
 .prix{
   align-items: center;
 }
@@ -75,15 +81,26 @@
   padding: 10px;
 }
 
-.produit_image2{
-  width: 100%;
-  align-items: center;
-  justify-content: center;
+
+.commentaire {
+  margin: 5px;
+  width: 80%;
 }
-.produit_image2 > img{
+.ajoutAvis{
+  display: flex;
+  flex-direction: column;
+}
+.textAreaCommentaire{
+  height: 75px;
+}
+.stars{
+  color:#f1c40f;
+  padding-bottom: 30px;
+}
+.ratingComponent{
+  color:#f1c40f;
+}
+.slideshowImg{
   height: 100%;
   width: 100%;
 }
-
-
-

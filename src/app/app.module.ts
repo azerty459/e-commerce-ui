@@ -59,6 +59,8 @@ import {MenuItemComponent} from "./components/menu-item/menu-item.component";
 import {SlideshowModule} from "ng-simple-slideshow";
 import {ProduiDataService} from "../../e-commerce-ui-common/business/data/produitData.service";
 import {FiltreService} from "../../e-commerce-ui-common/business/filtre.service";
+import {StarRatingComponent} from "./components/star-rating/star-rating.component";
+import {AvisService} from "../../e-commerce-ui-common/business/avis.service";
 
 const appRoutes: Routes = [
   {
@@ -94,6 +96,7 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
+    StarRatingComponent,
     ProduitComponent,
     AccueilComponent,
     DetailProduitComponent,
@@ -157,7 +160,7 @@ const appRoutes: Routes = [
     FlexLayoutModule,
     MatChipsModule
   ],
-  providers: [ProduitBusiness, PreviousRouteBusiness, ArbreService, CategorieBusinessService, FiltreService, ProduiDataService],
+  providers: [AvisService,ProduitBusiness, PreviousRouteBusiness, ArbreService, CategorieBusinessService, FiltreService, ProduiDataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
