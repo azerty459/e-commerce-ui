@@ -74,3 +74,6 @@
   align-items: center;
   justify-content: center;
 }
+.imgContainer>img{
+  max-width: 238px;
+}
