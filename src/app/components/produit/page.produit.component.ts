@@ -7,7 +7,7 @@ import {CategorieBusinessService} from "../../../../e-commerce-ui-common/busines
 import {ProduiDataService} from "../../../../e-commerce-ui-common/business/data/produitData.service";
 import {FiltreService} from "../../../../e-commerce-ui-common/business/filtre.service";
 import {PaginationDataService} from "../../../../e-commerce-ui-common/business/data/pagination-data.service";
-
+import {environment} from '../../../../src/environments/environment';
 @Component({
   selector: 'app-produit',
   templateUrl: './page.produit.component.html',
@@ -21,7 +21,7 @@ export class ProduitComponent implements OnInit {
    * Tableau de produits à afficher
    */
   public produits = this.produitDataService.produits;
-
+  public api_download_url = environment.api_rest_download_url;
 
 
   public categorieForBreadCrum = this.filtreService.categorieForBreadCrum;
@@ -53,12 +53,14 @@ export class ProduitComponent implements OnInit {
               public _router: Router, public previousRouteBusiness: PreviousRouteBusiness) {
     this.activatedRoute.params.subscribe(params => {
       this.pageInitiale = parseInt(params.page, 10);
+      this.page.pageActuelle = parseInt(params.page, 10);
     })
   }
   ngOnInit() {
     this.messageParPageSelect.nativeElement.value = this.messagesParPage;
-    if(this.pageInitiale <=0 ){
+    if(this.pageInitiale <= 0 ){
       this.pageInitiale = 1;
+      this.page.pageActuelle = 1;
     }
     if(!this.previousRouteBusiness.retour){
       this.initialisation();
@@ -75,7 +77,11 @@ export class ProduitComponent implements OnInit {
     const result =  await this.produitBusiness.getProduitByPagination(pageDemande, messageParPage);
     this.produits.arrayProduit = result.tableau;
     this.produits.length = result.total;
-    this.page.pageActuelle = result.pageActuelle;
+    if(result.pageActuelle === 0){
+      this.page.pageActuelle = 1;
+    }else {
+      this.page.pageActuelle = result.pageActuelle;
+    }
     this.page.pageMax = result.pageMax;
     this.page.total = result.total;
     this.page.tableau = result.tableau;
@@ -83,7 +89,6 @@ export class ProduitComponent implements OnInit {
     this.produitDataService.produits.arrayProduit = this.page.tableau;
   }
   private async getPaginationWithSearch(pageDemande:number,messageParPage:number){
-
     const result = await this.produitBusiness.getProduitByPaginationSearch(pageDemande, messageParPage, this.produitBusiness.searchedText, this.produitBusiness.searchedCategorie);
     this.produitDataService.produits.arrayProduit = result.tableau;
     this.produitDataService.produits.length = result.total;
@@ -147,6 +152,7 @@ export class ProduitComponent implements OnInit {
         this.page.pageActuelle = this.page.pageActuelle - 1;
       }
     } else {
+      console.log(this.page);
       if (this.page.pageActuelle < this.page.pageMax) {
         this.page.pageActuelle = this.page.pageActuelle + 1;
 

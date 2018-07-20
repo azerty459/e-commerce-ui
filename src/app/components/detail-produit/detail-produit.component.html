@@ -15,17 +15,18 @@
   <div id="toolbar">
     <app-retour  matTooltip="Revenir en arrière" [matTooltipPosition]="positionAfterTooltip"></app-retour>
   </div>
-  <div class="flex7 flex-row top_container" >
-    <div  >
-
+  <div #image class="flex7 flex-row top_container" >
+    <div class="flex4 flex-column produit_image">
+      <slideshow class="slideshowImg" *ngIf="produit?.arrayPhoto.length"
+                  [backgroundSize]="'length'"
+                  [imageUrls]="arrayPhotoUrl"
+                  [autoPlay]="true"
+                  [lazyLoad]="arrayPhotoUrl?.length > 1"
+                  [showDots]="true"
+      >
+      </slideshow>
     </div>
-    <slideshow  *ngIf="produit?.arrayPhoto.length" class="flex4 flex-column produit_image"
-                [imageUrls]="arrayPhotoUrl"
-                [autoPlay]="true"
-                [lazyLoad]="arrayPhotoUrl?.length > 1"
-                [showDots]="true"
-    >
-    </slideshow>
+
     <div class="flex4 flex-column produit_image" *ngIf="produit?.arrayPhoto.length === 0">
       <img
         src="../../../assets/img/1024px-Emblem-question.svg.png" alt="produit image"
@@ -51,28 +52,44 @@
     </div>
   </div>
 
-    <!--
-
-
-
-  <div class="flex7 flex-column additionalDetail_container">
-    <div class="flex">
-      <h1>Informations additionnel</h1>
-
-    </div>
-    <div class="flex4 flex-row descriptionAdditionnel">
-      <div class="flex">
-        <p> Ma description additionnel blad zdazdzadaz dazd az tfuvygbuhinj,oiuybrctexzrctbhuyjn,oik; </p>
-      </div>
-      <div class="flex2 produit_image2">
-        <img
-          src="../../../assets/img/1024px-Emblem-question.svg.png" alt="produit image"
-          width="300" height="100">
-      </div>
-    </div>
-    </div>
-    !-->
-
 
 
 </div>
+
+
+<div class="avisArea">
+  <mat-card class="commentaire">
+  <mat-card-header>
+    <mat-star-rating class="ratingComponent" [rating]="rating"  [starCount]="starCount" [color]="starColor" (ratingUpdated)="onRatingChanged($event)"></mat-star-rating>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="ajoutAvis">
+
+      <mat-form-field>
+        <textarea matInput #description class="textAreaCommentaire" placeholder="Commentaire"></textarea>
+      </mat-form-field>
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <button color="primary" mat-button mat-raised-button (click)="ajoutAvis(description.value)">Soumettre</button>
+  </mat-card-actions>
+</mat-card>
+    <mat-card  *ngFor="let avis of this.produit?.avis; let i = index" class="commentaire">
+      <mat-card-header class="stars">
+        <div  *ngFor="let i of generateRowIndexes(avis.note)">
+          <mat-icon>{{i}}</mat-icon>
+        </div>
+
+      </mat-card-header>
+      <mat-card-content>
+        <p>
+         {{avis.description}}
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+      </mat-card-actions>
+    </mat-card>
+
+
+</div>
+

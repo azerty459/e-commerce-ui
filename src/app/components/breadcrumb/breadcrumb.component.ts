@@ -39,7 +39,6 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
   ngOnInit() {
   }
   ngOnChanges() {
-    console.log(this.previousRouteBusiness.getCurrentUrl().startsWith('/produit/detail'));
     this.categoriesForBreadCrumb = [];
     this.buildBreadCrumb();
   }
@@ -52,28 +51,26 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
       this.bcService.allCategories = await this.categorieData.getChemin();
       this.allCategories = this.bcService.allCategories;
     }
-    console.log(this.allCategories);
     for (let categorie of this.allCategories){
       if(categorie.id === this.categorie.id){
-        this.categorie.chemin = categorie.chemin + ' > ' + this.categorie.id;
-      }
-    }
-    const listIdString = this.categorie.chemin.split(' > ');
-    for (let id of listIdString){
-      for(let categorie of this.allCategories){
-        if (categorie.id.toString() === id){
-          const categorieToAdd = new Categorie(categorie.id,categorie.nom,categorie.level,categorie.chemin+' > '+categorie.id);
-          this.categoriesForBreadCrumb.push(categorieToAdd);
+        for( let catDto of categorie.chemin){
+          this.categoriesForBreadCrumb.push(new Categorie(catDto.id,catDto.nom,catDto.level,null));
         }
+        this.categoriesForBreadCrumb.push(this.categorie);
       }
     }
-    console.log(this.categoriesForBreadCrumb);
+    if (this.categoriesForBreadCrumb[0].id != this.categorie.id){
+      this.categoriesForBreadCrumb.pop();
+      this.categoriesForBreadCrumb.reverse();
+      this.categoriesForBreadCrumb.push(this.categorie);
+    }
   }
   public async redirect(categorieChoisie,i){
     if(!this.isClickable(i)){
 
     }else{
       const result = await this.produitBusiness.getProduitByPaginationSearch(1,this.filtreService.getNbProduitParPage(),'',categorieChoisie.id)
+      console.log(result);
       this.produitDataService.produits.arrayProduit = result.tableau;
       this.produitDataService.produits.length = result.total;
       this.paginationDataService.paginationProduit.pageActuelle = result.pageActuelle;
@@ -83,6 +80,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
       this.paginationDataService.paginationProduit.pageMin = result.pageMin;
       this.previousRouteBusiness.retour = true;
       this.filtreService.categorieForBreadCrum = categorieChoisie;
+      this.produitBusiness.searchedCategorie = categorieChoisie.id;
       this._router.navigate(['/produit']);
     }
 

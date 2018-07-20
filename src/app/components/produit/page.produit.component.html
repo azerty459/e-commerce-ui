@@ -106,10 +106,9 @@
       <div  *ngFor="let produit of produits.arrayProduit; let i = index">
         <div class="flex produit" (click)="redirectionPageDetail(produit.ref)">
           <div class="flex-row produit_image">
-
-            <div *ngIf="produit.arrayPhoto[0]; else noPhoto">
-              <img src="{{produit.arrayPhoto[0].url}}" alt="Image du produit {{produit.nom}}"
-                   width="100%" height="autp">
+            <div class="imgContainer" *ngIf="produit.photoPrincipale && produit.photoPrincipale.id !== 0; else noPhoto">
+              <img src="{{api_download_url+produit.photoPrincipale.url+'_240x180'}}" alt="Image du produit {{produit.nom}}"
+                   >
             </div>
 
             <ng-template #noPhoto>
