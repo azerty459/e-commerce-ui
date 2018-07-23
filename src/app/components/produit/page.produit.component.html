@@ -107,13 +107,12 @@
         <div class="flex produit" (click)="redirectionPageDetail(produit.ref)">
           <div class="flex-row produit_image">
             <div class="imgContainer" *ngIf="produit.photoPrincipale && produit.photoPrincipale.id !== 0; else noPhoto">
-              <img src="{{api_download_url+produit.photoPrincipale.url+'_240x180'}}" alt="Image du produit {{produit.nom}}"
+              <img class="imagePrincipale" src="{{api_download_url+produit.photoPrincipale.url+'_240x180'}}" alt="Image du produit {{produit.nom}}"
                    >
             </div>
 
             <ng-template #noPhoto>
-              <img src="../../../assets/img/1024px-Emblem-question.svg.png" alt="produit image"
-              width="300" height="100">
+              <img class="imagePrincipale" src="../../../assets/img/1024px-Emblem-question.svg.png" alt="produit image">
             </ng-template>
 
           </div>

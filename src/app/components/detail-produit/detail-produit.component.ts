@@ -100,6 +100,9 @@ export class DetailProduitComponent implements OnInit {
     }else {
       this.avisService.ajoutAvis(new Avis(0,description,this.rating,undefined,this.produit.ref));
       this.produit.avis.push(new Avis(0,description,this.rating,undefined,this.produit.ref));
+      this.snackBar.open('Avis ajouté', '', {
+        duration: 2000
+      });
     }
 
   }

@@ -25,9 +25,7 @@
   height: 10%;
 }
 .produit_image > img {
-
-  height: 60%;
-  width: 60%;
+  height: 310px;
 }
 
 .produit_container{
