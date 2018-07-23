@@ -16,6 +16,9 @@
 
 .produit_image {
   height: 180px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .produit_image > img {
@@ -76,4 +79,7 @@
 }
 .imgContainer>img{
   max-width: 238px;
+}
+.imagePrincipale{
+  max-height: 180px;
 }
