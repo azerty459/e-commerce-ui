@@ -18,7 +18,7 @@ import {MatSnackBar} from "@angular/material";
 export class DetailProduitComponent implements OnInit {
   @Input('rating') rating= 0;
   @Input('starCount') starCount = 5;
-  @Input('color') starcolor: string;
+  @Input('color') starColor: string;
 
   public promiseProduit: Promise<Produit>;
   public promiseAvis: Promise<[Avis]>;
