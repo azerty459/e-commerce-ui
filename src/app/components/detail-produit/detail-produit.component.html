@@ -16,7 +16,7 @@
     <app-retour  matTooltip="Revenir en arrière" [matTooltipPosition]="positionAfterTooltip"></app-retour>
   </div>
   <div #image class="flex7 flex-row top_container" >
-    <div class="flex4 flex-column produit_image" *ngIf="produit.arrayPhoto.length != 0">
+    <div class="flex4 flex-column produit_image" *ngIf="produit?.arrayPhoto.length != 0">
       <slideshow class="slideshowImg" *ngIf="produit?.arrayPhoto.length"
                   [backgroundSize]="'contain'"
                   [imageUrls]="arrayPhotoUrl"

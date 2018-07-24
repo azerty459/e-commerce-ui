@@ -21,10 +21,7 @@
   align-items: center;
 }
 
-.produit_image > img {
-  height: auto;
-  width: 100%;
-}
+
 
 .produit_nom {
   padding-left: 10px;
