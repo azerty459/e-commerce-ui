@@ -86,9 +86,6 @@ export class AppComponent implements OnInit{
    * Méthode appelée par le formulaire de recherche
    */
   public submitSearch(): void {
-
-
-
     if (this.navItems !== undefined) {
       this.produitBusiness.searchedText = this.produit.nom;
       if (this.navItems[0].id !== undefined) {

@@ -14,8 +14,10 @@ import {environment} from '../../../../src/environments/environment';
   styleUrls: ['./page.produit.component.css']
 })
 export class ProduitComponent implements OnInit {
-  @ViewChild('messageParPageSelect') messageParPageSelect: ElementRef;
+//  @ViewChild('messageParPageSelect') messageParPageSelect: ElementRef;
   public page:Pagination = this.paginationDataService.paginationProduit;
+
+  public nbProduitsParPage = this.filtreService.getNbProduitParPage();
 
   /**
    * Tableau de produits à afficher
@@ -48,16 +50,14 @@ export class ProduitComponent implements OnInit {
    * Nombre de produits par page
    * @type {number}
    */
-  public messagesParPage = this.filtreService.getNbProduitParPage();
   constructor(public paginationDataService: PaginationDataService,public filtreService: FiltreService,public produitDataService: ProduiDataService,public categorieBusiness: CategorieBusinessService,public produitBusiness: ProduitBusiness, public activatedRoute: ActivatedRoute,
               public _router: Router, public previousRouteBusiness: PreviousRouteBusiness) {
     this.activatedRoute.params.subscribe(params => {
       this.pageInitiale = parseInt(params.page, 10);
       this.page.pageActuelle = parseInt(params.page, 10);
-    })
+    });
   }
   ngOnInit() {
-    this.messageParPageSelect.nativeElement.value = this.messagesParPage;
     if(this.pageInitiale <= 0 ){
       this.pageInitiale = 1;
       this.page.pageActuelle = 1;
@@ -69,7 +69,7 @@ export class ProduitComponent implements OnInit {
 
 
   async initialisation() {
-    this.getPaginationWithoutSearch(this.pageInitiale,this.messagesParPage);
+    this.getPaginationWithoutSearch(this.pageInitiale,this.nbProduitsParPage);
     this._router.navigate(['/produit', this.page.pageActuelle]);
   }
 
@@ -115,16 +115,7 @@ export class ProduitComponent implements OnInit {
 
   async selected(value: number) {
     this.filtreService.saveNbProduitParPage(value);
-    this.messagesParPage = value;
-    const pasDeTexteRecherche = this.produitBusiness.searchedText =='' || this.produitBusiness.searchedText == undefined ||this.produitBusiness.searchedText==null;
-    const pasDeCategorieRecherche = this.filtreService.categorieForBreadCrum == undefined && this.filtreService.categorieForBreadCrum == null;
-    if (pasDeCategorieRecherche && pasDeTexteRecherche ){
-      console.log("without");
-      this.getPaginationWithoutSearch(this.page.pageActuelle,this.messagesParPage);
-    } else {
-      console.log("with");
-      this.getPaginationWithSearch(this.page.pageActuelle,this.messagesParPage);
-    }
+    this.reloadProduct();
 
     // Désactivation du bouton suivant s'il n'y a pas de page suivante
     if(this.page.pageActuelle === this.page.pageMax) {
@@ -146,6 +137,19 @@ export class ProduitComponent implements OnInit {
 
   }
 
+  private reloadProduct(): void {
+    const pasDeTexteRecherche = this.produitBusiness.searchedText =='' || this.produitBusiness.searchedText == undefined ||this.produitBusiness.searchedText==null;
+    const pasDeCategorieRecherche = this.filtreService.categorieForBreadCrum == undefined && this.filtreService.categorieForBreadCrum == null;
+    if (pasDeCategorieRecherche && pasDeTexteRecherche ){
+      console.log("without");
+      this.getPaginationWithoutSearch(this.page.pageActuelle,this.nbProduitsParPage);
+    } else {
+      console.log("with");
+      this.getPaginationWithSearch(this.page.pageActuelle,this.nbProduitsParPage);
+    }
+  }
+
+
   async pagination(value: String) {
     if (value === 'precedent') {
       if (this.page.pageActuelle > this.page.pageMin) {
@@ -159,15 +163,7 @@ export class ProduitComponent implements OnInit {
       }
     }
     this.filtreService.pageAffiche = this.page.pageActuelle;
-    const pasDeTexteRecherche = this.produitBusiness.searchedText =='' || this.produitBusiness.searchedText == undefined ||this.produitBusiness.searchedText==null;
-    const pasDeCategorieRecherche = this.filtreService.categorieForBreadCrum == undefined && this.filtreService.categorieForBreadCrum == null;
-    if (pasDeCategorieRecherche && pasDeTexteRecherche ){
-      console.log("without");
-      this.getPaginationWithoutSearch(this.page.pageActuelle,this.messagesParPage);
-    } else {
-      console.log("with");
-      this.getPaginationWithSearch(this.page.pageActuelle,this.messagesParPage);
-    }
+    this.reloadProduct();
     this._router.navigate(['/produit', this.page.pageActuelle]);
   }
 

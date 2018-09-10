@@ -83,7 +83,7 @@
       <div class="afficher flex flex-row">
         <span class="text_afficher">Afficher</span>
         <div  class="form-group">
-          <select #messageParPageSelect id="messagesParPage" (change)="selected($event.target.value)" class="form-control">
+          <select #messageParPageSelect id="messagesParPage" [(ngModel)]="nbProduitsParPage" (change)="selected($event.target.value)" class="form-control">
             <option value="5">5 produits</option>
             <option value="25">25 produits</option>
             <option value="50">50 produits</option>
