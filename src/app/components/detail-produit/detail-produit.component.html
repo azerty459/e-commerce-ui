@@ -37,16 +37,7 @@
     <div class="flex3 flex-column detail_container">
       <div class="flex flex-row prix"><div class="flex valeurPrix">{{produit?.prixHT}}€</div><div class="flex descriptifPrix text-align-right">Prix HT</div></div>
 
-      <div class="flex flex-row moyenne">
-        <div class="flex moyenneNote">
-          <span>{{produit?.avis.length}} avis</span>
-          <mat-card-header class="stars">
-            <div *ngFor="let i of generateRowIndexes(produit.noteMoyenne)">
-              <mat-icon>{{i}}</mat-icon>
-            </div>
-          </mat-card-header>
-        </div>
-      </div>
+      <div class="flex flex-row moyenne"><div class="flex moyenneNote">Note moyenne {{produit?.noteMoyenne}}</div></div>
 
       <div class="flex flex-row purchase"><button [disabled]="true" mat-raised-button color="warn" >Add to cart</button></div>
 
@@ -85,24 +76,20 @@
     <button color="primary" mat-button mat-raised-button (click)="ajoutAvis(description.value)">Soumettre</button>
   </mat-card-actions>
 </mat-card>
-
     <mat-card  *ngFor="let avis of this.produit?.avis; let i = index" class="commentaire">
-
       <mat-card-header class="stars">
         <div  *ngFor="let i of generateRowIndexes(avis.note)">
           <mat-icon>{{i}}</mat-icon>
         </div>
-      </mat-card-header>
 
+      </mat-card-header>
       <mat-card-content>
         <p>
          {{avis.description}}
         </p>
       </mat-card-content>
-
       <mat-card-actions>
       </mat-card-actions>
-
     </mat-card>
 
 
