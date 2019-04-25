@@ -26,7 +26,7 @@ export class AppComponent implements OnInit{
   public treeControl: FlatTreeControl<CategorieFlatNode>;
   public treeFlattener: MatTreeFlattener<CategorieNode, CategorieFlatNode>;
   public dataSource: MatTreeFlatDataSource<CategorieNode, CategorieFlatNode>;
-  public produit = new Produit('', '', '', 0);
+  public produit = new Produit('', '', '', 0,0);
   public chosenCategorie = "";
   public categorieHasBeenSelected=false;
   constructor(
