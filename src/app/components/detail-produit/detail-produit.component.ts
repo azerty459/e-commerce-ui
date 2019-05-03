@@ -110,15 +110,11 @@ export class DetailProduitComponent implements OnInit {
   public generateRowIndexes(index:number){
     let indexes = [];
     for(let i = 0; i<5;i++){
-     
-      if(index-i >= 1){
+      if(i<index){
         indexes.push('star');
-      }else if(index-i >= 0.5){
-        indexes.push('star_half');
-      }else{
+      }else {
         indexes.push('star_border');
       }
-      
     }
     return indexes;
   }
