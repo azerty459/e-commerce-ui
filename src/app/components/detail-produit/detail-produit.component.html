@@ -39,7 +39,7 @@
 
       <div class="flex flex-row moyenne">
         <div class="flex moyenneNote">
-          <span>{{produit?.avis.length}} avis</span>
+          <span>Note: {{produit?.noteMoyenne.toFixed(1)}}</span>
           <mat-card-header class="stars">
             <div *ngFor="let i of generateRowIndexes(produit.noteMoyenne)">
               <mat-icon>{{i}}</mat-icon>
