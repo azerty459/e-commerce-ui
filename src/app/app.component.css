@@ -1,11 +1,13 @@
 
-.btn-group{
-  font-size:13px;
+.btn-group {
+  font-size: 13px;
 }
-.cancelButton{
+
+.cancelButton {
   margin: 0;
   min-width: 0px;
 }
-.search_bar{
+
+.search_bar {
   margin-left: 10px;
 }

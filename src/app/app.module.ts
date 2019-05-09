@@ -1,94 +1,96 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
-  MatButtonModule,
-  MatIconModule,
-  MatCardModule,
-  MatToolbarModule,
-  MatMenuModule,
-  MatInputModule,
-  MatFormFieldModule,
-  MatSidenavModule,
-  MatSelectModule,
-  MatTooltipModule,
-  MatStepperModule,
-  MatSortModule,
-  MatSnackBarModule,
-  MatSlideToggleModule,
-  MatSliderModule,
-  MatRippleModule,
-  MatRadioModule,
-  MatProgressSpinnerModule,
-  MatProgressBarModule,
-  MatPaginatorModule,
-  MatNativeDateModule,
-  MatListModule,
-  MatTableModule,
-  MatTabsModule,
   MatAutocompleteModule,
-  MatCheckboxModule,
+  MatButtonModule,
   MatButtonToggleModule,
+  MatCardModule,
+  MatCheckboxModule,
+  MatChipsModule,
   MatDatepickerModule,
   MatDialogModule,
-  MatChipsModule,
   MatDividerModule,
   MatExpansionModule,
+  MatFormFieldModule,
   MatGridListModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatMenuModule,
+  MatNativeDateModule,
+  MatPaginatorModule,
+  MatProgressBarModule,
+  MatProgressSpinnerModule,
+  MatRadioModule,
+  MatRippleModule,
+  MatSelectModule,
+  MatSidenavModule,
+  MatSliderModule,
+  MatSlideToggleModule,
+  MatSnackBarModule,
+  MatSortModule,
+  MatStepperModule,
+  MatTableModule,
+  MatTabsModule,
+  MatToolbarModule,
+  MatTooltipModule,
   MatTreeModule
 } from '@angular/material';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import {FlexLayoutModule} from '@angular/flex-layout';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
-import { AppComponent } from './app.component';
-import { ProduitComponent } from './components/produit/page.produit.component';
+import {AppComponent} from './app.component';
+import {ProduitComponent} from './components/produit/page.produit.component';
 import {HttpModule} from '@angular/http';
-import { AccueilComponent } from './components/accueil/accueil.component';
+import {AccueilComponent} from './components/accueil/accueil.component';
 import {ProduitBusiness} from '../../e-commerce-ui-common/business/produit.service';
-import { DetailProduitComponent } from './components/detail-produit/detail-produit.component';
+import {DetailProduitComponent} from './components/detail-produit/detail-produit.component';
 import {PreviousRouteBusiness} from '../../e-commerce-ui-common/business/previous-route.service';
 import {RetourComponent} from '../../e-commerce-ui-common/utilitaires/retour/retour.component';
-import { HttpClientModule } from '@angular/common/http';
+import {HttpClientModule} from '@angular/common/http';
 
-import { FormsModule } from '@angular/forms';
-import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
-import {ArbreService} from "../../e-commerce-ui-common/business/arbre.service";
-import {CategorieBusinessService} from "../../e-commerce-ui-common/business/categorie.service";
-import {MenuItemComponent} from "./components/menu-item/menu-item.component";
-import {SlideshowModule} from "ng-simple-slideshow";
-import {ProduiDataService} from "../../e-commerce-ui-common/business/data/produitData.service";
-import {FiltreService} from "../../e-commerce-ui-common/business/filtre.service";
-import {StarRatingComponent} from "./components/star-rating/star-rating.component";
-import {AvisService} from "../../e-commerce-ui-common/business/avis.service";
+import {FormsModule} from '@angular/forms';
+import {BreadcrumbComponent} from './components/breadcrumb/breadcrumb.component';
+import {ArbreService} from '../../e-commerce-ui-common/business/arbre.service';
+import {CategorieBusinessService} from '../../e-commerce-ui-common/business/categorie.service';
+import {MenuItemComponent} from './components/menu-item/menu-item.component';
+import {SlideshowModule} from 'ng-simple-slideshow';
+import {ProduiDataService} from '../../e-commerce-ui-common/business/data/produitData.service';
+import {FiltreService} from '../../e-commerce-ui-common/business/filtre.service';
+import {StarRatingComponent} from './components/star-rating/star-rating.component';
+import {AvisService} from '../../e-commerce-ui-common/business/avis.service';
 
 const appRoutes: Routes = [
   {
     path: 'produit',
-    redirectTo: 'produit/1'},
+    redirectTo: 'produit/1'
+  },
   {
     path: 'produit/:page',
     component: ProduitComponent,
-    data: { title: 'e-commerce - Produits' }
+    data: {title: 'e-commerce - Produits'}
   },
   {
     path: 'produit/:page;nbMsg=:nbMsg',
     component: ProduitComponent,
-    data: { title: 'e-commerce - Produits' }
+    data: {title: 'e-commerce - Produits'}
   },
   {
     path: 'accueil',
     component: AccueilComponent,
-    data: { title: 'e-commerce - Accueil' }
+    data: {title: 'e-commerce - Accueil'}
   },
-  { path: '',
+  {
+    path: '',
     redirectTo: '/produit/1',
     pathMatch: 'full'
   },
   {
     path: 'produit/detail/:ref',
     component: DetailProduitComponent,
-    data: { title: 'e-commerce - Detail produit' }
+    data: {title: 'e-commerce - Detail produit'}
   }
   // { path: '**', component: PageNotFoundComponent }
 ];
@@ -112,7 +114,7 @@ const appRoutes: Routes = [
     NgbModule.forRoot(),
     RouterModule.forRoot(
       appRoutes,
-      { enableTracing: false } // <-- debugging purposes only
+      {enableTracing: false} // <-- debugging purposes only
     ),
     BrowserAnimationsModule,
     MatCardModule,
@@ -160,7 +162,8 @@ const appRoutes: Routes = [
     FlexLayoutModule,
     MatChipsModule
   ],
-  providers: [AvisService,ProduitBusiness, PreviousRouteBusiness, ArbreService, CategorieBusinessService, FiltreService, ProduiDataService],
+  providers: [AvisService, ProduitBusiness, PreviousRouteBusiness, ArbreService, CategorieBusinessService, FiltreService, ProduiDataService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

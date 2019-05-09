@@ -4,58 +4,58 @@
 
 <div class="flex-row margin">
   <!--<div class="flex">-->
-    <!--<a href="/accueil">Accueil</a> > <a href="/produits">Produits</a>-->
+  <!--<a href="/accueil">Accueil</a> > <a href="/produits">Produits</a>-->
   <!--</div>-->
   <!--<div class="flex flex-row">-->
-    <!--<div class="flex3"></div>-->
+  <!--<div class="flex3"></div>-->
   <!--</div>-->
 </div>
 <div class="flex-row margin">
   <!--<div class="flex-column caracteristique">-->
-    <!--<div class="flex-column">-->
-      <!--<div class="flex-row">-->
-        <!--<b class="caracteristique_nom">Couleur</b>-->
-      <!--</div>-->
-      <!--<div class="flex-row">-->
-        <!--<mat-checkbox>Rouge</mat-checkbox>-->
-      <!--</div>-->
-      <!--<div class="flex-row">-->
-        <!--<mat-checkbox>Bleu</mat-checkbox>-->
-      <!--</div>-->
-      <!--<div class="flex-row">-->
-        <!--<mat-checkbox>Blanc</mat-checkbox>-->
-      <!--</div>-->
-      <!--<div class="flex-row">-->
-        <!--<mat-checkbox>Noire</mat-checkbox>-->
-      <!--</div>-->
-      <!--<div class="flex-row">-->
-        <!--<mat-checkbox>Orange</mat-checkbox>-->
-      <!--</div>-->
-    <!--</div>-->
-    <!--<div class="spacing-bare"></div>-->
-    <!--<div class="flex-column">-->
-      <!--<div class="flex-row">-->
-        <!--<b class="caracteristique_nom">Dimension</b>-->
-      <!--</div>-->
-      <!--<div class="flex-row">-->
-        <!--<mat-checkbox>10x10</mat-checkbox>-->
-      <!--</div>-->
-      <!--<div class="flex-row">-->
-        <!--<mat-checkbox>11x11</mat-checkbox>-->
-      <!--</div>-->
-      <!--<div class="flex-row">-->
-        <!--<mat-checkbox>12x12</mat-checkbox>-->
-      <!--</div>-->
-      <!--<div class="flex-row">-->
-        <!--<mat-checkbox>13x13</mat-checkbox>-->
-      <!--</div>-->
-      <!--<div class="flex-row">-->
-        <!--<mat-checkbox>14x14</mat-checkbox>-->
-      <!--</div>-->
-      <!--<div class="flex-row">-->
-        <!--<mat-checkbox>15x15</mat-checkbox>-->
-      <!--</div>-->
-    <!--</div>-->
+  <!--<div class="flex-column">-->
+  <!--<div class="flex-row">-->
+  <!--<b class="caracteristique_nom">Couleur</b>-->
+  <!--</div>-->
+  <!--<div class="flex-row">-->
+  <!--<mat-checkbox>Rouge</mat-checkbox>-->
+  <!--</div>-->
+  <!--<div class="flex-row">-->
+  <!--<mat-checkbox>Bleu</mat-checkbox>-->
+  <!--</div>-->
+  <!--<div class="flex-row">-->
+  <!--<mat-checkbox>Blanc</mat-checkbox>-->
+  <!--</div>-->
+  <!--<div class="flex-row">-->
+  <!--<mat-checkbox>Noire</mat-checkbox>-->
+  <!--</div>-->
+  <!--<div class="flex-row">-->
+  <!--<mat-checkbox>Orange</mat-checkbox>-->
+  <!--</div>-->
+  <!--</div>-->
+  <!--<div class="spacing-bare"></div>-->
+  <!--<div class="flex-column">-->
+  <!--<div class="flex-row">-->
+  <!--<b class="caracteristique_nom">Dimension</b>-->
+  <!--</div>-->
+  <!--<div class="flex-row">-->
+  <!--<mat-checkbox>10x10</mat-checkbox>-->
+  <!--</div>-->
+  <!--<div class="flex-row">-->
+  <!--<mat-checkbox>11x11</mat-checkbox>-->
+  <!--</div>-->
+  <!--<div class="flex-row">-->
+  <!--<mat-checkbox>12x12</mat-checkbox>-->
+  <!--</div>-->
+  <!--<div class="flex-row">-->
+  <!--<mat-checkbox>13x13</mat-checkbox>-->
+  <!--</div>-->
+  <!--<div class="flex-row">-->
+  <!--<mat-checkbox>14x14</mat-checkbox>-->
+  <!--</div>-->
+  <!--<div class="flex-row">-->
+  <!--<mat-checkbox>15x15</mat-checkbox>-->
+  <!--</div>-->
+  <!--</div>-->
   <!--</div>-->
   <div class="flex6 flex-column">
     <!-- Fil d'ariane pour la catégorie du produit -->
@@ -66,24 +66,25 @@
 
     <div class="barre_produit_top flex-row">
       <div class="flex flex-row">
-          <span class="text_afficher">{{produits.length}} articles au total</span>
+        <span class="text_afficher">{{produits.length}} articles au total</span>
       </div>
       <!--<div class="trier flex flex-row">-->
-        <!--<span class="text_afficher">Trier par</span>-->
-        <!--<div class="form-group">-->
-          <!--<select class="form-control">-->
-            <!--<option>Nom</option>-->
-            <!--<option>Note</option>-->
-            <!--<option>Nombre d'avis</option>-->
-            <!--<option>Prix décroissant</option>-->
-            <!--<option>Prix croissant</option>-->
-          <!--</select>-->
-        <!--</div>-->
+      <!--<span class="text_afficher">Trier par</span>-->
+      <!--<div class="form-group">-->
+      <!--<select class="form-control">-->
+      <!--<option>Nom</option>-->
+      <!--<option>Note</option>-->
+      <!--<option>Nombre d'avis</option>-->
+      <!--<option>Prix décroissant</option>-->
+      <!--<option>Prix croissant</option>-->
+      <!--</select>-->
+      <!--</div>-->
       <!--</div>-->
       <div class="afficher flex flex-row">
         <span class="text_afficher">Afficher</span>
-        <div  class="form-group">
-          <select #messageParPageSelect id="messagesParPage" [(ngModel)]="nbProduitsParPage" (change)="selected($event.target.value)" class="form-control">
+        <div class="form-group">
+          <select #messageParPageSelect (change)="selected($event.target.value)" [(ngModel)]="nbProduitsParPage"
+                  class="form-control" id="messagesParPage">
             <option value="5">5 produits</option>
             <option value="25">25 produits</option>
             <option value="50">50 produits</option>
@@ -96,23 +97,30 @@
         <span class="text_afficher">Page {{page?.pageActuelle}} sur {{page?.pageMax}}</span>
       </div>
       <div class="flex-row">
-        <button type="button" class="btn btn-outline-success" (click)="pagination('precedent')" [disabled]="page?.pageActuelle <= page?.pageMin"><- Précédent</button>
+        <button (click)="pagination('precedent')" [disabled]="page?.pageActuelle <= page?.pageMin"
+                class="btn btn-outline-success"
+                type="button"><- Précédent
+        </button>
         <div class="espace"></div>
-        <button type="button" class="btn btn-outline-success" (click)="pagination('suivant')" [disabled]="page?.pageActuelle >= page?.pageMax">Suivant -></button>
+        <button (click)="pagination('suivant')" [disabled]="page?.pageActuelle >= page?.pageMax"
+                class="btn btn-outline-success"
+                type="button">Suivant ->
+        </button>
       </div>
     </div>
 
     <div class="flex-row produit_container">
-      <div  *ngFor="let produit of produits.arrayProduit; let i = index">
-        <div class="flex produit" (click)="redirectionPageDetail(produit.ref)">
+      <div *ngFor="let produit of produits.arrayProduit; let i = index">
+        <div (click)="redirectionPageDetail(produit.ref)" class="flex produit">
           <div class="flex-row produit_image">
-            <div class="imgContainer" *ngIf="produit.photoPrincipale && produit.photoPrincipale.id !== 0; else noPhoto">
-              <img class="imagePrincipale" src="{{api_download_url+produit.photoPrincipale.url+'_240x180'}}" alt="Image du produit {{produit.nom}}"
-                   >
+            <div *ngIf="produit.photoPrincipale && produit.photoPrincipale.id !== 0; else noPhoto" class="imgContainer">
+              <img alt="Image du produit {{produit.nom}}" class="imagePrincipale"
+                   src="{{api_download_url+produit.photoPrincipale.url+'_240x180'}}"
+              >
             </div>
 
             <ng-template #noPhoto>
-              <img class="imagePrincipale" src="../../../assets/img/1024px-Emblem-question.svg.png" alt="produit image">
+              <img alt="produit image" class="imagePrincipale" src="../../../assets/img/1024px-Emblem-question.svg.png">
             </ng-template>
 
           </div>

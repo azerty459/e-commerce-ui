@@ -1,34 +1,35 @@
-import {Component, DoCheck, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {Title} from '@angular/platform-browser';
 import {PreviousRouteBusiness} from '../../e-commerce-ui-common/business/previous-route.service';
-import { filter, map, mergeMap } from 'rxjs/internal/operators';
-import { Produit} from '../../e-commerce-ui-common/models/Produit';
+import {filter, map, mergeMap} from 'rxjs/internal/operators';
+import {Produit} from '../../e-commerce-ui-common/models/Produit';
 import {ProduitBusiness} from '../../e-commerce-ui-common/business/produit.service';
-import {ArbreService} from "../../e-commerce-ui-common/business/arbre.service";
-import {CategorieFlatNode} from "../../e-commerce-ui-common/models/CategorieFlatNode";
-import {CategorieNode} from "../../e-commerce-ui-common/models/CategorieNode";
+import {ArbreService} from '../../e-commerce-ui-common/business/arbre.service';
+import {CategorieFlatNode} from '../../e-commerce-ui-common/models/CategorieFlatNode';
+import {CategorieNode} from '../../e-commerce-ui-common/models/CategorieNode';
 import {FlatTreeControl} from '@angular/cdk/tree';
 import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
-import {NavItem} from "./components/menu-item/nav-item";
-import {MatMenuTrigger} from "@angular/material";
-import {FiltreService} from "../../e-commerce-ui-common/business/filtre.service";
+import {NavItem} from './components/menu-item/nav-item';
+import {MatMenuTrigger} from '@angular/material';
+import {FiltreService} from '../../e-commerce-ui-common/business/filtre.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css', '../../node_modules/font-awesome/css/font-awesome.css' ]
+  styleUrls: ['./app.component.css', '../../node_modules/font-awesome/css/font-awesome.css']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
-  navItems:NavItem[];
-  nodeLoaded:boolean = false;
+  navItems: NavItem[];
+  nodeLoaded: boolean = false;
   public treeControl: FlatTreeControl<CategorieFlatNode>;
   public treeFlattener: MatTreeFlattener<CategorieNode, CategorieFlatNode>;
   public dataSource: MatTreeFlatDataSource<CategorieNode, CategorieFlatNode>;
-  public produit = new Produit('', '', '', 0,0);
-  public chosenCategorie = "";
-  public categorieHasBeenSelected=false;
+  public produit = new Produit('', '', '', 0, 0);
+  public chosenCategorie = '';
+  public categorieHasBeenSelected = false;
+
   constructor(
     private router: Router,
     private previousRouteBusiness: PreviousRouteBusiness,
@@ -51,23 +52,23 @@ export class AppComponent implements OnInit{
   /**
    * Méthode permettant de charger les catégories du menu
    */
-  public getNodes(){
-    this.nodeLoaded=true;
-    let primary :CategorieNode = new CategorieNode();
-    primary.nomCategorie="Toutes nos catégories";
-    primary.id=0;
-    primary.children=JSON.parse(JSON.stringify(this.arbreService.data));
+  public getNodes() {
+    this.nodeLoaded = true;
+    let primary: CategorieNode = new CategorieNode();
+    primary.nomCategorie = 'Toutes nos catégories';
+    primary.id = 0;
+    primary.children = JSON.parse(JSON.stringify(this.arbreService.data));
     this.navItems = JSON.parse(JSON.stringify([primary]));
   }
 
   ngOnInit() {
     // Permet de changer le titre de la page automatiquement en fonction du data title du rounting dans app.module.ts
     this.router.events.pipe(
-      filter( event => event instanceof NavigationEnd)
+      filter(event => event instanceof NavigationEnd)
     ).pipe(
       map(() => this.activatedRoute)
     ).pipe(
-      map( route => {
+      map(route => {
         while (route.firstChild) {
           route = route.firstChild;
         }
@@ -75,7 +76,7 @@ export class AppComponent implements OnInit{
       })
     ).pipe(
       filter((route) => route.outlet === 'primary')
-    )
+      )
       .pipe(
         mergeMap((route) => route.data)
       )
@@ -98,40 +99,38 @@ export class AppComponent implements OnInit{
       this.produitBusiness.search(this.produit.nom, 0);
     }
     console.log(this.previousRouteBusiness.getCurrentUrl());
-    if(this.previousRouteBusiness.getCurrentUrl().startsWith('/produit/detail')){
+    if (this.previousRouteBusiness.getCurrentUrl().startsWith('/produit/detail')) {
       this.router.navigate(['/produit']);
     }
 
   }
 
 
-
-
   /**
    * Methode appellée lors de la selection d'une catégorie dans le menu
    * @param categorie selectionnée
    */
-  public selectCategorie(item: CategorieNode): void{
-    if(this.nodeLoaded = true){
+  public selectCategorie(item: CategorieNode): void {
+    if (this.nodeLoaded = true) {
       this.trigger.closeMenu();
-      this.chosenCategorie=item.nomCategorie;
-      this.navItems[0].nomCategorie=item.nomCategorie;
-      this.navItems[0].id=item.id;
-      this.categorieHasBeenSelected=true;
+      this.chosenCategorie = item.nomCategorie;
+      this.navItems[0].nomCategorie = item.nomCategorie;
+      this.navItems[0].id = item.id;
+      this.categorieHasBeenSelected = true;
     }
   }
 
   /**
    * Méthode apellé lors de la désélection de la catégorie sélectionné
    */
-  public CancelCategorieChoice(){
+  public CancelCategorieChoice() {
     this.navItems = undefined;
     this.nodeLoaded = false;
-    this.categorieHasBeenSelected=false;
-    this.chosenCategorie ="";
+    this.categorieHasBeenSelected = false;
+    this.chosenCategorie = '';
   }
 
-  public retourHome(){
+  public retourHome() {
     this.router.navigate(['/produit']);
   }
 }

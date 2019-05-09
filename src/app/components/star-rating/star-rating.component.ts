@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
-import { MatSnackBar } from '@angular/material';
+import {Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'mat-star-rating',
@@ -26,12 +26,13 @@ export class StarRatingComponent implements OnInit {
       this.ratingArr.push(index);
     }
   }
-  onClick(rating:number) {
+
+  onClick(rating: number) {
     this.ratingUpdated.emit(rating);
     return false;
   }
 
-  showIcon(index:number) {
+  showIcon(index: number) {
     if (this.rating >= index + 1) {
       return 'star';
     } else {
@@ -40,8 +41,9 @@ export class StarRatingComponent implements OnInit {
   }
 
 }
+
 export enum StarRatingColor {
-  primary = "primary",
-  accent = "accent",
-  warn = "warn"
+  primary = 'primary',
+  accent = 'accent',
+  warn = 'warn'
 }
