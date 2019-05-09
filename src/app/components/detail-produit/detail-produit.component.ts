@@ -2,12 +2,12 @@ import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Produit} from '../../../../e-commerce-ui-common/models/Produit';
 import {ProduitBusiness} from '../../../../e-commerce-ui-common/business/produit.service';
-import { BreadcrumbsService} from '../../../../e-commerce-ui-common/business/breadcrumbs.service';
+import {BreadcrumbsService} from '../../../../e-commerce-ui-common/business/breadcrumbs.service';
 import {Categorie} from '../../../../e-commerce-ui-common/models/Categorie';
 import {CategoriedataService} from '../../../../e-commerce-ui-common/business/data/categoriedata.service';
-import {AvisService} from "../../../../e-commerce-ui-common/business/avis.service";
-import {Avis} from "../../../../e-commerce-ui-common/models/Avis";
-import {MatSnackBar} from "@angular/material";
+import {AvisService} from '../../../../e-commerce-ui-common/business/avis.service';
+import {Avis} from '../../../../e-commerce-ui-common/models/Avis';
+import {MatSnackBar} from '@angular/material';
 
 
 @Component({
@@ -16,7 +16,7 @@ import {MatSnackBar} from "@angular/material";
   styleUrls: ['./detail-produit.component.css']
 })
 export class DetailProduitComponent implements OnInit {
-  @Input('rating') rating= 0;
+  @Input('rating') rating = 0;
   @Input('starCount') starCount = 5;
   @Input('color') starColor: string;
 
@@ -29,21 +29,22 @@ export class DetailProduitComponent implements OnInit {
   @ViewChild('image') public image;
   // Chaîne de catactères représentant le fil d'ariane pour les catégories (jusque la catégorie juste avant celle du produit)
   public catBreadCrumb: string;
+  public categoriePourFil: Categorie;
 
-  constructor(private snackBar: MatSnackBar,private avisService: AvisService, private produitBusiness: ProduitBusiness, private activatedRoute: ActivatedRoute, private _router: Router, private breadcrumb: BreadcrumbsService, private categorieData: CategoriedataService, private bcService: BreadcrumbsService) {
+  constructor(private snackBar: MatSnackBar, private avisService: AvisService, private produitBusiness: ProduitBusiness, private activatedRoute: ActivatedRoute, private _router: Router, private breadcrumb: BreadcrumbsService, private categorieData: CategoriedataService, private bcService: BreadcrumbsService) {
     this.activatedRoute.params.subscribe(params => {
         this.pageActuelURL = params.ref;
       },
       error => {
-        console.log('Erreur gestion de page ', error)
+        console.log('Erreur gestion de page ', error);
       },
     );
   }
-  onRatingChanged(rating){
+
+  onRatingChanged(rating) {
     console.log(rating);
     this.rating = rating;
   }
-  public categoriePourFil: Categorie;
 
   ngOnInit() {
     this.affichage();
@@ -70,15 +71,14 @@ export class DetailProduitComponent implements OnInit {
   }
 
 
-
   async affichage() {
     this.promiseProduit = this.produitBusiness.getProduitByRef(this.pageActuelURL);
     await this.promiseProduit.then(
       (value) => {
         this.produit = value;
-        this.arrayPhotoUrl=[];
+        this.arrayPhotoUrl = [];
         for (const photo of this.produit.arrayPhoto) {
-          this.arrayPhotoUrl.push(photo.url+'_'+this.image.nativeElement.clientHeight+'x'+this.image.nativeElement.clientWidth);
+          this.arrayPhotoUrl.push(photo.url + '_' + this.image.nativeElement.clientHeight + 'x' + this.image.nativeElement.clientWidth);
         }
 
       }
@@ -92,14 +92,14 @@ export class DetailProduitComponent implements OnInit {
     );
   }
 
-  public ajoutAvis(description : string){
-    if(description === undefined || description.length===0){
+  public ajoutAvis(description: string) {
+    if (description === undefined || description.length === 0) {
       this.snackBar.open('Veuillez renseigner une description', '', {
         duration: 2000
       });
-    }else {
-      this.avisService.ajoutAvis(new Avis(0,description,this.rating,undefined,this.produit.ref));
-      this.produit.avis.push(new Avis(0,description,this.rating,undefined,this.produit.ref));
+    } else {
+      this.avisService.ajoutAvis(new Avis(0, description, this.rating, undefined, this.produit.ref));
+      this.produit.avis.push(new Avis(0, description, this.rating, undefined, this.produit.ref));
       this.snackBar.open('Avis ajouté', '', {
         duration: 2000
       });
@@ -107,18 +107,18 @@ export class DetailProduitComponent implements OnInit {
 
   }
 
-  public generateRowIndexes(index:number){
+  public generateRowIndexes(index: number) {
     let indexes = [];
-    for(let i = 0; i<5;i++){
-     
-      if(index-i >= 1){
+    for (let i = 0; i < 5; i++) {
+
+      if (index - i >= 1) {
         indexes.push('star');
-      }else if(index-i >= 0.5){
+      } else if (index - i >= 0.5) {
         indexes.push('star_half');
-      }else{
+      } else {
         indexes.push('star_border');
       }
-      
+
     }
     return indexes;
   }

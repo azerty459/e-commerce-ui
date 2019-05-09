@@ -3,7 +3,7 @@
 }
 
 .produit {
-  cursor:pointer;
+  cursor: pointer;
   border: 1px solid black;
   margin: 30px 44px 0px 0px;
   width: 240px;
@@ -22,7 +22,6 @@
 }
 
 
-
 .produit_nom {
   padding-left: 10px;
   height: 30%;
@@ -32,7 +31,7 @@
   height: 10%;
 }
 
-.produit_description_prixHT{
+.produit_description_prixHT {
   padding-left: 10px;
 }
 
@@ -69,14 +68,17 @@
 .text_afficher {
   margin: 8px 8px 0px 0px;
 }
-.imgContainer{
+
+.imgContainer {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.imgContainer>img{
+
+.imgContainer > img {
   max-width: 238px;
 }
-.imagePrincipale{
+
+.imagePrincipale {
   max-height: 180px;
 }

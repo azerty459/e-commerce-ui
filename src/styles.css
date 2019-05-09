@@ -2,9 +2,9 @@
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
 @import "~bootstrap/dist/css/bootstrap.css";
 
-html, body, app-root{
-  margin:0;
-  height:100%;
+html, body, app-root {
+  margin: 0;
+  height: 100%;
 }
 
 .logo {
@@ -36,15 +36,15 @@ html, body, app-root{
 
 /**/
 
-.form-control{
+.form-control {
   margin-left: -0.4rem !important;
   margin-right: -0.4rem !important;
   border-radius: 0 !important;
 }
 
 .spacing-bare {
-  margin-top: 14px!important;
-  margin-bottom: 14px!important;
+  margin-top: 14px !important;
+  margin-bottom: 14px !important;
   background-color: transparent;
   display: block;
   height: 1px;

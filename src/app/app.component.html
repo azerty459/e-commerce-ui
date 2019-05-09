@@ -1,27 +1,24 @@
-
-
-
 <div class="flex-row">
   <mat-toolbar color="primary">
     <div class="flex flex-row">
-      <button mat-button routerLink="/accueil" disabled>
+      <button disabled mat-button routerLink="/accueil">
 
-        <img (click)="retourHome()" class="logo" src="assets/img/icon.png" alt="logo">
+        <img (click)="retourHome()" alt="logo" class="logo" src="assets/img/icon.png">
       </button>
     </div>
     <div class="flex8 flex-column">
-        <div class="flex-row text-align-left">
-          <div class="flex2 bar_navbar">
-            <div class="btn-group"  role="group" aria-label="Button group with nested dropdown">
-              <button [hidden]="nodeLoaded" mat-raised-button color="primary" (mouseover)="getNodes()">
-                Toutes nos categories
-                <mat-icon>expand_more</mat-icon>
-              </button>
-              <div *ngIf="nodeLoaded">
+      <div class="flex-row text-align-left">
+        <div class="flex2 bar_navbar">
+          <div aria-label="Button group with nested dropdown" class="btn-group" role="group">
+            <button (mouseover)="getNodes()" [hidden]="nodeLoaded" color="primary" mat-raised-button>
+              Toutes nos categories
+              <mat-icon>expand_more</mat-icon>
+            </button>
+            <div *ngIf="nodeLoaded">
                 <span *ngFor="let item of navItems">
                   <!-- Handle branch node buttons here -->
                   <span *ngIf="item.children && item.children.length > 0">
-                    <button mat-raised-button color="primary" [matMenuTriggerFor]="menu.childMenu"  >
+                    <button [matMenuTriggerFor]="menu.childMenu" color="primary" mat-raised-button>
                       {{item.nomCategorie}}
                       <mat-icon>expand_more</mat-icon>
                     </button>
@@ -29,48 +26,51 @@
                   </span>
                   <!-- Leaf node buttons here -->
                   <span *ngIf="!item.children || item.children.length === 0">
-                    <button mat-button color="primary">
+                    <button color="primary" mat-button>
                       {{item.nomCategorie}}
                     </button>
                   </span>
                 </span>
-              </div>
-
             </div>
-            <button class="cancelButton" [hidden]="!categorieHasBeenSelected" mat-button (click)="CancelCategorieChoice()" >
-              <mat-icon>cancel</mat-icon>
-            </button>
-
-            <!--Formulaire de recherche-->
-            <form class="form-inline search_bar" #searchForm="ngForm" (ngSubmit)=" submitSearch()">
-              <input class="form-control mr-sm-2 search_input" type="text" placeholder="Rechercher un produit" aria-label="Search"
-                     name="searchedText"
-                     [(ngModel)]="produit.nom"
-                     #name="ngModel">
-              <button class="btn btn-success my-2 my-sm-0 search_button" type="submit"><i class="fa fa-search"></i></button>
-            </form>
 
           </div>
-          <div class="flex"></div>
+          <button (click)="CancelCategorieChoice()" [hidden]="!categorieHasBeenSelected" class="cancelButton"
+                  mat-button>
+            <mat-icon>cancel</mat-icon>
+          </button>
+
+          <!--Formulaire de recherche-->
+          <form #searchForm="ngForm" (ngSubmit)=" submitSearch()" class="form-inline search_bar">
+            <input #name="ngModel" [(ngModel)]="produit.nom" aria-label="Search"
+                   class="form-control mr-sm-2 search_input"
+                   name="searchedText"
+                   placeholder="Rechercher un produit"
+                   type="text">
+            <button class="btn btn-success my-2 my-sm-0 search_button" type="submit"><i class="fa fa-search"></i>
+            </button>
+          </form>
+
         </div>
-        <div class="flex-row">
-          <div class="flex text-align-left">
-            <button mat-button routerLink="/produit" class="enlever_focus_bleu" disabled>
-              <mat-icon>help</mat-icon>
-              Aide
-            </button>
-          </div>
-          <div class="flex text-align-right">
-            <button mat-button routerLink="/produit" class="enlever_focus_bleu" disabled>
-              <mat-icon>group</mat-icon>
-              Profil
-            </button>
-            <button mat-button routerLink="/produit" class="enlever_focus_bleu" disabled>
-              <mat-icon>shopping_cart</mat-icon>
-              Panier
-            </button>
-          </div>
+        <div class="flex"></div>
+      </div>
+      <div class="flex-row">
+        <div class="flex text-align-left">
+          <button class="enlever_focus_bleu" disabled mat-button routerLink="/produit">
+            <mat-icon>help</mat-icon>
+            Aide
+          </button>
         </div>
+        <div class="flex text-align-right">
+          <button class="enlever_focus_bleu" disabled mat-button routerLink="/produit">
+            <mat-icon>group</mat-icon>
+            Profil
+          </button>
+          <button class="enlever_focus_bleu" disabled mat-button routerLink="/produit">
+            <mat-icon>shopping_cart</mat-icon>
+            Panier
+          </button>
+        </div>
+      </div>
     </div>
   </mat-toolbar>
 </div>

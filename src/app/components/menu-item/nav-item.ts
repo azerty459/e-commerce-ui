@@ -1,6 +1,6 @@
 export interface NavItem {
   nomCategorie: string;
-  id:number;
+  id: number;
   route?: string;
   children?: NavItem[];
 }

@@ -7,14 +7,17 @@
   flex-direction: row;
   align-items: center;
 }
-.breadcrumbContainer{
+
+.breadcrumbContainer {
   display: flex;
   flex-direction: row;
 }
-.colorCategorieBlue:hover{
+
+.colorCategorieBlue:hover {
   cursor: pointer;
 }
-.colorCategorieBlue{
+
+.colorCategorieBlue {
   color: cornflowerblue;
 }
 
