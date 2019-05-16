@@ -57,7 +57,7 @@ import {ArbreService} from '../../e-commerce-ui-common/business/arbre.service';
 import {CategorieBusinessService} from '../../e-commerce-ui-common/business/categorie.service';
 import {MenuItemComponent} from './components/menu-item/menu-item.component';
 import {SlideshowModule} from 'ng-simple-slideshow';
-import {ProduiDataService} from '../../e-commerce-ui-common/business/data/produitData.service';
+import {ProduiDataService} from '../../e-commerce-ui-common/business/data/produit-data.service';
 import {FiltreService} from '../../e-commerce-ui-common/business/filtre.service';
 import {StarRatingComponent} from './components/star-rating/star-rating.component';
 import {AvisService} from '../../e-commerce-ui-common/business/avis.service';

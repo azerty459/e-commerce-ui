@@ -2,7 +2,7 @@ import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {Categorie} from '../../../../e-commerce-ui-common/models/Categorie';
 import {BreadcrumbsService} from '../../../../e-commerce-ui-common/business/breadcrumbs.service';
 import {CategoriedataService} from '../../../../e-commerce-ui-common/business/data/categoriedata.service';
-import {ProduiDataService} from '../../../../e-commerce-ui-common/business/data/produitData.service';
+import {ProduiDataService} from '../../../../e-commerce-ui-common/business/data/produit-data.service';
 import {ProduitBusiness} from '../../../../e-commerce-ui-common/business/produit.service';
 import {FiltreService} from '../../../../e-commerce-ui-common/business/filtre.service';
 import {PaginationDataService} from '../../../../e-commerce-ui-common/business/data/pagination-data.service';

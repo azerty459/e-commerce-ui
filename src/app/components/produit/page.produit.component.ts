@@ -4,7 +4,7 @@ import {ProduitBusiness} from '../../../../e-commerce-ui-common/business/produit
 import {Pagination} from '../../../../e-commerce-ui-common/models/Pagination';
 import {PreviousRouteBusiness} from '../../../../e-commerce-ui-common/business/previous-route.service';
 import {CategorieBusinessService} from '../../../../e-commerce-ui-common/business/categorie.service';
-import {ProduiDataService} from '../../../../e-commerce-ui-common/business/data/produitData.service';
+import {ProduiDataService} from '../../../../e-commerce-ui-common/business/data/produit-data.service';
 import {FiltreService} from '../../../../e-commerce-ui-common/business/filtre.service';
 import {PaginationDataService} from '../../../../e-commerce-ui-common/business/data/pagination-data.service';
 import {environment} from '../../../../src/environments/environment';
