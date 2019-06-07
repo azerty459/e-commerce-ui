@@ -98,11 +98,13 @@ export class DetailProduitComponent implements OnInit {
         duration: 2000
       });
     } else {
-      this.avisService.ajoutAvis(new Avis(0, description, this.rating, undefined, this.produit.ref));
+      const promise = this.avisService.ajoutAvis(new Avis(0, description, this.rating, undefined, this.produit.ref));
       this.produit.avis.push(new Avis(0, description, this.rating, undefined, this.produit.ref));
       this.snackBar.open('Avis ajouté', '', {
         duration: 2000
       });
+      // Met à jour l'affichage quand l'avis est ajouté en base
+      promise.then(() => this.affichage());
     }
 
   }

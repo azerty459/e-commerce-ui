@@ -15,6 +15,7 @@ html, body, app-root {
 
 .bar_navbar {
   padding-right: 16px;
+  max-width: 66%;
 }
 
 .categorie_button:focus, .search_input:focus, search_bar:focus {
