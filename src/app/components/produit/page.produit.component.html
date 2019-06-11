@@ -71,10 +71,10 @@
       <div class="trier flex flex-row">
         <span class="text_afficher">Trier par</span>
         <div class="form-group">
-          <select class="form-control">
-            <option>Nom</option>
-            <option>Prix croissant</option>
-            <option>Prix décroissant</option>
+          <select (change)="selectedName($event.target.value)" [(ngModel)]="nameOfTri" class="form-control">
+            <option value="Nom">Nom</option>
+            <option value="Prix croissant">Prix croissant</option>
+            <option value="Prix Décroissant">Prix décroissant</option>
           </select>
         </div>
       </div>

@@ -20,10 +20,12 @@ export class ProduitComponent implements OnInit {
 
   public nbProduitsParPage = this.filtreService.getNbProduitParPage();
 
+  public nameOfTri: String = 'Nom';
   /**
    * Tableau de produits à afficher
    */
-  public produits = this.produitDataService.produits;
+  public;
+  produits = this.produitDataService.produits;
   public api_download_url = environment.api_rest_download_url;
 
 
@@ -71,7 +73,7 @@ export class ProduitComponent implements OnInit {
 
 
   async initialisation() {
-    this.getPaginationWithoutSearch(this.pageInitiale, this.nbProduitsParPage);
+    this.getPaginationWithoutSearch(this.pageInitiale, this.nbProduitsParPage, this.nameOfTri);
     this._router.navigate(['/produit', this.page.pageActuelle]);
   }
 
@@ -83,6 +85,11 @@ export class ProduitComponent implements OnInit {
       console.log('redirection');
       this._router.navigate(['/produit', this.page.pageMax]);
     }
+  }
+
+  async selectedName(name: String) {
+    this.nameOfTri = name;
+    this.reloadProduct();
   }
 
   async selected(value: number) {
@@ -129,8 +136,8 @@ export class ProduitComponent implements OnInit {
     this._router.navigate(['/produit/detail', ref]);
   }
 
-  private async getPaginationWithoutSearch(pageDemande: number, messageParPage: number) {
-    const result = await this.produitBusiness.getProduitByPagination(pageDemande, messageParPage);
+  private async getPaginationWithoutSearch(pageDemande: number, messageParPage: number, nameOfTri: String) {
+    const result = await this.produitBusiness.getProduitByPagination(pageDemande, messageParPage, nameOfTri);
     this.produits.arrayProduit = result.tableau;
     this.produits.length = result.total;
     if (result.pageActuelle === 0) {
@@ -161,7 +168,7 @@ export class ProduitComponent implements OnInit {
     const pasDeCategorieRecherche = this.filtreService.categorieForBreadCrum == undefined && this.filtreService.categorieForBreadCrum == null;
     if (pasDeCategorieRecherche && pasDeTexteRecherche) {
       console.log('without');
-      this.getPaginationWithoutSearch(this.page.pageActuelle, this.nbProduitsParPage);
+      this.getPaginationWithoutSearch(this.page.pageActuelle, this.nbProduitsParPage, this.nameOfTri);
     } else {
       console.log('with');
       this.getPaginationWithSearch(this.page.pageActuelle, this.nbProduitsParPage);
