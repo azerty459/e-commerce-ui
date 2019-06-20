@@ -88,15 +88,23 @@ export class AppComponent implements OnInit {
    */
   public submitSearch(): void {
     if (this.navItems !== undefined) {
+      if (this.produit.nom === undefined || this.produit.nom.length === 0) {
+        this.produit.nom = ' ';
+      }
       this.produitBusiness.searchedText = this.produit.nom;
+
       if (this.navItems[0].id !== undefined) {
         this.produitBusiness.search(this.produit.nom, this.navItems[0].id);
         this.produitBusiness.searchedCategorie = this.navItems[0].id;
         this.produitBusiness.searchedCategorieObject = this.navItems[0];
       }
     } else {
-      this.produitBusiness.searchedCategorie = 0;
-      this.produitBusiness.search(this.produit.nom, 0);
+      if (this.produit.nom === undefined || this.produit.nom.length === 0) {
+        this.produit.nom = '';
+      } else {
+        this.produitBusiness.searchedCategorie = 0;
+        this.produitBusiness.search(this.produit.nom, 0);
+      }
     }
     console.log(this.previousRouteBusiness.getCurrentUrl());
     if (this.previousRouteBusiness.getCurrentUrl().startsWith('/produit/detail')) {
