@@ -51,18 +51,23 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
       this.bcService.allCategories = await this.categorieData.getChemin();
       this.allCategories = this.bcService.allCategories;
     }
-    for (let categorie of this.allCategories) {
-      if (categorie.id === this.categorie.id) {
-        for (let catDto of categorie.chemin) {
-          this.categoriesForBreadCrumb.push(new Categorie(catDto.id, catDto.nom, catDto.level, null));
+
+    if (this.categorie !== undefined) {
+
+      for (let categorie of this.allCategories) {
+        if (categorie.id === this.categorie.id) {
+          for (let catDto of categorie.chemin) {
+            this.categoriesForBreadCrumb.push(new Categorie(catDto.id, catDto.nom, catDto.level, null));
+          }
+          this.categoriesForBreadCrumb.push(this.categorie);
         }
+      }
+      if (this.categoriesForBreadCrumb[0].id != this.categorie.id) {
+        this.categoriesForBreadCrumb.pop();
+        this.categoriesForBreadCrumb.reverse();
         this.categoriesForBreadCrumb.push(this.categorie);
       }
-    }
-    if (this.categoriesForBreadCrumb[0].id != this.categorie.id) {
-      this.categoriesForBreadCrumb.pop();
-      this.categoriesForBreadCrumb.reverse();
-      this.categoriesForBreadCrumb.push(this.categorie);
+
     }
   }
 

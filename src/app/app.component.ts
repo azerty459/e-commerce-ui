@@ -87,23 +87,70 @@ export class AppComponent implements OnInit {
    * Méthode appelée par le formulaire de recherche
    */
   public submitSearch(): void {
-    if (this.navItems !== undefined) {
+
+    if (this.produit.nom.length !== 0 && this.navItems !== undefined) {
+
       this.produitBusiness.searchedText = this.produit.nom;
       if (this.navItems[0].id !== undefined) {
         this.produitBusiness.search(this.produit.nom, this.navItems[0].id);
         this.produitBusiness.searchedCategorie = this.navItems[0].id;
         this.produitBusiness.searchedCategorieObject = this.navItems[0];
       }
+
     } else {
-      this.produitBusiness.searchedCategorie = 0;
-      this.produitBusiness.search(this.produit.nom, 0);
+      if (this.produit.nom.length !== 0) {
+        this.produitBusiness.searchedCategorie = 0;
+        this.produitBusiness.search(this.produit.nom, 0);
+      } else {
+        if (this.navItems !== undefined) {
+          this.produitBusiness.search(' ', this.navItems[0].id);
+          this.produitBusiness.searchedCategorie = this.navItems[0].id;
+          this.produitBusiness.searchedCategorieObject = this.navItems[0];
+        } else {
+          this.produitBusiness.searchedCategorie = 0;
+          this.produitBusiness.search(' ', 0);
+        }
+      }
     }
-    console.log(this.previousRouteBusiness.getCurrentUrl());
     if (this.previousRouteBusiness.getCurrentUrl().startsWith('/produit/detail')) {
       this.router.navigate(['/produit']);
     }
-
   }
+
+  // public submitSearch(): void {
+  //   if (this.produit.nom.length !== 0) {
+  //     console.log('le nom de produit et de taille 0 donc vide');
+  //
+  //     if (this.navItems !== undefined) {
+  //       this.produitBusiness.searchedText = this.produit.nom;
+  //       if (this.navItems[0].id !== undefined) {
+  //         this.produitBusiness.search(this.produit.nom, this.navItems[0].id);
+  //         this.produitBusiness.searchedCategorie = this.navItems[0].id;
+  //         this.produitBusiness.searchedCategorieObject = this.navItems[0];
+  //       }
+  //     } else {
+  //       this.produitBusiness.searchedCategorie = 0;
+  //       this.produitBusiness.search(this.produit.nom, 0);
+  //     }
+  //
+  //   } else {
+  //     if (this.navItems !== undefined) {
+  //       this.produitBusiness.searchedText = this.produit.nom;
+  //       if (this.navItems[0].id !== undefined) {
+  //         this.produitBusiness.search(' ', this.navItems[0].id);
+  //         this.produitBusiness.searchedCategorie = this.navItems[0].id;
+  //         this.produitBusiness.searchedCategorieObject = this.navItems[0];
+  //       }
+  //     } else {
+  //       this.produitBusiness.searchedCategorie = 0;
+  //       this.produitBusiness.search(' ', 0);
+  //     }
+  //   }
+  //   console.log(this.previousRouteBusiness.getCurrentUrl());
+  //   if (this.previousRouteBusiness.getCurrentUrl().startsWith('/produit/detail')) {
+  //     this.router.navigate(['/produit']);
+  //   }
+  // }
 
 
   /**
