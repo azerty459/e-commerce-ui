@@ -20,7 +20,7 @@ export class ProduitComponent implements OnInit {
 
   public nbProduitsParPage = this.filtreService.getNbProduitParPage();
 
-  public nameOfTri: String = 'Nom';
+  public nameOfTri = this.filtreService.getNameOfTri();
   /**
    * Tableau de produits à afficher
    */
@@ -79,17 +79,17 @@ export class ProduitComponent implements OnInit {
 
   async redirection() {
     if (this.page.pageActuelle <= 0) {
-      console.log('redirection');
       this._router.navigate(['/produit', this.page.pageMin]);
     } else if (this.page.pageActuelle > this.page.pageMax) {
-      console.log('redirection');
       this._router.navigate(['/produit', this.page.pageMax]);
     }
   }
 
-  async selectedName(name: String) {
-    this.nameOfTri = name;
+  async selectedNameOfTri(name: string) {
+    this.filtreService.saveNameOfTri(name);
     this.reloadProduct();
+
+    this.redirection();
   }
 
   async selected(value: number) {
@@ -120,7 +120,6 @@ export class ProduitComponent implements OnInit {
         this.page.pageActuelle = this.page.pageActuelle - 1;
       }
     } else {
-      console.log(this.page);
       if (this.page.pageActuelle < this.page.pageMax) {
         this.page.pageActuelle = this.page.pageActuelle + 1;
 
@@ -167,10 +166,8 @@ export class ProduitComponent implements OnInit {
     const pasDeTexteRecherche = this.produitBusiness.searchedText == '' || this.produitBusiness.searchedText == undefined || this.produitBusiness.searchedText == null;
     const pasDeCategorieRecherche = this.filtreService.categorieForBreadCrum == undefined && this.filtreService.categorieForBreadCrum == null;
     if (pasDeCategorieRecherche && pasDeTexteRecherche) {
-      console.log('without');
       this.getPaginationWithoutSearch(this.page.pageActuelle, this.nbProduitsParPage, this.nameOfTri);
     } else {
-      console.log('with');
       this.getPaginationWithSearch(this.page.pageActuelle, this.nbProduitsParPage);
     }
   }
